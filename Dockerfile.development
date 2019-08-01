@@ -1,0 +1,6 @@
+FROM node:8.15.0
+
+WORKDIR /block-producers-directory-front
+COPY . /block-producers-directory-front
+
+RUN npm install
