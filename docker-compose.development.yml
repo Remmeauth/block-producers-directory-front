@@ -10,6 +10,6 @@ services:
     volumes:
       - ./src:/block-producers-directory-front/src
     environment:
-      - 'BACK_END_URL=https://bps-directory-back-prod.herokuapp.com'
+      - 'BACK_END_URL=https://bps-directory-back-staging.herokuapp.com'
     ports:
       - '8080:8080'
