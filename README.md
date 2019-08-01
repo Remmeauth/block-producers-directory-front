@@ -3,6 +3,7 @@ Front-end of directory of block producers based around Remme Protocol.
 
   * [Development](#development)
   * [Production](#production)
+  * [Technology stack](#technology-stack)
 
 ## Development
 
@@ -57,3 +58,14 @@ To run the project, use the following command. It will start the server and occu
 $ docker run -p 8080:8080 -e PORT=8080 -e BACK_END_URL='https://bps-directory-back-prod.herokuapp.com' \
     --name block-producers-directory-front block-producers-directory-front
 ```
+
+## Technology stack
+
+Project's technology stack is described below, including references to their tutorials:
+
+1. [JavaScript](https://en.wikipedia.org/wiki/JavaScript) as language and [Vue.js](https://vuejs.org/) as web-framework.
+2. [Docker](https://docs.docker.com) as containerization tool.
+3. [Vue Router](https://router.vuejs.org) as routing framework.
+4. [Travis](https://docs.travis-ci.com) as continuous integration service.
+5. [Heroku](https://devcenter.heroku.com) as continuous delivery service.
+6. Follow [Airbnb](https://github.com/airbnb/javascript) `JavaScript` style guide.
