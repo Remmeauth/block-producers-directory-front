@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ 'index page' }}
     <BlockProducers />
       {{ error.message }}
       {{ error.statusCode }}
