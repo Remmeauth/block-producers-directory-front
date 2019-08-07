@@ -5,7 +5,12 @@
 </template>
 
 <script>
+import UserPage from './components/pages/UserPage.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    UserPage
+  }
 }
 </script>
