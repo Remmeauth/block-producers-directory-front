@@ -1,3 +1,4 @@
+import reactiveStorage from "vue-reactive-storage";
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
@@ -8,6 +9,10 @@ import routes from './routes'
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 Vue.use(VueRouter)
+
+Vue.use(reactiveStorage, {
+    'token': null,
+});
 
 const router = new VueRouter({
   mode: 'history',

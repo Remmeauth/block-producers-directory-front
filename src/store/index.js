@@ -4,10 +4,12 @@ import Vue from 'vue'
 Vue.use(Vuex)
 
 import userPage from './modules/userPage'
+import authentication from './modules/authentication'
 
 const store = new Vuex.Store({
   modules: {
-    userPage: userPage
+    authentication: authentication,
+    userPage: userPage,
   }
 })
 
