@@ -19,7 +19,7 @@ export default {
         store.commit(INDEX_PAGE_ADD_BLOCK_PRODUCERS_MUTATION)
       })
       .catch(error => {
-        if (error.response.status === HttpStatus.NOT_FOUND || error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+        if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
           store.commit(INDEX_PAGE_ADD_ERROR_MUTATION, {
             message: error.response.data.error,
             statusCode: error.response.status
