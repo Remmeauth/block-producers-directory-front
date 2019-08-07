@@ -16,7 +16,7 @@ export default {
     axios
       .get('https://bps-directory-back-staging.herokuapp.com/block-producers/')
       .then(response => {
-        store.commit(INDEX_PAGE_ADD_BLOCK_PRODUCERS_MUTATION)
+        store.commit(INDEX_PAGE_ADD_BLOCK_PRODUCERS_MUTATION, response.data.result)
       })
       .catch(error => {
         if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
