@@ -38,7 +38,7 @@ export default {
         steemitUrl: null,
         telegramUrl: null,
         slackUrl: null,
-        tweeterUrl: null,
+        twitterUrl: null,
         websiteUrl: null,
         wikipediaUrl: null,
         user: null,
