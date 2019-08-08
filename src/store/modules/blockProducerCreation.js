@@ -105,7 +105,6 @@ export const  blockProducerCreation = {
           }
 
           if (error.response.status === HttpStatus.BAD_REQUEST) {
-            console.log(error.response)
             commit(ADD_FIELDS_ERRORS_MUTATION, {
               errors: error.response.data.errors,
               statusCode: error.response.status
