@@ -5,12 +5,14 @@
 
     <form>
       <v-text-field
-        v-model="usernameOrEmail"
+        v-model="usernameOrEmail" 
+        label="Username or e-mail"
         solo
         required
       ></v-text-field>
       <v-text-field
-        v-model="password"
+        v-model="password" 
+        label="Password"
         solo
         required
       ></v-text-field>
