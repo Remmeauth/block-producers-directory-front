@@ -7,10 +7,10 @@ export const CREATE_BLOCK_PRODUCER_MUTATION = 'createBlockProducer'
 export const BLOCK_PRODUCER_CREATION_ADD_ERROR_MUTATION = 'blockProducerCreation/' + ADD_ERROR_MUTATION
 export const BLOCK_PRODUCER_CREATION_ADD_FIELDS_ERRORS_MUTATION = 'blockProducerCreation/' + ADD_FIELDS_ERRORS_MUTATION
 export const BLOCK_PRODUCER_CREATION_CREATE_BLOCK_PRODUCER_MUTATION = 'blockProducerCreation/' + CREATE_BLOCK_PRODUCER_MUTATION
-export const BLOCK_PRODUCER_CREATION_GET_ACTION = 'blockProducerCreation/create'
+export const BLOCK_PRODUCER_CREATION_CREATE_ACTION = 'blockProducerCreation/create'
 
 
-export const  blockProducerCreation = {
+export const blockProducerCreation = {
   namespaced: true,
   error: {
     message: null,
@@ -35,7 +35,7 @@ export const  blockProducerCreation = {
     steemitUrl: null,
     telegramUrl: null,
     slackUrl: null,
-    tweeterUrl: null,
+    twitterUrl: null,
     websiteUrl: null,
     wikipediaUrl: null,
   },
@@ -65,7 +65,7 @@ export const  blockProducerCreation = {
       steemitUrl,
       telegramUrl,
       slackUrl,
-      tweeterUrl,
+      twitterUrl,
       websiteUrl,
       wikipediaUrl,
     }) {
@@ -78,13 +78,13 @@ export const  blockProducerCreation = {
           logo_url: logoUrl,
           facebook_url: facebookUrl,
           github_url: githubUrl,
-          linkedIn_url: linkedInUrl,
+          linkedin_url: linkedInUrl,
           reddit_url: redditUrl,
           medium_url: mediumUrl,
           steemit_url: steemitUrl,
           telegram_url: telegramUrl,
           slack_url: slackUrl,
-          tweeter_url: tweeterUrl,
+          twitter_url: twitterUrl,
           website_url: websiteUrl,
           wikipedia_url: wikipediaUrl,
         }, {

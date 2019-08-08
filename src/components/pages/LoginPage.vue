@@ -4,20 +4,26 @@
     {{ error.statusCode }}
 
     <form>
-      <v-text-field
-        v-model="usernameOrEmail" 
-        label="Username or e-mail"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="password" 
-        label="Password"
-        solo
-        required
-      ></v-text-field>
+      <v-container grid-list-xl fluid>
+        <v-layout wrap>
+          <v-flex xs12 sm6 md4>
+            <v-text-field
+              v-model="usernameOrEmail" 
+              label="Username or e-mail"
+              solo
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password" 
+              label="Password"
+              solo
+              required
+            ></v-text-field>
 
-      <v-btn @click="signIn">Sign In</v-btn>
+            <v-btn @click="signIn">Sign In</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </form>
     </div>
 </template>
