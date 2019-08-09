@@ -1,4 +1,5 @@
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
+import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import LoginPage from './components/pages/LoginPage.vue'
 import UserPage from './components/pages/UserPage.vue'
@@ -23,7 +24,12 @@ const routes = [
     path: '/block-producers/new/',
     component: BlockProducerCreationPage,
     name: 'blockProducerCreation'
-  }
+  },
+  {
+    path: '/block-producers/:identifier/',
+    component: BlockProducerPage,
+    name: 'blockProducer'
+  },
 ]
 
 export default routes
