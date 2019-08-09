@@ -5,12 +5,14 @@
 </template>
 
 <script>
+import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import UserPage from './components/pages/UserPage.vue'
 
 export default {
   name: 'app',
   components: {
+    BlockProducerPage,
     IndexPage,
     UserPage
   }
