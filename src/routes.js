@@ -3,6 +3,7 @@ import BlockProducerCreationPage from './components/pages/BlockProducerCreationP
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import LoginPage from './components/pages/LoginPage.vue'
+import SignUpPage from './components/pages/SignUpPage.vue'
 import SettingsPage from './components/pages/SettingsPage.vue'
 import UserPage from './components/pages/UserPage.vue'
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/login/',
     component: LoginPage,
     name: 'login'
+  },
+  {
+    path: '/signup/',
+    component: SignUpPage,
+    name: 'signup'
   },
   {
     path: '/settings/',
