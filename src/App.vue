@@ -9,6 +9,7 @@ import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
+import LoginPage from './components/pages/LoginPage.vue'
 import UserPage from './components/pages/UserPage.vue'
 
 export default {
@@ -18,6 +19,7 @@ export default {
     BlockProducerCreationPage,
     BlockProducerEditionPage,
     IndexPage,
+    LoginPage,
     UserPage
   }
 }
