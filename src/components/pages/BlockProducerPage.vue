@@ -10,11 +10,8 @@
 <script>
 import store from '../../store/index'
 
-import {
-  BLOCK_PRODUCER_GET_ACTION,
-  BLOCK_PRODUCER_ADD_BLOCK_PRODUCER_MUTATION,
-  BLOCK_PRODUCER_ADD_ERROR_MUTATION,
-} from '../../store/modules/blockProducer'
+import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+
 
 export default {
   name: 'BlockProducerPage',
@@ -47,17 +44,32 @@ export default {
     }
   },
   mounted() {
-    store.dispatch(BLOCK_PRODUCER_GET_ACTION, {
+    store.dispatch(blockProducerStorageActions.getBlockProducer, {
       identifier: this.$route.params.identifier,
     })
 
     store.subscribe((mutation, state) => {
-      if (mutation.type === BLOCK_PRODUCER_ADD_ERROR_MUTATION) {
+      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
       }
 
-      if (mutation.type === BLOCK_PRODUCER_ADD_BLOCK_PRODUCER_MUTATION) {
-        this.blockProducer = state.blockProducer.blockProducer
+      if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
+        this.blockProducer.name = state.blockProducer.name
+        this.blockProducer.location = state.blockProducer.location
+        this.blockProducer.shortDescription = state.blockProducer.shortDescription
+        this.blockProducer.fullDescription = state.blockProducer.fullDescription
+        this.blockProducer.logoUrl = state.blockProducer.logoUrl
+        this.blockProducer.facebookUrl = state.blockProducer.facebookUrl
+        this.blockProducer.githubUrl = state.blockProducer.githubUrl
+        this.blockProducer.linkedInUrl = state.blockProducer.linkedInUrl
+        this.blockProducer.redditUrl = state.blockProducer.redditUrl
+        this.blockProducer.mediumUrl = state.blockProducer.mediumUrl
+        this.blockProducer.steemitUrl = state.blockProducer.steemitUrl
+        this.blockProducer.telegramUrl = state.blockProducer.telegramUrl
+        this.blockProducer.slackUrl = state.blockProducer.slackUrl
+        this.blockProducer.twitterUrl = state.blockProducer.twitterUrl
+        this.blockProducer.websiteUrl = state.blockProducer.websiteUrl
+        this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
       }
     });
   }

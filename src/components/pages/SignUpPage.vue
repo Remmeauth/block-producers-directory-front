@@ -8,8 +8,14 @@
         <v-layout wrap>
           <v-flex xs12 sm6 md4>
             <v-text-field
-              v-model="usernameOrEmail" 
-              label="Username or e-mail"
+              v-model="email"
+              label="E-mail"
+              solo
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="username"
+              label="Username"
               solo
               required
             ></v-text-field>
@@ -20,7 +26,7 @@
               required
             ></v-text-field>
 
-            <v-btn @click="signIn">Sign In</v-btn>
+            <v-btn @click="signUp">Sign Up</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -33,33 +39,41 @@ import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 
 export default {
-  name: 'LoginPage',
+  name: 'SinUpPage',
   data() {
     return {
       error: {
         message: null,
         statusCode: null,
       },
-      usernameOrEmail: null,
+      email: null,
+      username: null,
       password: null,
     }
   },
   methods: {
-    signIn () {
-      store.dispatch(authenticationStorageActions.signIn, {
-        usernameOrEmail: this.usernameOrEmail,
+    signUp () {
+      store.dispatch(authenticationStorageActions.signUp, {
+        email: this.email,
+        username: this.username,
         password: this.password,
       })
     }
   },
   mounted() {
     store.subscribe((mutation, state) => {
+
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
       }
 
-      if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
-        this.localStorage.token = state.authentication.token
+      if (mutation.type === authenticationStorageMutations.subscribe.addFieldsErrors) {
+        this.fieldsErrors = state.authentication.fieldsErrors
+      }
+
+      if (mutation.type === authenticationStorageMutations.subscribe.markAsSignedUp) {
+        window.localStorage.email = this.email
+        window.localStorage.username = this.username
         this.$router.push('/')
       }
     });
