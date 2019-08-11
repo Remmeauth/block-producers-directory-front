@@ -3,13 +3,19 @@ import HttpStatus from 'http-status-codes'
 
 export const ADD_ERROR_MUTATION = 'addError'
 export const ADD_TOKEN_MUTATION = 'addToken'
+
 export const AUTHENTICATION_ADD_ERROR_MUTATION = 'authentication/' + ADD_ERROR_MUTATION
 export const AUTHENTICATION_ADD_TOKEN_MUTATION = 'authentication/' + ADD_TOKEN_MUTATION
+
 export const AUTHENTICATION_DO_ACTION = 'authentication/do'
 
 export const authentication = {
   namespaced: true,
   state: {
+    error: {
+      message: null,
+      statusCode: null,
+    },
     token: null,
   },
   mutations: {
@@ -23,7 +29,7 @@ export const authentication = {
   actions: {
     do({ commit }, { usernameOrEmail, password }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/authentication/token/obtaining/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/authentication/token/obtaining`, {
           username_or_email: usernameOrEmail,
           password: password,
         })
