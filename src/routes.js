@@ -1,5 +1,6 @@
-import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerPage from './components/pages/BlockProducerPage.vue'
+import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
+import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import LoginPage from './components/pages/LoginPage.vue'
 import SignUpPage from './components/pages/SignUpPage.vue'
@@ -36,6 +37,11 @@ const routes = [
     path: '/block-producers/new/',
     component: BlockProducerCreationPage,
     name: 'blockProducerCreation'
+  },
+  {
+    path: '/block-producers/:identifier/edit/',
+    component: BlockProducerEditionPage,
+    name: 'blockProducerEdition'
   },
   {
     path: '/block-producers/:identifier/',
