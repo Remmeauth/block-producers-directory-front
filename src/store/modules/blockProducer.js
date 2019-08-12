@@ -42,7 +42,7 @@ export const blockProducer = {
       statusCode: null,
     },
     isUpdated: false,
-    blockProducersSearch: null,
+    searchedBlockProducers: null,
     name: null,
     location: null,
     shortDescription: null,
@@ -113,8 +113,8 @@ export const blockProducer = {
     updateReferenceLinks (state, isUpdated) {
       state.isUpdated = isUpdated
     },
-    searchBlockProducers (state, blockProducersSearch) {
-      state.blockProducersSearch = blockProducersSearch
+    searchBlockProducers (state, searchedBlockProducers) {
+      state.searchedBlockProducers = searchedBlockProducers
     },
   },
   actions: {

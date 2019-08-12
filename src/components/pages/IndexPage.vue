@@ -14,7 +14,7 @@
         </v-container>
       </form>
 
-      {{ blockProducersSearch }}
+      {{ searchedBlockProducers }}
 
       <br><br>
 
@@ -45,14 +45,14 @@ export default {
         statusCode: null,
       },
       blockProducers: null,
-      blockProducersSearch: null,
+      searchedBlockProducers: null,
       searchPhrase: null,
     }
   },
   watch: {
-    searchPhrase: function (val) {
+    searchPhrase: function (searchPhrase) {
       store.dispatch(blockProducerStorageActions.searchBlockProducers, {
-        phrase: this.searchPhrase = val,
+        phrase: this.searchPhrase = searchPhrase,
       })
     }
   },
@@ -70,12 +70,8 @@ export default {
         this.error = state.blockProducer.error
       }
 
-      if (mutation.type === blockProducerStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.blockProducer.fieldsErrors
-      }
-
       if (mutation.type === blockProducerStorageMutations.subscribe.searchBlockProducers) {
-        this.blockProducersSearch = state.blockProducer.blockProducersSearch
+        this.searchedBlockProducers = state.blockProducer.searchedBlockProducers
       }
     });
   },
