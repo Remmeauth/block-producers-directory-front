@@ -6,6 +6,7 @@ import blockProducer from './modules/blockProducer'
 import blockProducerCreation from './modules/blockProducerCreation'
 import comment from './modules/comment'
 import indexPage from './modules/indexPage'
+import like from './modules/like'
 import profile from './modules/profile'
 import settings from './modules/settings'
 import user from './modules/user'
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
     blockProducerCreation: blockProducerCreation,
     comment: comment,
     indexPage: indexPage,
+    like: like,
     profile: profile,
     settings: settings,
     user: user,

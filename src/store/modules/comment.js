@@ -5,13 +5,13 @@ export const commentStorageMutations = {
   subscribe: {
     addError: 'comment/addError',
     addFieldsErrors: 'comment/addFieldsErrors',
-    getComments: 'comment/getComments',
+    addComments: 'comment/addComments',
     createComment: 'comment/createComment',
   },
   commit: {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
-    getComments: 'getComments',
+    addComments: 'addComments',
     createComment: 'createComment',
   },
 }
@@ -30,7 +30,7 @@ export const comment = {
       statusCode: null,
     },
     comments: null,
-    commentsCount: null,
+    commentsNumber: null,
     isCreated: null,
   },
   mutations: {
@@ -40,9 +40,9 @@ export const comment = {
     addFieldsErrors (state, errors) {
       state.fieldsErrors = errors
     },
-    getComments (state, comments) {
+    addComments (state, comments) {
       state.comments = comments
-      state.commentsCount = comments.length
+      state.commentsNumber = comments.length
     },
     createComment (state, isCreated) {
       state.isCreated = isCreated
@@ -53,7 +53,7 @@ export const comment = {
       axios
         .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/comments/`)
         .then(response => {
-          commit(commentStorageMutations.commit.getComments, response.data.result)
+          commit(commentStorageMutations.commit.addComments, response.data.result)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
