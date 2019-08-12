@@ -44,7 +44,7 @@ export const authentication = {
   actions: {
     signIn({ commit }, { usernameOrEmail, password }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/authentication/token/obtaining`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/authentication/token/obtaining/`, {
           username_or_email: usernameOrEmail,
           password: password,
         })

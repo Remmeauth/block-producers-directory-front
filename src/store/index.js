@@ -5,6 +5,7 @@ import authentication from './modules/authentication'
 import blockProducer from './modules/blockProducer'
 import blockProducerCreation from './modules/blockProducerCreation'
 import indexPage from './modules/indexPage'
+import like from './modules/like'
 import profile from './modules/profile'
 import settings from './modules/settings'
 import user from './modules/user'
@@ -17,6 +18,7 @@ const store = new Vuex.Store({
     authentication: authentication,
     blockProducer: blockProducer,
     blockProducerCreation: blockProducerCreation,
+    like: like,
     indexPage: indexPage,
     profile: profile,
     settings: settings,

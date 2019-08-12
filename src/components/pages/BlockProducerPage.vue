@@ -4,6 +4,12 @@
     {{ error.statusCode }}
 
     {{ blockProducer }}
+
+    <v-btn @click="like">Like or unlike</v-btn>
+
+    {{ isLikedByUser }}
+    {{ likesNumber }}
+    {{ blockProducerLikes }}
   </div>
 </template>
 
@@ -11,7 +17,7 @@
 import store from '../../store/index'
 
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
-
+import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
 
 export default {
   name: 'BlockProducerPage',
@@ -41,6 +47,9 @@ export default {
         user: null,
         id: null,
       },
+      blockProducerLikes: null,
+      likesNumber: null,
+      isLikedByUser: false,
     }
   },
   mounted() {
@@ -48,9 +57,27 @@ export default {
       identifier: this.$route.params.identifier,
     })
 
+    store.dispatch(likeStorageActions.getLikes, {
+      blockProducerIdentifier: this.$route.params.identifier,
+    })
+
+    store.dispatch(likeStorageActions.isLikedByUser, {
+      username: window.localStorage.username,
+      blockProducerIdentifier: this.$route.params.identifier,
+    })
+
     store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
+      }
+
+      if (mutation.type === likeStorageMutations.subscribe.addLikes) {
+        this.blockProducerLikes = state.like.likes
+        this.likesNumber = state.like.likesNumber
+      }
+
+      if (mutation.type === likeStorageMutations.subscribe.markAsIsLikedByUser) {
+        this.isLikedByUser = state.like.isLikedByUser
       }
 
       if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
@@ -72,6 +99,21 @@ export default {
         this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
       }
     });
+  },
+  methods: {
+    like () {
+      store.dispatch(likeStorageActions.putLike, {
+        blockProducerIdentifier: this.$route.params.identifier
+      })
+
+      store.subscribe((mutation, state) => {
+        if (mutation.type === likeStorageMutations.subscribe.addError) {
+          this.error = state.like.error
+        }
+
+        if (mutation.type === likeStorageMutations.subscribe.putLike) {}
+      });
+    }
   }
 }
 </script>
