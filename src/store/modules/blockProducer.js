@@ -9,6 +9,7 @@ export const blockProducerStorageMutations = {
     updateDetails: 'blockProducer/updateDetails',
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
+    searchBlockProducers: 'blockProducer/searchBlockProducers',
   },
   commit: {
     addError: 'addError',
@@ -17,6 +18,7 @@ export const blockProducerStorageMutations = {
     updateDetails: 'updateDetails',
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
+    searchBlockProducers: 'searchBlockProducers',
   },
 }
 
@@ -25,6 +27,7 @@ export const blockProducerStorageActions = {
   updateDetails: 'blockProducer/updateDetails',
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
+  searchBlockProducers: 'blockProducer/searchBlockProducers',
 }
 
 export const blockProducer = {
@@ -39,6 +42,7 @@ export const blockProducer = {
       statusCode: null,
     },
     isUpdated: false,
+    blockProducersSearch: null,
     name: null,
     location: null,
     shortDescription: null,
@@ -108,6 +112,9 @@ export const blockProducer = {
     },
     updateReferenceLinks (state, isUpdated) {
       state.isUpdated = isUpdated
+    },
+    searchBlockProducers (state, blockProducersSearch) {
+      state.blockProducersSearch = blockProducersSearch
     },
   },
   actions: {
@@ -255,6 +262,28 @@ export const blockProducer = {
         })
         .then(response => {
           commit(blockProducerStorageMutations.commit.updateReferenceLinks, true)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+
+          if (error.response.status === HttpStatus.BAD_REQUEST) {
+            commit(blockProducerStorageMutations.commit.addFieldsErrors, {
+              errors: error.response.data.errors,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    searchBlockProducers({ commit }, { phrase }) {
+      axios
+        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/search/?phrase=${phrase}/`)
+        .then(response => {
+          commit(blockProducerStorageMutations.commit.searchBlockProducers, response.data.result)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
