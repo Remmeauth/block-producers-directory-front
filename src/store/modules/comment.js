@@ -49,9 +49,9 @@ export const comment = {
     },
   },
   actions: {
-    get({ commit }, { identifier }) {
+    get({ commit }, { blockProducerIdentifier }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/comments/`)
+        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/comments/`)
         .then(response => {
           commit(commentStorageMutations.commit.addComments, response.data.result)
         })
@@ -78,9 +78,9 @@ export const comment = {
           }
         })
     },
-    create({ commit }, { identifier, text }) {
+    create({ commit }, { blockProducerIdentifier, text }) {
       axios
-        .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/comments/`, {
+        .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/comments/`, {
           text: text,
         }, {
           headers: {

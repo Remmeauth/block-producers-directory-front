@@ -20,7 +20,7 @@
 
     {{ successMessage }} <br><br>
     {{ comments }} <br><br>
-    {{ 'comments number: ' + commentsNumber }}
+    {{ 'comments number: ' + commentsNumber }} <br><br>
 
     <v-btn @click="like">Like or unlike</v-btn>
 
@@ -77,7 +77,7 @@ export default {
   methods: {
     create () {
       store.dispatch(commentStorageActions.createComment, {
-        identifier: this.$route.params.identifier,
+        blockProducerIdentifier: this.$route.params.identifier,
         text: this.text,
       })
     },
@@ -101,7 +101,7 @@ export default {
     })
 
     store.dispatch(commentStorageActions.getComments, {
-      identifier: this.$route.params.identifier,
+      blockProducerIdentifier: this.$route.params.identifier,
     })
 
     store.dispatch(likeStorageActions.getLikes, {
