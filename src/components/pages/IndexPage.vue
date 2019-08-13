@@ -20,6 +20,10 @@
 
       {{ blockProducers }}
 
+      <br><br>
+
+      {{ commentsNumbers }}
+
     </div>
 </template>
 
@@ -32,6 +36,7 @@ import {
 } from '../../store/modules/indexPage'
 
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 
 export default {
   name: 'IndexPage',
@@ -45,6 +50,7 @@ export default {
         statusCode: null,
       },
       blockProducers: null,
+      commentsNumbers: null,
       searchedBlockProducers: null,
       searchPhrase: null,
     }
@@ -57,6 +63,8 @@ export default {
     }
   },
   mounted() {
+    store.dispatch(commentStorageActions.getCommentsNumbers)
+
     store.subscribe((mutation, state) => {
       if (mutation.type === INDEX_PAGE_ADD_ERROR_MUTATION) {
         this.error = state.indexPage.error
@@ -72,6 +80,14 @@ export default {
 
       if (mutation.type === blockProducerStorageMutations.subscribe.searchBlockProducers) {
         this.searchedBlockProducers = state.blockProducer.searchedBlockProducers
+      }
+
+      if (mutation.type === commentStorageMutations.subscribe.addError) {
+        this.error = state.comment.error
+      }
+
+      if (mutation.type === commentStorageMutations.subscribe.addCommentsNumbers) {
+        this.commentsNumbers = state.comment.commentsNumbers
       }
     });
   },
