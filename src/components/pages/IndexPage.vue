@@ -14,13 +14,11 @@
         </v-container>
       </form>
 
-      {{ searchedBlockProducers }}
+      {{ searchedBlockProducers }} <br><br>
 
-      <br><br>
+      {{ blockProducers }} <br><br>
 
-      {{ blockProducers }}
-
-      <br><br>
+      {{ likesNumbers }} <br><br>
 
       {{ commentsNumbers }}
 
@@ -37,6 +35,7 @@ import {
 
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
+import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
 
 export default {
   name: 'IndexPage',
@@ -51,6 +50,7 @@ export default {
       },
       blockProducers: null,
       commentsNumbers: null,
+      likesNumbers: null,
       searchedBlockProducers: null,
       searchPhrase: null,
     }
@@ -64,6 +64,8 @@ export default {
   },
   mounted() {
     store.dispatch(commentStorageActions.getCommentsNumbers)
+
+    store.dispatch(likeStorageActions.getLikesNumbers)
 
     store.subscribe((mutation, state) => {
       if (mutation.type === INDEX_PAGE_ADD_ERROR_MUTATION) {
@@ -88,6 +90,14 @@ export default {
 
       if (mutation.type === commentStorageMutations.subscribe.addCommentsNumbers) {
         this.commentsNumbers = state.comment.commentsNumbers
+      }
+
+      if (mutation.type === likeStorageMutations.subscribe.addError) {
+        this.error = state.like.error
+      }
+
+      if (mutation.type === likeStorageMutations.subscribe.addLikesNumbers) {
+        this.likesNumbers = state.like.likesNumbers
       }
     });
   },
