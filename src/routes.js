@@ -2,7 +2,7 @@ import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
-import LoginPage from './components/pages/LoginPage.vue'
+import SignInPage from './components/pages/SignInPage.vue'
 import SignUpPage from './components/pages/SignUpPage.vue'
 import SettingsPage from './components/pages/SettingsPage.vue'
 import UserPage from './components/pages/UserPage.vue'
@@ -14,14 +14,14 @@ const routes = [
     name: 'index'
   },
   {
-    path: '/login/',
-    component: LoginPage,
-    name: 'login'
+    path: '/sign-in/',
+    component: SignInPage,
+    name: 'sign-in'
   },
   {
-    path: '/signup/',
+    path: '/sign-up/',
     component: SignUpPage,
-    name: 'signup'
+    name: 'sign-up'
   },
   {
     path: '/settings/',

@@ -84,7 +84,7 @@ export const comment = {
           text: text,
         }, {
           headers: {
-            'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+            'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
             'Content-Type': 'application/json',
           }
         })
