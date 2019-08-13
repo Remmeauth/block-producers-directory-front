@@ -1,14 +1,13 @@
 import reactiveStorage from "vue-reactive-storage";
 import Vue from 'vue'
-import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
-import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import App from './App.vue'
 import routes from './routes'
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
-Vue.use(Vuetify)
 Vue.use(VueRouter)
 
 Vue.use(reactiveStorage, {
@@ -22,5 +21,6 @@ const router = new VueRouter({
 
 new Vue({
   render: h => h(App),
+  vuetify,
   router
 }).$mount('#app')
