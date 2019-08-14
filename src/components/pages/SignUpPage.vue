@@ -62,7 +62,6 @@ export default {
   },
   mounted() {
     store.subscribe((mutation, state) => {
-
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
       }
@@ -71,10 +70,19 @@ export default {
         this.fieldsErrors = state.authentication.fieldsErrors
       }
 
-      if (mutation.type === authenticationStorageMutations.subscribe.markAsSignedUp) {
-        window.localStorage.email = this.email
-        window.localStorage.username = this.username
+      if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
+        this.localStorage.token = state.authentication.token
         this.$router.push('/')
+      }
+
+      if (mutation.type === authenticationStorageMutations.subscribe.markAsSignedUp) {
+        this.localStorage.email = this.email
+        this.localStorage.username = this.username
+
+        store.dispatch(authenticationStorageActions.signIn, {
+          usernameOrEmail: this.email,
+          password: this.password,
+        })
       }
     });
   }

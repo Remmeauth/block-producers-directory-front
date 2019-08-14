@@ -31,9 +31,10 @@
 <script>
 import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
+import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
 export default {
-  name: 'LoginPage',
+  name: 'SignInPage',
   data() {
     return {
       error: {
@@ -54,12 +55,23 @@ export default {
   },
   mounted() {
     store.subscribe((mutation, state) => {
-      if (mutation.type === authenticationStorageMutations.subscribe.addError) {
+      if (
+        mutation.type === authenticationStorageMutations.subscribe.addError ||
+        mutation.type === userStorageMutations.subscribe.addError
+      ) {
         this.error = state.authentication.error
       }
 
       if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
         this.localStorage.token = state.authentication.token
+        store.dispatch(userStorageActions.getUserFromToken, {
+          jwtToken: state.authentication.token,
+        })
+      }
+
+      if (mutation.type === userStorageMutations.subscribe.addUser) {
+        this.localStorage.email = state.user.email
+        this.localStorage.username = state.user.username
         this.$router.push('/')
       }
     });
