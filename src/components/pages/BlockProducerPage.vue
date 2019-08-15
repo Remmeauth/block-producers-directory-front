@@ -124,7 +124,7 @@ export default {
     })
 
     store.dispatch(likeStorageActions.isLikedByUser, {
-      username: window.localStorage.username,
+      username: this.localStorage.username,
       blockProducerIdentifier: this.$route.params.identifier,
     })
 

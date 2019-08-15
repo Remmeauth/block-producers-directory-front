@@ -14,6 +14,7 @@ export const userStorageMutations = {
 
 export const userStorageActions = {
   getUser: 'user/get',
+  getUserFromToken: 'user/getFromToken',
 }
 
 export const user = {
@@ -39,6 +40,29 @@ export const user = {
     get({ commit }, { username }) {
       axios
       .get(`https://bps-directory-back-staging.herokuapp.com/users/${username}/`)
+      .then(response => {
+        commit(userStorageMutations.commit.addUser, {
+          email: response.data.result.email,
+          username: response.data.result.username
+        })
+      })
+      .catch(error => {
+        if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+          commit(userStorageMutations.commit.addError, {
+            message: error.response.data.error,
+            statusCode: error.response.status
+          })
+        }
+      })
+    },
+    getFromToken({ commit }, { jwtToken }) {
+      axios
+      .get(`https://bps-directory-back-staging.herokuapp.com/users/`, {
+            headers: {
+                'Authorization': `JWT ${jwtToken}`,
+                'Content-Type': 'application/json',
+            }
+        })
       .then(response => {
         commit(userStorageMutations.commit.addUser, {
           email: response.data.result.email,
