@@ -120,7 +120,7 @@ export const blockProducer = {
   actions: {
     get({ commit }, { identifier }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/`)
+        .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`)
         .then(response => {
           commit(blockProducerStorageMutations.commit.getBlockProducer, {
             name: response.data.result.name,
@@ -165,7 +165,7 @@ export const blockProducer = {
       location,
     }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`, {
           name: name,
           location: location,
         }, {
@@ -199,7 +199,7 @@ export const blockProducer = {
       fullDescription, 
     }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`, {
           short_description: shortDescription,
           full_description: fullDescription,
         }, {
@@ -242,7 +242,7 @@ export const blockProducer = {
         wikipediaUrl,
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`, {
           facebook_url: facebookUrl,
           github_url: githubUrl,
           linkedin_url: linkedInUrl,
@@ -281,7 +281,7 @@ export const blockProducer = {
     },
     searchBlockProducers({ commit }, { phrase }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/search/?phrase=${phrase}/`)
+        .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/search/?phrase=${phrase}/`)
         .then(response => {
           commit(blockProducerStorageMutations.commit.searchBlockProducers, response.data.result)
         })
