@@ -1,36 +1,47 @@
 <template>
   <div>
-    {{ error.message }}
-    {{ error.statusCode }}
+    <template v-if="error.statusCode === 404">
+      <Error404/>
+    </template>
+    <template v-else-if="error.statusCode === 500">
+      <Error500/>
+    </template>
 
-    {{ blockProducer }} <br><br>
+    <template v-else>
 
-    <form>
-      <v-container grid-list-xl fluid>
-        <v-layout row>
-          <v-flex xs12 sm6 md4>
-            <v-text-field v-model="text" label="Write a comment.." solo required ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm6 md4>
-            <v-btn @click="create">Add comment</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </form>
+      {{ error.message }} {{ error.statusCode }} <br><br>
 
-    {{ successMessage }} <br><br>
-    {{ comments }} <br><br>
-    {{ 'comments number: ' + commentsNumber }} <br><br>
+      {{ blockProducer }} <br><br>
 
-    <v-btn @click="like">Like or unlike</v-btn>
+      <form>
+        <v-container grid-list-xl fluid>
+          <v-layout row>
+            <v-flex xs12 sm6 md4>
+              <v-text-field v-model="text" label="Write a comment.." solo required ></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-btn @click="create">Add comment</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </form>
 
-    {{ isLikedByUser }}
-    {{ likesNumber }}
-    {{ blockProducerLikes }}
+      {{ successMessage }} <br><br>
+      {{ comments }} <br><br>
+      {{ 'comments number: ' + commentsNumber }} <br><br>
+
+      <v-btn @click="like">Like or unlike</v-btn>
+
+      {{ isLikedByUser }}
+      {{ likesNumber }}
+      {{ blockProducerLikes }}
+    </template>
   </div>
 </template>
 
 <script>
+import Error404 from '../../components/ui/Error404'
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
@@ -39,6 +50,10 @@ import { likeStorageActions, likeStorageMutations } from '../../store/modules/li
 
 export default {
   name: 'BlockProducerPage',
+  components: {
+    Error404,
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -113,9 +128,11 @@ export default {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    store.subscribe((mutation, state) => {
+    const unsubscribe = store.subscribe((mutation, state) => {
+
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
+        unsubscribe()
       }
 
       if (mutation.type === likeStorageMutations.subscribe.addLikes) {
