@@ -62,13 +62,13 @@ export const settings = {
         location
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${window.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
           first_name: firstName,
           last_name: lastName,
           location: location,
         }, {
             headers: {
-                'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -102,7 +102,7 @@ export const settings = {
         steemitUrl
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${window.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
           website_url: websiteUrl,
           linkedin_url: linkedInUrl,
           twitter_url: twitterUrl,
@@ -113,7 +113,7 @@ export const settings = {
           steemit_url: steemitUrl,
         }, {
             headers: {
-                'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -140,11 +140,11 @@ export const settings = {
         additionalInformation
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${window.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
           additional_information: additionalInformation,
         }, {
             headers: {
-                'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
                 'Content-Type': 'application/json',
             }
         })

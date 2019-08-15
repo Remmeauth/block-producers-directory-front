@@ -55,8 +55,7 @@ $ docker build -t block-producers-directory-front . -f Dockerfile.production
 To run the project, use the following command. It will start the server and occupate current terminal session:
 
 ```bash
-$ docker run -p 8080:8080 -e PORT=8080 -e BACK_END_URL='https://bps-directory-back-prod.herokuapp.com' \
-    --name block-producers-directory-front block-producers-directory-front
+$ docker run -p 8080:8080 -e PORT=8080 --name block-producers-directory-front block-producers-directory-front
 ```
 
 ## Technology stack

@@ -6,18 +6,21 @@ export const commentStorageMutations = {
     addError: 'comment/addError',
     addFieldsErrors: 'comment/addFieldsErrors',
     addComments: 'comment/addComments',
+    addCommentsNumbers: 'comment/addCommentsNumbers',
     createComment: 'comment/createComment',
   },
   commit: {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
     addComments: 'addComments',
+    addCommentsNumbers: 'addCommentsNumbers',
     createComment: 'createComment',
   },
 }
 
 export const commentStorageActions = {
   getComments: 'comment/get',
+  getCommentsNumbers: 'comment/getNumbers',
   createComment: 'comment/create',
 }
 
@@ -31,6 +34,7 @@ export const comment = {
     },
     comments: null,
     commentsNumber: null,
+    commentsNumbers: null,
     isCreated: null,
   },
   mutations: {
@@ -43,6 +47,9 @@ export const comment = {
     addComments (state, comments) {
       state.comments = comments
       state.commentsNumber = comments.length
+    },
+    addCommentsNumbers (state, commentsNumbers) {
+      state.commentsNumbers = commentsNumbers
     },
     createComment (state, isCreated) {
       state.isCreated = isCreated
@@ -84,7 +91,7 @@ export const comment = {
           text: text,
         }, {
           headers: {
-            'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+            'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
             'Content-Type': 'application/json',
           }
         })
@@ -109,6 +116,21 @@ export const comment = {
           if (error.response.status === HttpStatus.BAD_REQUEST) {
             commit(commentStorageMutations.commit.addFieldsErrors, {
               errors: error.response.data.errors,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    getNumbers({ commit }) {
+      axios
+        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/comments/numbers/`)
+        .then(response => {
+          commit(commentStorageMutations.commit.addCommentsNumbers, response.data.result)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(commentStorageMutations.commit.addError, {
+              message: error.response.data.error,
               statusCode: error.response.status
             })
           }

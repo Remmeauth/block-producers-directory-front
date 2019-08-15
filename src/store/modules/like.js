@@ -6,12 +6,14 @@ export const likeStorageMutations = {
     addError: 'like/addError',
     markAsLiked: 'like/markAsLiked',
     addLikes: 'like/addLikes',
+    addLikesNumbers: 'like/addLikesNumbers',
     markAsIsLikedByUser: 'like/markAsIsLikedByUser',
   },
   commit: {
     addError: 'addError',
     markAsLiked: 'markAsLiked',
     addLikes: 'addLikes',
+    addLikesNumbers: 'addLikesNumbers',
     markAsIsLikedByUser: 'markAsIsLikedByUser',
   },
 }
@@ -19,6 +21,7 @@ export const likeStorageMutations = {
 export const likeStorageActions = {
   putLike: 'like/put',
   getLikes: 'like/getAll',
+  getLikesNumbers: 'like/getNumbers',
   isLikedByUser: 'like/isLikedByUser',
 }
 
@@ -31,6 +34,7 @@ export const like = {
     },
     isLiked: false,
     likesNumber: null,
+    likesNumbers: null,
     likes: [],
     isLikedByUser: false,
   },
@@ -45,6 +49,9 @@ export const like = {
       state.likes = likes
       state.likesNumber = likes.length
     },
+    addLikesNumbers (state, likesNumbers) {
+      state.likesNumbers = likesNumbers
+    },
     markAsIsLikedByUser (state, IsLikedByUser) {
       state.isLikedByUser = IsLikedByUser
     },
@@ -54,7 +61,7 @@ export const like = {
       axios
         .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/likes/`, {}, {
             headers: {
-                'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -109,6 +116,21 @@ export const like = {
           })
         }
       })
+    },
+    getNumbers({ commit }) {
+      axios
+        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/likes/numbers/`)
+        .then(response => {
+          commit(likeStorageMutations.commit.addLikesNumbers, response.data.result)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(likeStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+        })
     },
   }
 }

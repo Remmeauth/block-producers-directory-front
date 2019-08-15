@@ -89,7 +89,7 @@ export const blockProducerCreation = {
           wikipedia_url: wikipediaUrl,
         }, {
           headers: {
-            'Authorization': `JWT ${window.localStorage.token.slice(1, -1)}`,
+            'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
             'Content-Type': 'application/json',
           }
         })

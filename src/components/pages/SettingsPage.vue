@@ -173,11 +173,11 @@ export default {
   },
   mounted() {
     store.dispatch(userStorageActions.getUser, {
-        username: window.localStorage.username,
+        username: this.localStorage.username,
     })
 
     store.dispatch(profileStorageActions.getProfile, {
-        username: window.localStorage.username,
+        username: this.localStorage.username,
     })
 
     store.subscribe((mutation, state) => {
