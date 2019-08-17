@@ -5,6 +5,11 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   icons: {
-    iconfont: 'mdi',
+    iconfont: 'mdiSvg',
   },
 });
+
+//
+// icons: {
+//     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
+//   }

@@ -95,6 +95,7 @@ export default {
   methods: {
     updateDetails() {
       store.dispatch(blockProducerStorageActions.updateDetails, {
+        jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         name: this.details.name,
         location: this.details.location,
@@ -102,6 +103,7 @@ export default {
     },
     updateDescription () {
       store.dispatch(blockProducerStorageActions.updateDescription, {
+        jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         shortDescription: this.descriptions.shortDescription,
         fullDescription: this.descriptions.fullDescription,
@@ -109,6 +111,7 @@ export default {
     },
     updateReferenceLinks () {
       store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
+        jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         facebookUrl: this.referenceLinks.facebookUrl,
         githubUrl: this.referenceLinks.githubUrl,

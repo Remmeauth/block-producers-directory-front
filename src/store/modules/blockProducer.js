@@ -69,7 +69,8 @@ export const blockProducer = {
     addFieldsErrors (state, errors) {
       state.fieldsErrors = errors
     },
-    getBlockProducer (state, { 
+    getBlockProducer (state, {
+      user,
       name,
       location,
       shortDescription,
@@ -87,6 +88,7 @@ export const blockProducer = {
       websiteUrl,
       wikipediaUrl,
     }) {
+      state.user = user
       state.name = name
       state.location = location
       state.shortDescription = shortDescription
@@ -123,6 +125,7 @@ export const blockProducer = {
         .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/`)
         .then(response => {
           commit(blockProducerStorageMutations.commit.getBlockProducer, {
+            user: response.data.result.user,
             name: response.data.result.name,
             location: response.data.result.location,
             shortDescription: response.data.result.short_description,
@@ -139,7 +142,6 @@ export const blockProducer = {
             twitterUrl: response.data.result.twitter_url,
             websiteUrl: response.data.result.website_url,
             wikipediaUrl: response.data.result.wikipedia_url,
-            user: response.data.result.user,
             id: response.data.result.id,
           })
         })
@@ -159,7 +161,8 @@ export const blockProducer = {
           }
         })
     },
-    updateDetails({ commit }, { 
+    updateDetails({ commit }, {
+      jwtToken,
       identifier, 
       name, 
       location,
@@ -170,7 +173,7 @@ export const blockProducer = {
           location: location,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -193,7 +196,8 @@ export const blockProducer = {
           }
         })
     },
-    updateDescription({ commit }, { 
+    updateDescription({ commit }, {
+      jwtToken,
       identifier, 
       shortDescription, 
       fullDescription, 
@@ -204,7 +208,7 @@ export const blockProducer = {
           full_description: fullDescription,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -228,6 +232,7 @@ export const blockProducer = {
         })
     },
     updateReferenceLinks({ commit }, {
+        jwtToken,
         identifier, 
         facebookUrl,
         githubUrl,
@@ -256,7 +261,7 @@ export const blockProducer = {
           wikipedia_url: wikipediaUrl,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
