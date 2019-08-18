@@ -71,6 +71,7 @@ export const blockProducer = {
     },
     getBlockProducer (state, {
       user,
+      id,
       name,
       location,
       shortDescription,
@@ -89,6 +90,7 @@ export const blockProducer = {
       wikipediaUrl,
     }) {
       state.user = user
+      state.id = id
       state.name = name
       state.location = location
       state.shortDescription = shortDescription

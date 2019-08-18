@@ -8,8 +8,3 @@ export default new Vuetify({
     iconfont: 'mdiSvg',
   },
 });
-
-//
-// icons: {
-//     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
-//   }

@@ -38,19 +38,27 @@
                     <span>{{ commentsNumber }} comments</span>
                     <v-icon>comment</v-icon>
                   </v-btn>
-                  <v-btn class="custom-btn" v-if="isLikedByUser" @click="like">
+                  <v-btn class="btn-background-none" v-if="isLikedByUser" @click="like">
                     <span>{{ likesNumber }} likes</span>
                     <v-icon>favorite</v-icon>
                   </v-btn>
-                  <v-btn class="custom-btn" v-else @click="like">
+                  <v-btn class="btn-background-none" v-else @click="like">
                     <span>{{ likesNumber }} likes</span>
                     <v-icon>favorite_border</v-icon>
                   </v-btn>
                 </v-bottom-navigation>
               </v-card>
             </v-flex>
+            <div v-if="blockProducer.user">
+              <br v-if="blockProducer.user.username === localStorage.username">
+              <v-flex lg12 v-if="blockProducer.user.username === localStorage.username">
+                <v-card max-width="344" class="mx-auto">
+                  <v-btn @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})" width="344">Edit a block producer</v-btn>
+                </v-card>
+              </v-flex>
+            </div>
             <br>
-            <v-flex lg 12>
+            <v-flex lg12>
               <v-card max-width="344" class="mx-auto">
                 <v-list disabled>
                   <v-list-item-group color="primary">
@@ -104,8 +112,8 @@
                 </template>
               </v-list>
             </v-card>
-            <br>
-            <v-flex lg12>
+            <br v-if="localStorage.username">
+            <v-flex lg12 v-if="localStorage.username">
               <h2>Leave a comment</h2>
               <br>
               <form>
@@ -246,6 +254,7 @@ export default {
 
       if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
         this.blockProducer.user = state.blockProducer.user
+        this.blockProducer.id = state.blockProducer.id
         this.blockProducer.name = state.blockProducer.name
         this.blockProducer.location = state.blockProducer.location
         this.blockProducer.shortDescription = state.blockProducer.shortDescription
@@ -290,8 +299,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.0) !important;
 }
 
-  .custom-btn::before {
-    color: transparent
+.btn-background-none::before {
+  color: transparent
 }
-
 </style>

@@ -41,7 +41,7 @@ const routes = [
   {
     path: '/block-producers/:identifier/edit/',
     component: BlockProducerEditionPage,
-    name: 'blockProducerEdition'
+    name: 'block-producer-edition'
   },
   {
     path: '/block-producers/:identifier/',
