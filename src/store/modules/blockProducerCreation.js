@@ -51,7 +51,8 @@ export const blockProducerCreation = {
     },
   },
   actions: {
-    create({ commit }, { 
+    create({ commit }, {
+      jwtToken,
       name,
       location, 
       shortDescription, 
@@ -89,7 +90,7 @@ export const blockProducerCreation = {
           wikipedia_url: wikipediaUrl,
         }, {
           headers: {
-            'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+            'Authorization': `JWT ${jwtToken}`,
             'Content-Type': 'application/json',
           }
         })
