@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
 
         <template v-if="localStorage.token">
-          <v-btn outlined color="#5d80da">Submit</v-btn>
+          <v-btn outlined color="#5d80da" @click="$router.push('/block-producers/new/')">Submit</v-btn>
 
           <v-menu offset-y :nudge-width="150" style="margin-top: 20px">
 
