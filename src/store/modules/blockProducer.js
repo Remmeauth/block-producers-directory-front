@@ -6,6 +6,7 @@ export const blockProducerStorageMutations = {
     addError: 'blockProducer/addError',
     addFieldsErrors: 'blockProducer/addFieldsErrors',
     getBlockProducer: 'blockProducer/getBlockProducer',
+    getBlockProducers: 'blockProducer/getBlockProducers',
     updateDetails: 'blockProducer/updateDetails',
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
@@ -15,6 +16,7 @@ export const blockProducerStorageMutations = {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
     getBlockProducer: 'getBlockProducer',
+    getBlockProducers: 'getBlockProducers',
     updateDetails: 'updateDetails',
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
@@ -24,6 +26,7 @@ export const blockProducerStorageMutations = {
 
 export const blockProducerStorageActions = {
   getBlockProducer: 'blockProducer/get',
+  getBlockProducers: 'blockProducer/getAll',
   updateDetails: 'blockProducer/updateDetails',
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
@@ -42,6 +45,7 @@ export const blockProducer = {
       statusCode: null,
     },
     isUpdated: false,
+    blockProducers: null,
     searchedBlockProducers: null,
     name: null,
     location: null,
@@ -108,6 +112,9 @@ export const blockProducer = {
       state.websiteUrl = websiteUrl
       state.wikipediaUrl = wikipediaUrl
     },
+    getBlockProducers (state, blockProducers) {
+      state.blockProducers = blockProducers.blockProducers
+    },
     updateDetails (state, isUpdated) {
       state.isUpdated = isUpdated
     },
@@ -156,6 +163,23 @@ export const blockProducer = {
           }
 
           if (error.response.status === HttpStatus.NOT_FOUND) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    getAll({ commit }) {
+      axios
+        .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/`)
+        .then(response => {
+          commit('getBlockProducers', {
+            blockProducers: response.data.result,
+          })
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
             commit(blockProducerStorageMutations.commit.addError, {
               message: error.response.data.error,
               statusCode: error.response.status

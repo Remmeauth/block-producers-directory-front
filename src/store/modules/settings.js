@@ -57,18 +57,20 @@ export const settings = {
   },
   actions: {
     updateDetails({ commit }, {
+        jwtToken,
+        username,
         firstName,
         lastName,
         location
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
           first_name: firstName,
           last_name: lastName,
           location: location,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -92,6 +94,8 @@ export const settings = {
         })
     },
     updateReferenceLinks({ commit }, {
+        jwtToken,
+        username,
         websiteUrl,
         linkedInUrl,
         twitterUrl,
@@ -102,7 +106,7 @@ export const settings = {
         steemitUrl
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
           website_url: websiteUrl,
           linkedin_url: linkedInUrl,
           twitter_url: twitterUrl,
@@ -113,7 +117,7 @@ export const settings = {
           steemit_url: steemitUrl,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -137,14 +141,16 @@ export const settings = {
         })
     },
     updateAdditionalInformation({ commit }, {
+        jwtToken,
+        username,
         additionalInformation
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${this.localStorage.username}/profile/`, {
+        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
           additional_information: additionalInformation,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })

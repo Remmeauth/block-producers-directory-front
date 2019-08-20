@@ -26,13 +26,13 @@
                     </v-list-item-content>
                   </v-list-item>
 
-                  <v-list-item>
+                  <v-list-item :to="{name: 'user', params: {username: localStorage.username}}">
                     <v-list-item-content>
                       <v-list-item-title>Your profile</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
 
-                  <v-list-item>
+                  <v-list-item :to="{name: 'settings'}">
                     <v-list-item-content>
                       <v-list-item-title>Your settings</v-list-item-title>
                     </v-list-item-content>
