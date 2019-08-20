@@ -13,7 +13,8 @@ export const avatarStorageMutations = {
 }
 
 export const avatarStorageActions = {
-  uploadAvatar: 'avatar/upload',
+  uploadUserAvatarForUser: 'avatar/uploadForUser',
+  uploadBlockProducerAvatar: 'avatar/uploadForBlockProducer',
 }
 
 
@@ -35,12 +36,35 @@ export const avatar = {
     },
   },
   actions: {
-    upload({ commit }, { jwtToken, username, file }) {
+    uploadForUser({ commit }, { jwtToken, username, file }) {
       let formData = new FormData();
       formData.append('file', file);
 
       axios
         .put(`https://bps-directory-back-staging.herokuapp.com/users/${username}/avatars/`, formData, {
+          headers: {
+            'Authorization': `JWT ${jwtToken}`,
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        .then(response => {
+          commit(avatarStorageMutations.commit.markAvatarAsUploaded)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(avatarStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    uploadForBlockProducer({ commit }, { jwtToken, identifier, file }) {
+      let formData = new FormData();
+      formData.append('file', file);
+
+      axios
+        .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${identifier}/avatars/`, formData, {
           headers: {
             'Authorization': `JWT ${jwtToken}`,
             'Content-Type': 'multipart/form-data',

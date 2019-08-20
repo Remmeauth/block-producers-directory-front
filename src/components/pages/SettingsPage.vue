@@ -110,12 +110,11 @@
         </v-form>
       </v-flex>
     </v-layout>
+    <br>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
-
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
@@ -126,7 +125,6 @@ export default {
   name: 'SettingsPage',
   data() {
     return {
-      file: '',
       error: {
         message: null,
         statusCode: null,
@@ -155,7 +153,7 @@ export default {
       },
       other: {
         additionalInformation: null,
-        avatarUrl: null,
+        avatarFile: null,
       }
     }
   },
@@ -191,13 +189,13 @@ export default {
       })
     },
     handleFileUpload() {
-      this.file = this.$refs.file
+      this.other.avatarFile = this.$refs.file
     },
     submitUploadingProfileAvatar() {
-      store.dispatch(avatarStorageActions.uploadAvatar, {
+      store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        file: this.file,
+        file: this.other.avatarFile,
       })
     },
   },

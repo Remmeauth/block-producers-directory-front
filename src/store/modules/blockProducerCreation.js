@@ -12,16 +12,17 @@ export const BLOCK_PRODUCER_CREATION_CREATE_ACTION = 'blockProducerCreation/crea
 
 export const blockProducerCreation = {
   namespaced: true,
-  error: {
-    message: null,
-    statusCode: null,
-  },
-  fieldsErrors: {
-    errors: null,
-    statusCode: null,
-  },
-  isCreated: false,
   state: {
+    error: {
+      message: null,
+      statusCode: null,
+    },
+    fieldsErrors: {
+      errors: null,
+      statusCode: null,
+    },
+    isCreated: false,
+    id: null,
     name: null,
     location: null,
     shortDescription: null,
@@ -46,8 +47,9 @@ export const blockProducerCreation = {
     addFieldsErrors (state, errors) {
       state.fieldsErrors = errors
     },
-    createBlockProducer (state, isCreated) {      
-      state.isCreated = isCreated
+    createBlockProducer (state, blockProducerIdentifier) {
+      state.id = blockProducerIdentifier
+      state.isCreated = true
     },
   },
   actions: {
@@ -57,7 +59,6 @@ export const blockProducerCreation = {
       location, 
       shortDescription, 
       fullDescription,
-      logoUrl,
       facebookUrl,
       githubUrl,
       linkedInUrl,
@@ -76,7 +77,6 @@ export const blockProducerCreation = {
           location: location,
           short_description: shortDescription,
           full_description: fullDescription,
-          logo_url: logoUrl,
           facebook_url: facebookUrl,
           github_url: githubUrl,
           linkedin_url: linkedInUrl,
@@ -95,7 +95,7 @@ export const blockProducerCreation = {
           }
         })
         .then(response => {
-          commit(CREATE_BLOCK_PRODUCER_MUTATION, true)
+          commit(CREATE_BLOCK_PRODUCER_MUTATION, response.data.result.id)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
