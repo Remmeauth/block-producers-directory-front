@@ -36,7 +36,7 @@ const routes = [
   {
     path: '/block-producers/new/',
     component: BlockProducerCreationPage,
-    name: 'blockProducerCreation'
+    name: 'block-producer-creation'
   },
   {
     path: '/block-producers/:identifier/edit/',
