@@ -193,7 +193,7 @@ export default {
     handleFileUpload() {
       this.file = this.$refs.file
     },
-    submitUploadingProfileAvatar(){
+    submitUploadingProfileAvatar() {
       store.dispatch(avatarStorageActions.uploadAvatar, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -249,7 +249,7 @@ export default {
       }
 
       if (mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded) {
-        this.successMessage = 'Profile picture have been uploaded successfully — view your profile.'
+        this.successMessage = 'Profile picture has been uploaded successfully — view your profile.'
       }
     });
   }
@@ -262,10 +262,10 @@ export default {
 }
 
 .v-textarea {
-    height: 120px;
+  height: 120px;
 }
 
 .v-file-input {
-    height: 86px;
+  height: 86px;
 }
 </style>
