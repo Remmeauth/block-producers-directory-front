@@ -27,7 +27,7 @@
                         :md="6"
                         :sm="12"
                         :xs="12"
-                        @click="$router.push({name: 'blockProducer', params: {identifier: blockProducer.id }})"
+                        @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
                       >
                         <v-card outlined tile class="justify-center" style="text-align:center; border-color:#5d80da;">
                           <v-img
