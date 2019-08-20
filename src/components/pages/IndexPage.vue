@@ -112,7 +112,9 @@ export default {
       getBlockProducersToRender: function() {
         if (this.searchPhrase) {
           return this.searchedBlockProducers
-        } else { return this.blockProducers }
+        } 
+        
+        return this.blockProducers
       },
       getBlockProducerCommentsNumber: function(blockProducerIdentifier) {
         var commentsNumber = 0
