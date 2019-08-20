@@ -35,6 +35,7 @@ export const profile = {
     steemitUrl: null,
     telegramUrl: null,
     twitterUrl: null,
+    websiteUrl: null,
   },
   mutations: {
     addError (state, error) {
@@ -92,6 +93,13 @@ export const profile = {
         })
       })
       .catch(error => {
+        if (error.response.status === HttpStatus.NOT_FOUND) {
+          commit(profileStorageMutations.commit.addError, {
+            message: error.response.data.error,
+            statusCode: error.response.status
+          })
+        }
+
         if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
           commit(profileStorageMutations.commit.addError, {
             message: error.response.data.error,

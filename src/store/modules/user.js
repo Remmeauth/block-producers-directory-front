@@ -47,6 +47,13 @@ export const user = {
         })
       })
       .catch(error => {
+        if (error.response.status === HttpStatus.NOT_FOUND) {
+          commit(userStorageMutations.commit.addError, {
+            message: error.response.data.error,
+            statusCode: error.response.status
+          })
+        }
+
         if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
           commit(userStorageMutations.commit.addError, {
             message: error.response.data.error,

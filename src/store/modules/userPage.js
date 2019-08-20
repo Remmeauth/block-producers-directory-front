@@ -26,6 +26,7 @@ export const userPage = {
       steemitUrl: null,
       telegramUrl: null,
       tweeterUrl: null,
+      websiteUrl: null,
     }
   },
   mutations: {

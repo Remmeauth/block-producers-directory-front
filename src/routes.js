@@ -46,7 +46,7 @@ const routes = [
   {
     path: '/block-producers/:identifier/',
     component: BlockProducerPage,
-    name: 'blockProducer'
+    name: 'block-producer'
   },
 ]
 
