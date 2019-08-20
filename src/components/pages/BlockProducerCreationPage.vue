@@ -86,6 +86,7 @@ export default {
   methods: {
     create () {
       store.dispatch(BLOCK_PRODUCER_CREATION_CREATE_ACTION, {
+        jwtToken: this.localStorage.token,
         name: this.name,
         location: this.location,
         shortDescription: this.shortDescription,

@@ -57,11 +57,11 @@ export const like = {
     },
   },
   actions: {
-    put({ commit }, { blockProducerIdentifier }) {
+    put({ commit }, { jwtToken, blockProducerIdentifier }) {
       axios
         .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/likes/`, {}, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })

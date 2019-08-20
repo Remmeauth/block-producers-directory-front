@@ -85,13 +85,13 @@ export const comment = {
           }
         })
     },
-    create({ commit }, { blockProducerIdentifier, text }) {
+    create({ commit }, { jwtToken, blockProducerIdentifier, text }) {
       axios
         .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/comments/`, {
           text: text,
         }, {
           headers: {
-            'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+            'Authorization': `JWT ${jwtToken}`,
             'Content-Type': 'application/json',
           }
         })
@@ -99,6 +99,7 @@ export const comment = {
           commit(commentStorageMutations.commit.createComment, true)
         })
         .catch(error => {
+          console.log(error)
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
             commit(commentStorageMutations.commit.addError, {
               message: error.response.data.error,

@@ -148,6 +148,8 @@ export default {
   methods: {
     updateDetails() {
       store.dispatch(settingsStorageActions.updateDetails, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
         firstName: this.details.firstName,
         lastName: this.details.lastName,
         location: this.details.location,
@@ -155,6 +157,8 @@ export default {
     },
     updateReferenceLinks () {
       store.dispatch(settingsStorageActions.updateReferenceLinks, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
         websiteUrl: this.referenceLinks.websiteUrl,
         linkedInUrl: this.referenceLinks.linkedInUrl,
         twitterUrl: this.referenceLinks.twitterUrl,
@@ -167,6 +171,8 @@ export default {
     },
     updateAdditionalInformation () {
       store.dispatch(settingsStorageActions.updateAdditionalInformation, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
         additionalInformation: this.other.additionalInformation,
       })
     }

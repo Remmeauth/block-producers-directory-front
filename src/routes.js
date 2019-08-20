@@ -41,12 +41,12 @@ const routes = [
   {
     path: '/block-producers/:identifier/edit/',
     component: BlockProducerEditionPage,
-    name: 'blockProducerEdition'
+    name: 'block-producer-edition'
   },
   {
     path: '/block-producers/:identifier/',
     component: BlockProducerPage,
-    name: 'blockProducer'
+    name: 'block-producer'
   },
 ]
 

@@ -6,6 +6,7 @@ export const blockProducerStorageMutations = {
     addError: 'blockProducer/addError',
     addFieldsErrors: 'blockProducer/addFieldsErrors',
     getBlockProducer: 'blockProducer/getBlockProducer',
+    getBlockProducers: 'blockProducer/getBlockProducers',
     updateDetails: 'blockProducer/updateDetails',
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
@@ -15,6 +16,7 @@ export const blockProducerStorageMutations = {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
     getBlockProducer: 'getBlockProducer',
+    getBlockProducers: 'getBlockProducers',
     updateDetails: 'updateDetails',
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
@@ -24,6 +26,7 @@ export const blockProducerStorageMutations = {
 
 export const blockProducerStorageActions = {
   getBlockProducer: 'blockProducer/get',
+  getBlockProducers: 'blockProducer/getAll',
   updateDetails: 'blockProducer/updateDetails',
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
@@ -42,6 +45,7 @@ export const blockProducer = {
       statusCode: null,
     },
     isUpdated: false,
+    blockProducers: null,
     searchedBlockProducers: null,
     name: null,
     location: null,
@@ -69,7 +73,9 @@ export const blockProducer = {
     addFieldsErrors (state, errors) {
       state.fieldsErrors = errors
     },
-    getBlockProducer (state, { 
+    getBlockProducer (state, {
+      user,
+      id,
       name,
       location,
       shortDescription,
@@ -87,6 +93,8 @@ export const blockProducer = {
       websiteUrl,
       wikipediaUrl,
     }) {
+      state.user = user
+      state.id = id
       state.name = name
       state.location = location
       state.shortDescription = shortDescription
@@ -103,6 +111,9 @@ export const blockProducer = {
       state.twitterUrl = twitterUrl
       state.websiteUrl = websiteUrl
       state.wikipediaUrl = wikipediaUrl
+    },
+    getBlockProducers (state, blockProducers) {
+      state.blockProducers = blockProducers.blockProducers
     },
     updateDetails (state, isUpdated) {
       state.isUpdated = isUpdated
@@ -123,6 +134,7 @@ export const blockProducer = {
         .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`)
         .then(response => {
           commit(blockProducerStorageMutations.commit.getBlockProducer, {
+            user: response.data.result.user,
             name: response.data.result.name,
             location: response.data.result.location,
             shortDescription: response.data.result.short_description,
@@ -139,7 +151,6 @@ export const blockProducer = {
             twitterUrl: response.data.result.twitter_url,
             websiteUrl: response.data.result.website_url,
             wikipediaUrl: response.data.result.wikipedia_url,
-            user: response.data.result.user,
             id: response.data.result.id,
           })
         })
@@ -159,7 +170,25 @@ export const blockProducer = {
           }
         })
     },
-    updateDetails({ commit }, { 
+    getAll({ commit }) {
+      axios
+        .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/`)
+        .then(response => {
+          commit('getBlockProducers', {
+            blockProducers: response.data.result,
+          })
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    updateDetails({ commit }, {
+      jwtToken,
       identifier, 
       name, 
       location,
@@ -170,7 +199,7 @@ export const blockProducer = {
           location: location,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -193,7 +222,8 @@ export const blockProducer = {
           }
         })
     },
-    updateDescription({ commit }, { 
+    updateDescription({ commit }, {
+      jwtToken,
       identifier, 
       shortDescription, 
       fullDescription, 
@@ -204,7 +234,7 @@ export const blockProducer = {
           full_description: fullDescription,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -228,6 +258,7 @@ export const blockProducer = {
         })
     },
     updateReferenceLinks({ commit }, {
+        jwtToken,
         identifier, 
         facebookUrl,
         githubUrl,
@@ -256,7 +287,7 @@ export const blockProducer = {
           wikipedia_url: wikipediaUrl,
         }, {
             headers: {
-                'Authorization': `JWT ${this.localStorage.token.slice(1, -1)}`,
+                'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
         })
