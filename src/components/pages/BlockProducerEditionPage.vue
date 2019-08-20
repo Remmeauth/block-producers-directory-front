@@ -1,57 +1,128 @@
 <template>
-  <div>
-    {{ error.message }}
-    {{ error.statusCode }}
-
-    {{ fieldsErrors.errors }}
-    {{ fieldsErrors.statusCode }}
-
-    {{ successMessage }}
-
-    <form>
-      <v-container grid-list-xl fluid>
-        <v-layout wrap>
-          <v-flex xs12 sm6 md4>
-            <v-text-field v-model="details.name" label="name" solo required ></v-text-field>
-            <v-text-field v-model="details.location" label="location" solo ></v-text-field>
-
-            <v-btn @click="updateDetails">Update details</v-btn>
-          </v-flex>
-          <v-flex xs12 sm6 md4>
-            <v-text-field v-model="descriptions.shortDescription" label="shortDescription" solo required ></v-text-field>
-            <v-textarea v-model="descriptions.fullDescription" label="fullDescription" solo ></v-textarea>
-
-            <v-btn @click="updateDescription">Update description</v-btn>
-          </v-flex>
-          <v-flex xs12 sm6 md4>
-            <v-text-field v-model="referenceLinks.websiteUrl" label="websiteUrl" solo required ></v-text-field>
-            <v-text-field v-model="referenceLinks.facebookUrl" label="facebookUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.githubUrl" label="githubUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.linkedInUrl" label="linkedInUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.redditUrl" label="redditUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.mediumUrl" label="mediumUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.steemitUrl" label="steemitUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.telegramUrl" label="telegramUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.slackUrl" label="slackUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.twitterUrl" label="twitterUrl" solo ></v-text-field>
-            <v-text-field v-model="referenceLinks.wikipediaUrl" label="wikipediaUrl" solo ></v-text-field>
-
-            <v-btn @click="updateReferenceLinks">Update links</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </form>
-
-    {{ other.logoUrl }}
-
+  <div v-if="error.statusCode === 404">
+    <Error404/>
+  </div>
+  <div v-else-if="error.statusCode === 500">
+    <Error500/>
+  </div>
+  <div v-else>
+    <br>
+    <v-layout>
+      <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Project</h2>
+                <br>
+                <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="details.name" outlined clearable label="Name" prepend-inner-icon="account_circle"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="details.websiteUrl" outlined clearable label="Website" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-text-field v-model="details.location" outlined clearable label="Location" prepend-inner-icon="place"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateDetails">Update details</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Description</h2>
+                <br>
+                <span>Provide a short description and the full description. For a full description you can use HTML formatting.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-text-field v-model="descriptions.shortDescription" outlined clearable label="Short description"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-textarea no-resize v-model="descriptions.fullDescription" outlined label="Full description"></v-textarea>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateDescription">Update descriptions</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Logotype</h2>
+                <br>
+                <span>Upload block producer logotype.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-file-input outlined label="Select your logotype" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="submitUploadingBlockProducerLogotype">Update logotype</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Reference links</h2>
+                <br>
+                <span>Provide your profiles from other platforms.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.linkedInUrl" outlined clearable label="LinkedIn" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.twitterUrl" outlined clearable label="Twitter" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.mediumUrl" outlined clearable label="Medium" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.githubUrl" outlined clearable label="Github" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.facebookUrl" outlined clearable label="Facebook" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.telegramUrl" outlined clearable label="Telegram" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.steemitUrl" outlined clearable label="Steemit" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.redditUrl" outlined clearable label="Reddit" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.slackUrl" outlined clearable label="Slack" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.wikipediaUrl" outlined clearable label="Wikipedia" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateReferenceLinks">Update links</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-flex>
+    </v-layout>
+    <br>
   </div>
 </template>
 
 <script>
 import store from '../../store/index'
-
+import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
-
 
 export default {
   name: 'BlockProducerEditionPage',
@@ -69,13 +140,13 @@ export default {
       details: {
         name: null,
         location: null,
+        websiteUrl: null,
       },
       descriptions: {
         shortDescription: null,
         fullDescription: null,
       },
       referenceLinks: {
-        websiteUrl: null,
         facebookUrl: null,
         githubUrl: null,
         linkedInUrl: null,
@@ -88,7 +159,7 @@ export default {
         wikipediaUrl: null,
       },
       other: {
-        logoUrl: null,  
+        logotypeFile: null,
       },
     }
   },
@@ -99,6 +170,7 @@ export default {
         identifier: this.$route.params.identifier,
         name: this.details.name,
         location: this.details.location,
+        websiteUrl: this.details.websiteUrl,
       })
     },
     updateDescription () {
@@ -122,10 +194,19 @@ export default {
         telegramUrl: this.referenceLinks.telegramUrl,
         slackUrl: this.referenceLinks.slackUrl,
         twitterUrl: this.referenceLinks.twitterUrl,
-        websiteUrl: this.referenceLinks.websiteUrl,
         wikipediaUrl: this.referenceLinks.wikipediaUrl,
       })
-    }
+    },
+    handleFileUpload() {
+      this.other.logotypeFile = this.$refs.file
+    },
+    submitUploadingBlockProducerLogotype() {
+      store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+        jwtToken: this.localStorage.token,
+        identifier: this.$route.params.identifier,
+        file: this.other.logotypeFile,
+      })
+    },
   },
   mounted() {
     store.dispatch(blockProducerStorageActions.getBlockProducer, {
@@ -144,6 +225,7 @@ export default {
       if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
         this.details.name = state.blockProducer.name
         this.details.location = state.blockProducer.location
+        this.details.websiteUrl = state.blockProducer.websiteUrl
         this.descriptions.shortDescription = state.blockProducer.shortDescription
         this.descriptions.fullDescription = state.blockProducer.fullDescription
         this.other.logoUrl = state.blockProducer.logoUrl
@@ -156,14 +238,14 @@ export default {
         this.referenceLinks.telegramUrl = state.blockProducer.telegramUrl
         this.referenceLinks.slackUrl = state.blockProducer.slackUrl
         this.referenceLinks.twitterUrl = state.blockProducer.twitterUrl
-        this.referenceLinks.websiteUrl = state.blockProducer.websiteUrl
         this.referenceLinks.wikipediaUrl = state.blockProducer.wikipediaUrl
       }
 
       if (
         mutation.type === blockProducerStorageMutations.subscribe.updateDetails ||
         mutation.type === blockProducerStorageMutations.subscribe.updateDescription ||
-        mutation.type === blockProducerStorageMutations.subscribe.updateReferenceLinks
+        mutation.type === blockProducerStorageMutations.subscribe.updateReferenceLinks ||
+        mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
       ) {
         this.successMessage = 'Block producer updated successfully — view your block producer.'
       }

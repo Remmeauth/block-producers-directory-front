@@ -192,11 +192,13 @@ export const blockProducer = {
       identifier, 
       name, 
       location,
+      websiteUrl,
     }) {
       axios
         .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`, {
           name: name,
           location: location,
+          website_url: websiteUrl,
         }, {
             headers: {
                 'Authorization': `JWT ${jwtToken}`,
