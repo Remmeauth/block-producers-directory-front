@@ -4,7 +4,7 @@
     {{ error.statusCode }}
 
     <v-layout>
-      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:60px;">
+      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top: 90px;">
         <v-form>
           <v-container>
             <v-row>
@@ -21,21 +21,21 @@
                   </div>
                   <v-card flat class="ma-2 pa-10">
                     <v-form>
-                      <v-text-field 
+                      <v-text-field class="mb-4 pl-2 pr-2" 
                         v-model="email"
                         label="E-mail"
                         outlined 
                         prepend-inner-icon="email"
                         required
                       ></v-text-field>
-                      <v-text-field 
+                      <v-text-field class="mb-4 pl-2 pr-2"
                         v-model="username"
                         label="Username"
                         outlined 
                         prepend-inner-icon="person"
                         required
                       ></v-text-field>
-                      <v-text-field 
+                      <v-text-field class="mb-4 pl-2 pr-2"
                         v-model="password" 
                         label="Password" 
                         outlined 
@@ -143,4 +143,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.v-card {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+.custom-btn::before {
+  color: transparent;
+}
+</style>

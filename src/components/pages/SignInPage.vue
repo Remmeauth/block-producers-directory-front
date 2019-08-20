@@ -21,14 +21,16 @@
                   </div>
                   <v-card flat class="ma-2 pa-10">
                     <v-form>
-                      <v-text-field 
+                      <v-text-field
+                        class="mb-4 pl-2 pr-2"
                         v-model="usernameOrEmail"
                         label="Username or e-mail"
                         outlined 
                         prepend-inner-icon="person"
                         required
                       ></v-text-field>
-                      <v-text-field 
+                      <v-text-field
+                        class="mb-4 pl-2 pr-2"
                         v-model="password" 
                         label="Password" 
                         outlined 
@@ -147,8 +149,5 @@ export default {
 }
 .custom-btn::before {
   color: transparent;
-}
-.v-input__control {
-  height: 75px;
 }
 </style>
