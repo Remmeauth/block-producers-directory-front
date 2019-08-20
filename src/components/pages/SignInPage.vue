@@ -3,29 +3,91 @@
     {{ error.message }}
     {{ error.statusCode }}
 
-    <form>
-      <v-container grid-list-xl fluid>
-        <v-layout wrap>
-          <v-flex xs12 sm6 md4>
-            <v-text-field
-              v-model="usernameOrEmail" 
-              label="Username or e-mail"
-              solo
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="password" 
-              label="Password"
-              solo
-              required
-            ></v-text-field>
-
-            <v-btn @click="signIn">Sign In</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </form>
-    </div>
+    <v-layout>
+      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-card 
+                  elevation="18" 
+                  outlined
+                  style="border-color: #5d80da;"
+                >
+                  <div 
+                    style="text-align: center; font-size:1.7em;"
+                  ><br>
+                    Sign in to Directory
+                  </div>
+                  <v-card flat class="ma-2 pa-10">
+                    <v-form>
+                      <v-text-field 
+                        v-model="usernameOrEmail"
+                        label="Username or e-mail"
+                        outlined 
+                        prepend-inner-icon="person"
+                        required
+                      ></v-text-field>
+                      <v-text-field 
+                        v-model="password" 
+                        label="Password" 
+                        outlined 
+                        prepend-inner-icon="lock" 
+                        type="password" 
+                        required
+                      ></v-text-field>
+                      <v-card-actions class="justify-center">
+                        <v-btn 
+                        outlined 
+                        color="white" 
+                        block 
+                        @click="signIn"
+                        style="background-color: #4d70d5;"
+                      >
+                        Sign in
+                      </v-btn>
+                      </v-card-actions>
+                      <v-card-actions 
+                        class="justify-center" 
+                        style="padding-top: 0; flex-direction: column;"
+                      >
+                        <v-btn 
+                          class="custom-btn text-none" 
+                          :ripple="false"
+                          text
+                          color="#5d80da" 
+                          style="text-decoration: underline;" 
+                        >
+                          Forgot password?
+                        </v-btn>
+                        <v-btn  
+                          class="custom-btn text-none" 
+                          :ripple="false"
+                          text
+                        >
+                          Don't have an account? 
+                          <v-btn 
+                            class="custom-btn text-none" 
+                            :ripple="false" 
+                            text
+                            color="#5d80da" 
+                            style="text-decoration: underline;"
+                            @click="$router.push({name: 'sign-up'})"
+                          >
+                            Sign up
+                          </v-btn>
+                        </v-btn>
+                      </v-card-actions>
+                    </v-form>
+                  </v-card>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
@@ -79,4 +141,14 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.v-card {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+.custom-btn::before {
+  color: transparent;
+}
+.v-input__control {
+  height: 75px;
+}
+</style>
