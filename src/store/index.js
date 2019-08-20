@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 
 import authentication from './modules/authentication'
+import avatar from './modules/avatar'
 import blockProducer from './modules/blockProducer'
 import blockProducerCreation from './modules/blockProducerCreation'
 import comment from './modules/comment'
@@ -17,6 +18,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     authentication: authentication,
+    avatar: avatar,
     blockProducer: blockProducer,
     blockProducerCreation: blockProducerCreation,
     comment: comment,
