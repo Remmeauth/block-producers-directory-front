@@ -13,7 +13,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="12" offset-lg="1">
-                <h2 prepend-inner-icon="link">Personal details</h2>
+                <h2>Personal details</h2>
                 <br>
                 <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
               </v-col>
@@ -47,7 +47,7 @@
                 <span>Tell some words about yourself.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea v-model="other.additionalInformation" outlined label="Additional information"></v-textarea>
+                <v-textarea no-resize v-model="other.additionalInformation" outlined label="Additional information"></v-textarea>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateAdditionalInformation">Update information</v-btn>

@@ -39,7 +39,7 @@
                 <v-text-field v-model="shortDescription" outlined clearable label="Short description"></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea v-model="fullDescription" outlined label="Full description"></v-textarea>
+                <v-textarea no-resize v-model="fullDescription" outlined label="Full description"></v-textarea>
               </v-col>
             </v-row>
           </v-container>
@@ -51,7 +51,7 @@
                 <span>Upload block producer logotype.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input outlined label="Select your picture" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+                <v-file-input outlined label="Select your logotype" id="file" ref="file" @change="handleFileUpload"></v-file-input>
               </v-col>
             </v-row>
           </v-container>
