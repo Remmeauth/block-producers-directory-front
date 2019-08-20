@@ -6,6 +6,7 @@ import SignInPage from './components/pages/SignInPage.vue'
 import SignUpPage from './components/pages/SignUpPage.vue'
 import SettingsPage from './components/pages/SettingsPage.vue'
 import UserPage from './components/pages/UserPage.vue'
+import Error404 from './components/ui/Error404.vue'
 
 const routes = [
   {
@@ -47,6 +48,11 @@ const routes = [
     path: '/block-producers/:identifier/',
     component: BlockProducerPage,
     name: 'block-producer'
+  },
+  {
+    path: '*',
+    component: Error404,
+    name: 'not-found-routes'
   },
 ]
 
