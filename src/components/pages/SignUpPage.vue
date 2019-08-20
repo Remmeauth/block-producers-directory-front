@@ -85,35 +85,6 @@
         </v-form>
       </v-flex>
     </v-layout>
-
-    <!-- <form>
-      <v-container grid-list-xl fluid>
-        <v-layout wrap>
-          <v-flex xs12 sm6 md4>
-            <v-text-field
-              v-model="email"
-              label="E-mail"
-              solo
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="username"
-              label="Username"
-              solo
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="password" 
-              label="Password"
-              solo
-              required
-            ></v-text-field>
-
-            <v-btn @click="signUp">Sign Up</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </form> -->
   </div>
 </template>
 
