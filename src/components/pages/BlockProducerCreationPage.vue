@@ -1,8 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 404">
-    <Error404/>
-  </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-if="error.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -107,18 +104,16 @@
 </template>
 
 <script>
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
-import {
-  BLOCK_PRODUCER_CREATION_ADD_ERROR_MUTATION,
-  BLOCK_PRODUCER_CREATION_ADD_FIELDS_ERRORS_MUTATION,
-  BLOCK_PRODUCER_CREATION_CREATE_ACTION,
-  BLOCK_PRODUCER_CREATION_CREATE_BLOCK_PRODUCER_MUTATION,
-} from '../../store/modules/blockProducerCreation'
-
+import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 
 export default {
   name: 'BlockProducerCreationPage',
+  components: {
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -150,7 +145,7 @@ export default {
   },
   methods: {
     create () {
-      store.dispatch(BLOCK_PRODUCER_CREATION_CREATE_ACTION, {
+      store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
         location: this.location,
@@ -174,17 +169,19 @@ export default {
     },
   },
   mounted() {
-    store.subscribe((mutation, state) => {
-      if (mutation.type === BLOCK_PRODUCER_CREATION_ADD_ERROR_MUTATION) {
-        this.error = state.blockProducerCreation.error
+    const unsubscribe = store.subscribe((mutation, state) => {
+      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
+        this.error = state.blockProducer.error
+        unsubscribe()
       }
 
-      if (mutation.type === BLOCK_PRODUCER_CREATION_ADD_FIELDS_ERRORS_MUTATION) {
-        this.fieldsErrors = state.blockProducerCreation.fieldsErrors
+      if (mutation.type === blockProducerStorageMutations.subscribe.addFieldsErrors) {
+        this.fieldsErrors = state.blockProducer.fieldsErrors
+        unsubscribe()
       }
 
-      if (mutation.type === BLOCK_PRODUCER_CREATION_CREATE_BLOCK_PRODUCER_MUTATION) {
-        const createdBlockProducerIdentifier = state.blockProducerCreation.id
+      if (mutation.type === blockProducerStorageMutations.subscribe.createBlockProducer) {
+        const createdBlockProducerIdentifier = state.blockProducer.id
 
         store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
           jwtToken: this.localStorage.token,

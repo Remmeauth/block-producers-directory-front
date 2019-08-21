@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <BlockProducers />
-      {{ error.message }}
-      {{ error.statusCode }}
-
+  <div v-if="error.statusCode === 500">
+    <Error500/>
+  </div>
+  <div v-else>
     <form>
       <v-container grid-list-xl fluid>
         <v-layout wrap align-center>
@@ -82,13 +81,8 @@
 </template>
 
 <script>
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
-import BlockProducers from '../common/BlockProducers'
-import {
-  INDEX_PAGE_ADD_BLOCK_PRODUCERS_MUTATION,
-  INDEX_PAGE_ADD_ERROR_MUTATION
-} from '../../store/modules/indexPage'
-
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
@@ -96,7 +90,7 @@ import { likeStorageActions, likeStorageMutations } from '../../store/modules/li
 export default {
   name: 'IndexPage',
   components: {
-    BlockProducers
+    Error500,
   },
   data() {
     return {
@@ -149,36 +143,35 @@ export default {
   },
   mounted() {
     store.dispatch(commentStorageActions.getCommentsNumbers)
-
     store.dispatch(likeStorageActions.getLikesNumbers)
+    store.dispatch(blockProducerStorageActions.getBlockProducers)
 
-    store.subscribe((mutation, state) => {
-      if (mutation.type === INDEX_PAGE_ADD_ERROR_MUTATION) {
-        this.error = state.indexPage.error
-      }
-
-      if (mutation.type === INDEX_PAGE_ADD_BLOCK_PRODUCERS_MUTATION) {
-        this.blockProducers = state.indexPage.blockProducers
-      }
-
+    const unsubscribe = store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
+        unsubscribe()
+      }
+
+      if (mutation.type === commentStorageMutations.subscribe.addError) {
+        this.error = state.comment.error
+        unsubscribe()
+      }
+
+      if (mutation.type === likeStorageMutations.subscribe.addError) {
+        this.error = state.like.error
+        unsubscribe()
+      }
+
+      if (mutation.type === blockProducerStorageMutations.subscribe.addBlockProducers) {
+        this.blockProducers = state.blockProducer.blockProducers
       }
 
       if (mutation.type === blockProducerStorageMutations.subscribe.searchBlockProducers) {
         this.searchedBlockProducers = state.blockProducer.searchedBlockProducers
       }
 
-      if (mutation.type === commentStorageMutations.subscribe.addError) {
-        this.error = state.comment.error
-      }
-
       if (mutation.type === commentStorageMutations.subscribe.addCommentsNumbers) {
         this.commentsNumbers = state.comment.commentsNumbers
-      }
-
-      if (mutation.type === likeStorageMutations.subscribe.addError) {
-        this.error = state.like.error
       }
 
       if (mutation.type === likeStorageMutations.subscribe.addLikesNumbers) {

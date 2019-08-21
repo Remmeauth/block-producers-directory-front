@@ -243,6 +243,16 @@ export default {
         unsubscribe()
       }
 
+      if (mutation.type === commentStorageMutations.subscribe.addError) {
+        this.error = state.comment.error
+        unsubscribe()
+      }
+
+      if (mutation.type === commentStorageMutations.subscribe.fieldsErrors) {
+        this.fieldsErrors = state.comment.fieldsErrors
+        unsubscribe()
+      }
+
       if (mutation.type === likeStorageMutations.subscribe.addLikes) {
         this.blockProducerLikes = state.like.likes
         this.likesNumber = state.like.likesNumber
@@ -271,14 +281,6 @@ export default {
         this.blockProducer.twitterUrl = state.blockProducer.twitterUrl
         this.blockProducer.websiteUrl = state.blockProducer.websiteUrl
         this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.addError) {
-        this.error = state.comment.error
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.fieldsErrors) {
-        this.fieldsErrors = state.comment.fieldsErrors
       }
 
       if (mutation.type === commentStorageMutations.subscribe.createComment) {

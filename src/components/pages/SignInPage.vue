@@ -1,8 +1,8 @@
 <template>
-  <div>
-    {{ error.message }}
-    {{ error.statusCode }}
-
+  <div v-if="error.statusCode === 500">
+    <Error500/>
+  </div>
+  <div v-else>
     <v-layout>
       <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
         <v-form>
@@ -94,12 +94,16 @@
 </template>
 
 <script>
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
 export default {
   name: 'SignInPage',
+  components: {
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -119,12 +123,15 @@ export default {
     }
   },
   mounted() {
-    store.subscribe((mutation, state) => {
-      if (
-        mutation.type === authenticationStorageMutations.subscribe.addError ||
-        mutation.type === userStorageMutations.subscribe.addError
-      ) {
+    const unsubscribe = store.subscribe((mutation, state) => {
+      if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
+        unsubscribe()
+      }
+
+      if (mutation.type === userStorageMutations.subscribe.addError) {
+        this.error = state.user.error
+        unsubscribe()
       }
 
       if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
@@ -137,7 +144,7 @@ export default {
       if (mutation.type === userStorageMutations.subscribe.addUser) {
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
-        this.$router.push('/')
+        this.$router.push({name: 'index'})
       }
     });
   }

@@ -58,7 +58,7 @@ export const comment = {
   actions: {
     get({ commit }, { blockProducerIdentifier }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/comments/`)
+        .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${blockProducerIdentifier}/comments/`)
         .then(response => {
           commit(commentStorageMutations.commit.addComments, response.data.result)
         })
@@ -87,7 +87,7 @@ export const comment = {
     },
     create({ commit }, { jwtToken, blockProducerIdentifier, text }) {
       axios
-        .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/comments/`, {
+        .put(process.env.VUE_APP_BACK_END_URL + `/block-producers/${blockProducerIdentifier}/comments/`, {
           text: text,
         }, {
           headers: {
@@ -99,7 +99,6 @@ export const comment = {
           commit(commentStorageMutations.commit.createComment, true)
         })
         .catch(error => {
-          console.log(error)
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
             commit(commentStorageMutations.commit.addError, {
               message: error.response.data.error,
@@ -124,7 +123,7 @@ export const comment = {
     },
     getNumbers({ commit }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/comments/numbers/`)
+        .get(process.env.VUE_APP_BACK_END_URL + '/block-producers/comments/numbers/')
         .then(response => {
           commit(commentStorageMutations.commit.addCommentsNumbers, response.data.result)
         })

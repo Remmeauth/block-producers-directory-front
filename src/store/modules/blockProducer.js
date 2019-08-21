@@ -6,21 +6,23 @@ export const blockProducerStorageMutations = {
     addError: 'blockProducer/addError',
     addFieldsErrors: 'blockProducer/addFieldsErrors',
     getBlockProducer: 'blockProducer/getBlockProducer',
-    getBlockProducers: 'blockProducer/getBlockProducers',
+    addBlockProducers: 'blockProducer/addBlockProducers',
     updateDetails: 'blockProducer/updateDetails',
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
     searchBlockProducers: 'blockProducer/searchBlockProducers',
+    createBlockProducer: 'blockProducer/createBlockProducer',
   },
   commit: {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
     getBlockProducer: 'getBlockProducer',
-    getBlockProducers: 'getBlockProducers',
+    addBlockProducers: 'addBlockProducers',
     updateDetails: 'updateDetails',
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
     searchBlockProducers: 'searchBlockProducers',
+    createBlockProducer: 'createBlockProducer',
   },
 }
 
@@ -31,6 +33,7 @@ export const blockProducerStorageActions = {
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
   searchBlockProducers: 'blockProducer/searchBlockProducers',
+  createBlockProducer: 'blockProducer/create',
 }
 
 export const blockProducer = {
@@ -44,6 +47,7 @@ export const blockProducer = {
       errors: null,
       statusCode: null,
     },
+    isCreated: false,
     isUpdated: false,
     blockProducers: null,
     searchedBlockProducers: null,
@@ -112,7 +116,7 @@ export const blockProducer = {
       state.websiteUrl = websiteUrl
       state.wikipediaUrl = wikipediaUrl
     },
-    getBlockProducers (state, blockProducers) {
+    addBlockProducers (state, blockProducers) {
       state.blockProducers = blockProducers.blockProducers
     },
     updateDetails (state, isUpdated) {
@@ -126,6 +130,10 @@ export const blockProducer = {
     },
     searchBlockProducers (state, searchedBlockProducers) {
       state.searchedBlockProducers = searchedBlockProducers
+    },
+    createBlockProducer (state, blockProducerIdentifier) {
+      state.id = blockProducerIdentifier
+      state.isCreated = true
     },
   },
   actions: {
@@ -174,7 +182,7 @@ export const blockProducer = {
       axios
         .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/`)
         .then(response => {
-          commit('getBlockProducers', {
+          commit(blockProducerStorageMutations.commit.addBlockProducers, {
             blockProducers: response.data.result,
           })
         })
@@ -334,6 +342,66 @@ export const blockProducer = {
           }
         })
     },
+    create({ commit }, {
+      jwtToken,
+      name,
+      location,
+      shortDescription,
+      fullDescription,
+      facebookUrl,
+      githubUrl,
+      linkedInUrl,
+      redditUrl,
+      mediumUrl,
+      steemitUrl,
+      telegramUrl,
+      slackUrl,
+      twitterUrl,
+      websiteUrl,
+      wikipediaUrl,
+    }) {
+      axios
+        .put(process.env.VUE_APP_BACK_END_URL + '/block-producers/', {
+          name: name,
+          location: location,
+          short_description: shortDescription,
+          full_description: fullDescription,
+          facebook_url: facebookUrl,
+          github_url: githubUrl,
+          linkedin_url: linkedInUrl,
+          reddit_url: redditUrl,
+          medium_url: mediumUrl,
+          steemit_url: steemitUrl,
+          telegram_url: telegramUrl,
+          slack_url: slackUrl,
+          twitter_url: twitterUrl,
+          website_url: websiteUrl,
+          wikipedia_url: wikipediaUrl,
+        }, {
+          headers: {
+            'Authorization': `JWT ${jwtToken}`,
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => {
+          commit(blockProducerStorageMutations.commit.createBlockProducer, response.data.result.id)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+
+          if (error.response.status === HttpStatus.BAD_REQUEST) {
+            commit(blockProducerStorageMutations.commit.addFieldsErrors, {
+              errors: error.response.data.errors,
+              statusCode: error.response.status
+            })
+          }
+        })
+    }
   }
 }
 
