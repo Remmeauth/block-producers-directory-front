@@ -9,7 +9,6 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-
                 <v-card
                   elevation="18" 
                   outlined

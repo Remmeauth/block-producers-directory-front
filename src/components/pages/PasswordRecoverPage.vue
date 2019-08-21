@@ -3,14 +3,12 @@
     <Error500/>
   </div>
   <div v-else>
-
     <v-layout>
       <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12">
-                
                 <v-card
                   v-if="successMessage"
                   elevation="18" 
@@ -67,7 +65,6 @@
                     </v-form>
                   </v-card>
                 </v-card>
-                
                 <v-card
                   v-else
                   elevation="18" 
