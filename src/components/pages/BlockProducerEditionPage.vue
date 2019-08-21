@@ -120,12 +120,18 @@
 </template>
 
 <script>
+import Error404 from '../../components/ui/Error404'
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 
 export default {
   name: 'BlockProducerEditionPage',
+  components: {
+    Error404,
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -213,13 +219,15 @@ export default {
         identifier: this.$route.params.identifier,
     })
 
-    store.subscribe((mutation, state) => {
+    const unsubscribe = store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
+        unsubscribe()
       }
 
       if (mutation.type === blockProducerStorageMutations.subscribe.addFieldsErrors) {
         this.fieldsErrors = state.blockProducer.fieldsErrors
+        unsubscribe()
       }
 
       if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {

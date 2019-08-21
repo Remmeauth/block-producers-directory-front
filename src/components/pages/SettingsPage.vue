@@ -1,8 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 404">
-    <Error404/>
-  </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-if="error.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -115,6 +112,7 @@
 </template>
 
 <script>
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
@@ -123,6 +121,9 @@ import { profileStorageActions, profileStorageMutations } from '../../store/modu
 
 export default {
   name: 'SettingsPage',
+  components: {
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -208,13 +209,15 @@ export default {
         username: this.localStorage.username,
     })
 
-    store.subscribe((mutation, state) => {
+    const unsubscribe = store.subscribe((mutation, state) => {
       if (mutation.type === settingsStorageMutations.subscribe.addError) {
         this.error = state.settings.error
+        unsubscribe()
       }
 
       if (mutation.type === settingsStorageMutations.subscribe.addFieldsErrors) {
         this.fieldsErrors = state.settings.fieldsErrors
+        unsubscribe()
       }
 
       if (mutation.type === userStorageMutations.subscribe.addUser) {

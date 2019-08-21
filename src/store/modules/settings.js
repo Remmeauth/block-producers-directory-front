@@ -64,7 +64,7 @@ export const settings = {
         location
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/users/${username}/profile/`, {
           first_name: firstName,
           last_name: lastName,
           location: location,
@@ -106,7 +106,7 @@ export const settings = {
         steemitUrl
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/users/${username}/profile/`, {
           website_url: websiteUrl,
           linkedin_url: linkedInUrl,
           twitter_url: twitterUrl,
@@ -146,7 +146,7 @@ export const settings = {
         additionalInformation
       }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/users/${username}/profile/`, {
           additional_information: additionalInformation,
         }, {
             headers: {

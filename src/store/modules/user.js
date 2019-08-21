@@ -39,7 +39,7 @@ export const user = {
   actions: {
     get({ commit }, { username }) {
       axios
-      .get(`https://bps-directory-back-staging.herokuapp.com/users/${username}/`)
+      .get(process.env.VUE_APP_BACK_END_URL + `/users/${username}/`)
       .then(response => {
         commit(userStorageMutations.commit.addUser, {
           email: response.data.result.email,
@@ -64,7 +64,7 @@ export const user = {
     },
     getFromToken({ commit }, { jwtToken }) {
       axios
-      .get(`https://bps-directory-back-staging.herokuapp.com/users/`, {
+      .get(process.env.VUE_APP_BACK_END_URL + '/users/', {
             headers: {
                 'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
