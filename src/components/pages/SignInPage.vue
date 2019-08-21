@@ -58,7 +58,8 @@
                           :ripple="false"
                           text
                           color="#5d80da" 
-                          style="text-decoration: underline;" 
+                          style="text-decoration: underline;"
+                          @click="$router.push({name: 'password-recover'})"
                         >
                           Forgot password?
                         </v-btn>

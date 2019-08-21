@@ -2,6 +2,8 @@ import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
+import PasswordRecoverPage from './components/pages/PasswordRecoverPage.vue'
+import PasswordRecoveringIdentifierPage from './components/pages/PasswordRecoveringIdentifierPage.vue'
 import SignInPage from './components/pages/SignInPage.vue'
 import SignUpPage from './components/pages/SignUpPage.vue'
 import SettingsPage from './components/pages/SettingsPage.vue'
@@ -23,6 +25,16 @@ const routes = [
     path: '/sign-up/',
     component: SignUpPage,
     name: 'sign-up'
+  },
+  {
+    path: '/password/recover/',
+    component: PasswordRecoverPage,
+    name: 'password-recover'
+  },
+  {
+    path: '/user/password/recovering/:identifier/',
+    component: PasswordRecoveringIdentifierPage,
+    name: 'password-recovering-identifier'
   },
   {
     path: '/settings/',
