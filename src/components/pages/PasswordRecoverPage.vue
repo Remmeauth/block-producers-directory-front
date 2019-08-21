@@ -1,0 +1,206 @@
+<template>
+  <div v-if="error.statusCode === 500">
+    <Error500/>
+  </div>
+  <div v-else>
+
+    <v-layout>
+      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                
+                <v-card
+                  v-if="successMessage"
+                  elevation="18" 
+                  outlined
+                  style="border-color: #5d80da;"
+                >
+                  <v-card 
+                    flat 
+                    class="ma-2 pa-10 pt-0"
+                    align="center"
+                  >
+                    <v-img
+                      class="mt-10"
+                      height="200px"
+                      max-width="300"
+                      src="../../assets/email.png"
+                    >
+                    </v-img>
+                    <v-form>
+                      <v-card-actions
+                        class="justify-center" 
+                        style="font-size: 1.1em; font-weight: 400; flex-direction: column;"
+                      >
+                        Recovery link sent to
+                      </v-card-actions>
+                      <v-card-actions
+                        class="justify-center" 
+                        style="font-size: 1.1em; font-weight: 400; padding-top: 0; flex-direction: column; color: #5d80da;"
+                      >
+                        {{ email }}
+                      </v-card-actions>
+                      <v-card-actions 
+                        class="justify-center" 
+                        style="padding-top: 0; flex-direction: column;"
+                      >
+                        <v-btn  
+                          class="custom-btn text-none" 
+                          :ripple="false"
+                          text
+                        >
+                          Remembered your password?
+                          <v-btn 
+                            class="custom-btn text-none" 
+                            :ripple="false" 
+                            text
+                            color="#5d80da" 
+                            style="text-decoration: underline;"
+                            @click="$router.push({name: 'sign-in'})"
+                          >
+                            Sign in
+                          </v-btn>
+                        </v-btn>
+                      </v-card-actions>
+                    </v-form>
+                  </v-card>
+                </v-card>
+                
+                <v-card
+                  v-else
+                  elevation="18" 
+                  outlined
+                  style="border-color: #5d80da;"
+                >
+                  <div 
+                    style="text-align: center; font-size:1.6em;"
+                  ><br>
+                    Send a password recover request
+                  </div>
+                  <br>
+                  <v-card-actions 
+                    class="ml-12 mr-12 justify-center" 
+                    style="font-size: 0.8em; color: #4d70d5;"
+                  >
+                    Enter the e-mail address of your account to get a recovery link
+                  </v-card-actions>
+                  <v-card 
+                    flat 
+                    class="ma-2 pa-10 pt-0"
+                  >
+                    <v-form>
+                      <v-text-field
+                        class="mb-4 pl-2 pr-2"
+                        v-model="email"
+                        label="E-mail"
+                        outlined 
+                        prepend-inner-icon="email"
+                        required
+                      ></v-text-field>
+                      <v-card-actions 
+                        class="justify-center"
+                      >
+                        <v-btn 
+                          outlined 
+                          color="white" 
+                          block 
+                          @click="getPasswordRecoveryRequest"
+                          style="background-color: #4d70d5;"
+                        >
+                          Get recovery link
+                        </v-btn>
+                      </v-card-actions>
+                      <v-card-actions 
+                        class="justify-center" 
+                        style="padding-top: 0; flex-direction: column;"
+                      >
+                        <v-btn  
+                          class="custom-btn text-none" 
+                          :ripple="false"
+                          text
+                        >
+                          Remember your password?
+                          <v-btn 
+                            class="custom-btn text-none" 
+                            :ripple="false" 
+                            text
+                            color="#5d80da" 
+                            style="text-decoration: underline;"
+                            @click="$router.push({name: 'sign-in'})"
+                          >
+                            Sign in
+                          </v-btn>
+                        </v-btn>
+                      </v-card-actions>
+                    </v-form>
+                  </v-card>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-flex>
+    </v-layout>
+  </div>
+</template>
+
+<script>
+import Error500 from '../../components/ui/Error500'
+import store from '../../store/index'
+import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
+
+export default {
+  name: 'password-recover',
+  components: {
+    Error500,
+  },
+  data() {
+    return {
+      error: {
+        message: null,
+        statusCode: null,
+      },
+      fieldsErrors: {
+        errors: null,
+        statusCode: null,
+      },
+      successMessage: null,
+      email: null,
+    }
+  },
+  methods: {
+    getPasswordRecoveryRequest () {
+      store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {
+        email: this.email,
+      })
+    }
+  },
+  mounted() {
+    store.subscribe((mutation, state) => {
+      if (mutation.type === passwordStorageMutations.subscribe.addError) {
+        this.error = state.password.error
+      }
+
+      if (mutation.type === passwordStorageMutations.subscribe.addFieldsErrors) {
+        this.fieldsErrors = state.password.fieldsErrors
+      }
+
+      if (mutation.type === passwordStorageMutations.subscribe.receivePasswordRecoveryRequest) {
+        this.successMessage = `Recovery link sent to the email address — check it.`
+        this.localStorage.recoveryEmail = this.email
+      }
+    });
+  }
+}
+</script>
+
+<style>
+.v-card {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+.custom-btn::before {
+  color: transparent;
+}
+</style>
