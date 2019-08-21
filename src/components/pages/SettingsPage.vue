@@ -1,116 +1,129 @@
 <template>
-  <div>
-    {{ error.message }}
-    {{ error.statusCode }}
-
-    {{ fieldsErrors.errors }}
-    {{ fieldsErrors.statusCode }}
-
-    {{ successMessage }}
-
-    <form>
-      <v-text-field
-        v-model="referenceLinks.websiteUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.linkedInUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.twitterUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.mediumUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.githubUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.facebookUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.telegramUrl"
-        solo
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="referenceLinks.steemitUrl"
-        solo
-        required
-      ></v-text-field>
-
-      <v-btn @click="updateReferenceLinks">Update links</v-btn>
-    </form>
-
-    <form>
-      <v-textarea
-        v-model="other.additionalInformation"
-        solo
-        required
-      ></v-textarea>
-
-      <v-btn @click="updateAdditionalInformation">Update information</v-btn>
-    </form>
-
-    <form>
-      <v-text-field
-        v-model="details.email"
-        solo
-        required
-        disabled
-      ></v-text-field>
-
-      <v-text-field
-        v-model="details.username"
-        solo
-        required
-        disabled
-      ></v-text-field>
-
-      <v-text-field
-        v-model="details.firstName"
-        solo
-        required
-      ></v-text-field>
-
-      <v-text-field
-        v-model="details.lastName"
-        solo
-        required
-      ></v-text-field>
-
-      <v-text-field
-        v-model="details.location"
-        solo
-        required
-      ></v-text-field>
-      <v-btn @click="updateDetails">Update details</v-btn>
-    </form>
-
-    {{ other.avatarUrl }}
-
-    </div>
+  <div v-if="error.statusCode === 500">
+    <Error500/>
+  </div>
+  <div v-else>
+    <br>
+    <v-layout>
+      <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Personal details</h2>
+                <br>
+                <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="details.username" disabled outlined clearable label="Username" prepend-inner-icon="alternate_email"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="details.email" disabled outlined clearable label="E-mail address" prepend-inner-icon="email"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="details.firstName" outlined clearable label="First name" prepend-inner-icon="account_circle"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="details.lastName" outlined clearable label="Last name" prepend-inner-icon="account_circle"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-text-field v-model="details.location" outlined clearable label="Location" prepend-inner-icon="place"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateDetails">Update details</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Additional information</h2>
+                <br>
+                <span>Tell some words about yourself.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-textarea no-resize v-model="other.additionalInformation" outlined label="Additional information"></v-textarea>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateAdditionalInformation">Update information</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Profile picture</h2>
+                <br>
+                <span>Upload your picture or avatar.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <v-file-input outlined label="Select your picture" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+                <v-btn @click="submitUploadingProfileAvatar">Upload picture</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="12" offset-lg="1">
+                <h2>Reference links</h2>
+                <br>
+                <span>Provide your profiles from other platforms.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.websiteUrl" outlined clearable label="Web-site address" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.linkedInUrl" outlined clearable label="LinkedIn" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.twitterUrl" outlined clearable label="Twitter" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.mediumUrl" outlined clearable label="Medium" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.githubUrl" outlined clearable label="Github" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.facebookUrl" outlined clearable label="Facebook" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field v-model="referenceLinks.telegramUrl" outlined clearable label="Telegram" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field v-model="referenceLinks.steemitUrl" outlined clearable label="Steemit" prepend-inner-icon="link"></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn @click="updateReferenceLinks">Update links</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-flex>
+    </v-layout>
+    <br>
+  </div>
 </template>
 
 <script>
+import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
-import { settingsStorageMutations, settingsStorageActions } from '../../store/modules/settings'
+import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
+import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 import { profileStorageActions, profileStorageMutations } from '../../store/modules/profile'
 
 export default {
   name: 'SettingsPage',
+  components: {
+    Error500,
+  },
   data() {
     return {
       error: {
@@ -141,7 +154,7 @@ export default {
       },
       other: {
         additionalInformation: null,
-        avatarUrl: null,
+        avatarFile: null,
       }
     }
   },
@@ -155,7 +168,7 @@ export default {
         location: this.details.location,
       })
     },
-    updateReferenceLinks () {
+    updateReferenceLinks() {
       store.dispatch(settingsStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -169,13 +182,23 @@ export default {
         steemitUrl: this.referenceLinks.steemitUrl,
       })
     },
-    updateAdditionalInformation () {
+    updateAdditionalInformation() {
       store.dispatch(settingsStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         additionalInformation: this.other.additionalInformation,
       })
-    }
+    },
+    handleFileUpload() {
+      this.other.avatarFile = this.$refs.file
+    },
+    submitUploadingProfileAvatar() {
+      store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+        file: this.other.avatarFile,
+      })
+    },
   },
   mounted() {
     store.dispatch(userStorageActions.getUser, {
@@ -186,13 +209,15 @@ export default {
         username: this.localStorage.username,
     })
 
-    store.subscribe((mutation, state) => {
+    const unsubscribe = store.subscribe((mutation, state) => {
       if (mutation.type === settingsStorageMutations.subscribe.addError) {
         this.error = state.settings.error
+        unsubscribe()
       }
 
       if (mutation.type === settingsStorageMutations.subscribe.addFieldsErrors) {
         this.fieldsErrors = state.settings.fieldsErrors
+        unsubscribe()
       }
 
       if (mutation.type === userStorageMutations.subscribe.addUser) {
@@ -223,9 +248,25 @@ export default {
       ) {
         this.successMessage = 'Profile updated successfully — view your profile.'
       }
+
+      if (mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded) {
+        this.successMessage = 'Profile picture has been uploaded successfully — view your profile.'
+      }
     });
   }
 }
 </script>
 
-<style></style>
+<style>
+.v-text-field {
+  height: 60px;
+}
+
+.v-textarea {
+  height: 120px;
+}
+
+.v-file-input {
+  height: 86px;
+}
+</style>

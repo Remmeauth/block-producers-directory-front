@@ -30,7 +30,7 @@
               <br v-if="user.username === localStorage.username">
               <v-flex lg12 v-if="user.username === localStorage.username">
                 <v-card max-width="344" class="mx-auto">
-                  <v-btn @click="$router.push('/settings/')" width="344">Edit profile</v-btn>
+                  <v-btn @click="$router.push({name: 'settings'})" width="344">Edit profile</v-btn>
                 </v-card>
               </v-flex>
             </div>

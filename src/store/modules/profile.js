@@ -74,7 +74,7 @@ export const profile = {
   actions: {
     get({ commit }, { username }) {
     axios
-      .get(`https://bps-directory-back-staging.herokuapp.com/users/${username}/profile/`)
+      .get(process.env.VUE_APP_BACK_END_URL + `/users/${username}/profile/`)
       .then(response => {
         commit(profileStorageMutations.commit.addProfile, {
          additionalInformation: response.data.result.additional_information,

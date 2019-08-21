@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
 
         <template v-if="localStorage.token">
-          <v-btn outlined color="#5d80da">Submit</v-btn>
+          <v-btn outlined color="#5d80da" @click="$router.push({name: 'block-producer-creation'})">Submit</v-btn>
 
           <v-menu offset-y :nudge-width="150" style="margin-top: 20px">
 
@@ -49,8 +49,8 @@
         </template>
 
         <template v-else>
-          <v-btn outlined color="#5d80da" style="margin-right: 20px;" @click="$router.push('/sign-in/')">Sign In</v-btn>
-          <v-btn outlined color="#5d80da" style="margin-right: 2px;" @click="$router.push('/sign-up/')">Sign Up</v-btn>
+          <v-btn outlined color="#5d80da" style="margin-right: 20px;" @click="$router.push({name: 'sign-in'})">Sign In</v-btn>
+          <v-btn outlined color="#5d80da" style="margin-right: 2px;" @click="$router.push({name: 'sign-up'})">Sign Up</v-btn>
         </template>
       </v-toolbar>
 
@@ -65,7 +65,7 @@ export default {
       this.localStorage.token = ''
       this.localStorage.username = ''
       this.localStorage.email = ''
-      this.$router.push('/')
+      this.$router.push({name: 'index'})
     }
   },
 }

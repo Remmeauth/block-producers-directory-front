@@ -59,7 +59,7 @@ export const like = {
   actions: {
     put({ commit }, { jwtToken, blockProducerIdentifier }) {
       axios
-        .put(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/likes/`, {}, {
+        .put(process.env.VUE_APP_BACK_END_URL + `/block-producers/${blockProducerIdentifier}/likes/`, {}, {
             headers: {
                 'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export const like = {
     },
     getAll({ commit }, { blockProducerIdentifier }) {
       axios
-      .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/likes/`)
+      .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${blockProducerIdentifier}/likes/`)
       .then(response => {
         commit(likeStorageMutations.commit.addLikes, {
           likes: response.data.result,
@@ -96,7 +96,7 @@ export const like = {
     },
     isLikedByUser({ commit }, { blockProducerIdentifier, username }) {
       axios
-      .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/${blockProducerIdentifier}/likes/`)
+      .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${blockProducerIdentifier}/likes/`)
       .then(response => {
         if (!response.data.result) {
           commit(likeStorageMutations.commit.markAsIsLikedByUser, false)
@@ -119,7 +119,7 @@ export const like = {
     },
     getNumbers({ commit }) {
       axios
-        .get(`https://bps-directory-back-staging.herokuapp.com/block-producers/likes/numbers/`)
+        .get(process.env.VUE_APP_BACK_END_URL + '/block-producers/likes/numbers/')
         .then(response => {
           commit(likeStorageMutations.commit.addLikesNumbers, response.data.result)
         })
