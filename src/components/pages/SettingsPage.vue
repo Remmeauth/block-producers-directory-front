@@ -32,6 +32,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDetails">Update details</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDetails">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateDetails = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -49,6 +55,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateAdditionalInformation">Update information</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateAdditionalInformation">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateAdditionalInformation = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -61,9 +73,15 @@
                 <span>Upload your picture or avatar.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input outlined label="Select your picture" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+                <v-file-input v-model="other.avatarFile" outlined label="Select your picture"></v-file-input>
                 <v-btn @click="submitUploadingProfileAvatar">Upload picture</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.submitUploadingProfileAvatar">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.submitUploadingProfileAvatar = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -102,6 +120,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateReferenceLinks">Update links</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateReferenceLinks">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateReferenceLinks = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -134,6 +158,12 @@ export default {
         errors: null,
         statusCode: null,
       },
+      snackBars: {
+        updateDetails: null,
+        updateReferenceLinks: null,
+        updateAdditionalInformation: null,
+        submitUploadingProfileAvatar: null,
+      },
       successMessage: null,
       details: {
         email: null,
@@ -160,6 +190,7 @@ export default {
   },
   methods: {
     updateDetails() {
+      this.snackBars.updateDetails = true
       store.dispatch(settingsStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -169,6 +200,7 @@ export default {
       })
     },
     updateReferenceLinks() {
+      this.snackBars.updateReferenceLinks = true
       store.dispatch(settingsStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -183,16 +215,15 @@ export default {
       })
     },
     updateAdditionalInformation() {
+      this.snackBars.updateAdditionalInformation = true
       store.dispatch(settingsStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         additionalInformation: this.other.additionalInformation,
       })
     },
-    handleFileUpload() {
-      this.other.avatarFile = this.$refs.file
-    },
     submitUploadingProfileAvatar() {
+    this.snackBars.submitUploadingProfileAvatar = true
       store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -244,13 +275,13 @@ export default {
       if (
         mutation.type === settingsStorageMutations.subscribe.updateReferenceLinks ||
         mutation.type === settingsStorageMutations.subscribe.updateAdditionalInformation ||
-        mutation.type === settingsStorageMutations.subscribe.updateDetails
+        mutation.type === settingsStorageMutations.subscribe.updateDetails ||
+        mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
       ) {
-        this.successMessage = 'Profile updated successfully — view your profile.'
-      }
-
-      if (mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded) {
-        this.successMessage = 'Profile picture has been uploaded successfully — view your profile.'
+      this.successMessage =
+          "Profile updated successfully — <a href=\"" +
+          `/users/${this.localStorage.username}` +
+          "\">view your profile</a>"
       }
     });
   }

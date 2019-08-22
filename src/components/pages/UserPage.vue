@@ -36,42 +36,44 @@
             </div>
             <br>
             <v-flex lg12>
-              <v-card max-width="344" class="mx-auto">
-                <v-list>
-                  <v-list-item-group color="primary">
-                    <v-list-item>
-                      <v-list-item-icon>
-                        <v-icon>link</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title><a v-bind:href="profile.websiteUrl">{{ profile.websiteUrl }}</a></v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-icon>
-                        <v-icon>location_on</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title>{{ profile.location }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list>
-              </v-card>
+              <div v-if="profile.websiteUrl || profile.location">
+                <v-card max-width="344" class="mx-auto">
+                  <v-list>
+                    <v-list-item-group color="primary">
+                      <v-list-item v-if="profile.websiteUrl">
+                        <v-list-item-icon>
+                          <v-icon>link</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title><a v-bind:href="profile.websiteUrl">{{ profile.websiteUrl }}</a></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item v-if="profile.location">
+                        <v-list-item-icon>
+                          <v-icon>location_on</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title>{{ profile.location }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                </v-card>
+              </div>
+              <div v-if="true"></div>
             </v-flex>
             <br>
           </v-flex>
           <v-flex lg6>
             <v-card class="mx-auto overflow-hidden">
               <v-subheader>User's information</v-subheader>
-              <br>
               <div class="pa-4 pt-0 caption">
                 <p v-if="profile.additionalInformation" style="text-align: justify;" v-html="profile.additionalInformation"></p>
                 <p v-else style="text-align: justify;">No information has been provided.</p>
               </div>
             </v-card>
             <br>
-            <v-card v-if="blockProducers">
+            <v-card v-if="blockProducers && blockProducersByUser(user.username).length > 0">
               <v-list two-line>
                 <template v-for="(blockProducer, index) in blockProducersByUser(user.username)">
                   <v-subheader v-if="index === 0">User's block producers</v-subheader>
@@ -82,7 +84,7 @@
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-title>{{ blockProducer.name }}</v-list-item-title>
-                      <v-list-item-subtitle>{{ blockProducer.location }}</v-list-item-subtitle>
+                      <v-list-item-subtitle><v-icon>place</v-icon>{{ blockProducer.location }}</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                 </template>
@@ -191,7 +193,7 @@ export default {
         this.profile.websiteUrl = state.profile.websiteUrl
       }
 
-      if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducers) {
+      if (mutation.type === blockProducerStorageMutations.subscribe.addBlockProducers) {
         this.blockProducers = state.blockProducer.blockProducers
       }
     });
