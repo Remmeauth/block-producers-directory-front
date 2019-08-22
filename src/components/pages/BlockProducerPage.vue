@@ -17,10 +17,7 @@
                 max-width="344"
                 class="mx-auto"
                 >
-                <v-img
-                  src="https://block-producers-directory.s3-us-west-2.amazonaws.com/bps/logos/default-block-producer-logotype.png"
-                  height="194"
-                  ></v-img>
+                <v-img v-if="blockProducer.logoUrl" :src="blockProducer.logoUrl" height="194"></v-img>
                 <v-card-title class="align-start">
                   <div>
                     <span class="headline">{{ blockProducer.name }}</span>
@@ -70,7 +67,7 @@
                         <v-list-item-title><a v-bind:href="blockProducer.websiteUrl">{{ blockProducer.websiteUrl }}</a></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item  v-if="blockProducer.location">
                       <v-list-item-icon>
                         <v-icon>location_on</v-icon>
                       </v-list-item-icon>
@@ -85,24 +82,22 @@
             <br>
           </v-flex>
           <v-flex lg6>
-            <v-card
-              class="mx-auto overflow-hidden"
-              >
-              <v-divider></v-divider>
-              <br>
+            <v-card class="mx-auto overflow-hidden">
+              <v-subheader>Block producer's information</v-subheader>
               <div class="pa-4 pt-0 caption">
-                <p style="text-align: justify;" v-html="blockProducer.fullDescription"></p>
+                <p v-if="blockProducer.fullDescription" style="text-align: justify;" v-html="blockProducer.fullDescription"></p>
+                <p v-else style="text-align: justify;">No information has been provided.</p>
               </div>
             </v-card>
             <br>
-            <v-card>
+            <v-card v-if="comments && comments.length > 0">
               <v-list two-line>
                 <template v-for="(comment, index) in comments">
                   <v-subheader v-if="index === 0">Comments</v-subheader>
                   <v-divider v-else-if="index > 0" :inset="true"></v-divider>
                   <v-list-item>
                     <v-list-item-avatar>
-                      <img src="https://block-producers-directory.s3-us-west-2.amazonaws.com/user/avatars/default-user-logotype.png">
+                      <img :src="comment.profile_avatar_url">
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-title>{{ comment.user.username }} {{ new Date(comment.created_at * 1000).toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</v-list-item-title>
@@ -111,6 +106,12 @@
                   </v-list-item>
                 </template>
               </v-list>
+            </v-card>
+            <v-card v-else>
+              <v-subheader>Comments.</v-subheader>
+              <div class="pa-4 pt-0 caption">
+                <p style="text-align: justify;">No comments.</p>
+              </div>
             </v-card>
             <br v-if="localStorage.username">
             <v-flex lg12 v-if="localStorage.username">
@@ -140,6 +141,7 @@ import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
+import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
 
 export default {
   name: 'BlockProducerPage',
@@ -152,6 +154,9 @@ export default {
       error: {
         message: null,
         statusCode: null,
+      },
+      profile: {
+        avatarUrl: null,
       },
       blockProducer: {
         name: null,
@@ -183,7 +188,7 @@ export default {
     }
   },
   methods: {
-    createComment () {
+    createComment() {
       store.dispatch(commentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,
@@ -191,6 +196,7 @@ export default {
       })
 
     this.comments.unshift({
+      profile_avatar_url: this.profile.avatarUrl,
       user: {
         username: this.localStorage.username,
       },
@@ -200,7 +206,7 @@ export default {
 
     this.comment = ''
     },
-    like () {
+    like() {
       this.isLikedByUser = !this.isLikedByUser
       if (this.isLikedByUser) { this.likesNumber++ } else { this.likesNumber-- }
 
@@ -219,6 +225,10 @@ export default {
     },
   },
   mounted() {
+    store.dispatch(profileStorageActions.getProfile, {
+      username: this.localStorage.username,
+    })
+
     store.dispatch(blockProducerStorageActions.getBlockProducer, {
       identifier: this.$route.params.identifier,
     })
@@ -281,6 +291,10 @@ export default {
         this.blockProducer.twitterUrl = state.blockProducer.twitterUrl
         this.blockProducer.websiteUrl = state.blockProducer.websiteUrl
         this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
+      }
+
+      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
+        this.profile.avatarUrl = state.profile.avatarUrl
       }
 
       if (mutation.type === commentStorageMutations.subscribe.createComment) {

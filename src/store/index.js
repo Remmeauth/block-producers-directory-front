@@ -6,6 +6,7 @@ import avatar from './modules/avatar'
 import blockProducer from './modules/blockProducer'
 import comment from './modules/comment'
 import like from './modules/like'
+import password from './modules/password'
 import profile from './modules/profile'
 import settings from './modules/settings'
 import user from './modules/user'
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     blockProducer: blockProducer,
     comment: comment,
     like: like,
+    password: password,
     profile: profile,
     settings: settings,
     user: user,

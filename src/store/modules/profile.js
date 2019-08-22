@@ -23,6 +23,7 @@ export const profile = {
       message: null,
       statusCode: null,
     },
+    userId: null,
     firstName: null,
     lastName: null,
     additionalInformation: null,
@@ -77,19 +78,19 @@ export const profile = {
       .get(process.env.VUE_APP_BACK_END_URL + `/users/${username}/profile/`)
       .then(response => {
         commit(profileStorageMutations.commit.addProfile, {
-         additionalInformation: response.data.result.additional_information,
-         firstName: response.data.result.first_name,
-         lastName: response.data.result.last_name,
-         avatarUrl: response.data.result.avatar_url,
-         facebookUrl: response.data.result.facebook_url,
-         githubUrl: response.data.result.github_url,
-         linkedInUrl: response.data.result.linkedin_url,
-         location: response.data.result.location,
-         mediumUrl: response.data.result.medium_url,
-         steemitUrl: response.data.result.steemit_url,
-         telegramUrl: response.data.result.telegram_url,
-         twitterUrl: response.data.result.twitter_url,
-         websiteUrl: response.data.result.website_url,
+          additionalInformation: response.data.result.additional_information,
+          firstName: response.data.result.first_name,
+          lastName: response.data.result.last_name,
+          avatarUrl: response.data.result.avatar_url,
+          facebookUrl: response.data.result.facebook_url,
+          githubUrl: response.data.result.github_url,
+          linkedInUrl: response.data.result.linkedin_url,
+          location: response.data.result.location,
+          mediumUrl: response.data.result.medium_url,
+          steemitUrl: response.data.result.steemit_url,
+          telegramUrl: response.data.result.telegram_url,
+          twitterUrl: response.data.result.twitter_url,
+          websiteUrl: response.data.result.website_url,
         })
       })
       .catch(error => {

@@ -48,7 +48,7 @@
                 <span>Upload block producer logotype.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input outlined label="Select your logotype" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+                <v-file-input v-model="logotypeFile" outlined label="Select your logotype"></v-file-input>
               </v-col>
             </v-row>
           </v-container>
@@ -124,6 +124,7 @@ export default {
         errors: null,
         statusCode: null,
       },
+      createdBlockProducerIdentifier: null,
       logotypeFile: null,
       successMessage: null,
       name: null,
@@ -164,9 +165,6 @@ export default {
         wikipediaUrl: this.wikipediaUrl,
       })
     },
-    handleFileUpload() {
-      this.logotypeFile = this.$refs.file
-    },
   },
   mounted() {
     const unsubscribe = store.subscribe((mutation, state) => {
@@ -181,17 +179,21 @@ export default {
       }
 
       if (mutation.type === blockProducerStorageMutations.subscribe.createBlockProducer) {
-        const createdBlockProducerIdentifier = state.blockProducer.id
+        this.createdBlockProducerIdentifier = state.blockProducer.id
 
-        store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
-          jwtToken: this.localStorage.token,
-          identifier: createdBlockProducerIdentifier,
-          file: this.logotypeFile,
-        })
+        if (this.logotypeFile) {
+          store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+            jwtToken: this.localStorage.token,
+            identifier: this.createdBlockProducerIdentifier,
+            file: this.logotypeFile,
+          })
+        } else {
+          this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
+        }
       }
 
       if (mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded) {
-        this.successMessage = 'Block producer created successfully — view your block producer.'
+         this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
       }
     });
   }

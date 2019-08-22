@@ -29,6 +29,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDetails">Update details</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDetails">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateDetails = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -49,6 +55,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDescription">Update descriptions</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDescription">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateDescription = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -61,11 +73,17 @@
                 <span>Upload block producer logotype.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input outlined label="Select your logotype" id="file" ref="file" @change="handleFileUpload"></v-file-input>
+                <v-file-input v-model="other.logotypeFile" outlined label="Select your logotype"></v-file-input>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="submitUploadingBlockProducerLogotype">Update logotype</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.submitUploadingBlockProducerLogotype">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.submitUploadingBlockProducerLogotype = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -110,6 +128,12 @@
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateReferenceLinks">Update links</v-btn>
               </v-col>
+              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateReferenceLinks">
+                <span v-html="this.successMessage"></span>
+                <v-btn color="pink" text @click="snackBars.updateReferenceLinks = false">
+                  Close
+                </v-btn>
+              </v-snackbar>
             </v-row>
           </v-container>
         </v-form>
@@ -142,6 +166,12 @@ export default {
         errors: null,
         statusCode: null,
       },
+      snackBars: {
+        updateDetails: null,
+        updateDescription: null,
+        updateReferenceLinks: null,
+        submitUploadingBlockProducerLogotype: null,
+      },
       successMessage: null,
       details: {
         name: null,
@@ -171,6 +201,7 @@ export default {
   },
   methods: {
     updateDetails() {
+      this.snackBars.updateDetails = true
       store.dispatch(blockProducerStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -180,6 +211,7 @@ export default {
       })
     },
     updateDescription () {
+    this.snackBars.updateDescription = true
       store.dispatch(blockProducerStorageActions.updateDescription, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -188,6 +220,7 @@ export default {
       })
     },
     updateReferenceLinks () {
+    this.snackBars.updateReferenceLinks = true
       store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -203,10 +236,8 @@ export default {
         wikipediaUrl: this.referenceLinks.wikipediaUrl,
       })
     },
-    handleFileUpload() {
-      this.other.logotypeFile = this.$refs.file
-    },
     submitUploadingBlockProducerLogotype() {
+    this.snackBars.submitUploadingBlockProducerLogotype = true
       store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -255,7 +286,10 @@ export default {
         mutation.type === blockProducerStorageMutations.subscribe.updateReferenceLinks ||
         mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
       ) {
-        this.successMessage = 'Block producer updated successfully — view your block producer.'
+        this.successMessage =
+          "Block producer updated successfully — <a href=\"" +
+          `/block-producers/${this.$route.params.identifier}` +
+          "\">view your block producer</a>"
       }
     });
   }

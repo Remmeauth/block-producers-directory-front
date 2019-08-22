@@ -14,6 +14,7 @@ Vue.use(reactiveStorage, {
     'token': null,
     'username': null,
     'email': null,
+    'recoveryEmail': null,
 });
 
 const router = new VueRouter({
