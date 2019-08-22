@@ -106,8 +106,8 @@ export default {
       getBlockProducersToRender: function() {
         if (this.searchPhrase) {
           return this.searchedBlockProducers
-        } 
-        
+        }
+
         return this.blockProducers
       },
       getBlockProducerCommentsNumber: function(blockProducerIdentifier) {

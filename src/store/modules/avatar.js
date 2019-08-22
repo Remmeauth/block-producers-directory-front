@@ -41,7 +41,7 @@ export const avatar = {
       formData.append('file', file);
 
       axios
-        .put(process.env.VUE_APP_BACK_END_URL + `/users/${username}/avatars/`, formData, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/users/${username}/avatars/`, formData, {
           headers: {
             'Authorization': `JWT ${jwtToken}`,
             'Content-Type': 'multipart/form-data',
@@ -64,7 +64,7 @@ export const avatar = {
       formData.append('file', file);
 
       axios
-        .put(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/avatars/`, formData, {
+        .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/avatars/`, formData, {
           headers: {
             'Authorization': `JWT ${jwtToken}`,
             'Content-Type': 'multipart/form-data',
