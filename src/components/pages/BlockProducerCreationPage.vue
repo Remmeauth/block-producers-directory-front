@@ -18,7 +18,6 @@
                 <v-text-field
                   v-model="name"
                   :error-messages="nameErrors"
-                  required
                   @input="$v.name.$touch()"
                   @blur="$v.name.$touch()"
                   outlined
@@ -31,7 +30,6 @@
                 <v-text-field
                   v-model="websiteUrl"
                   :error-messages="websiteUrlErrors"
-                  required
                   @input="$v.websiteUrl.$touch()"
                   @blur="$v.websiteUrl.$touch()"
                   outlined
@@ -44,7 +42,6 @@
                 <v-text-field
                   v-model="location"
                   :error-messages="locationUrlErrors"
-                  required
                   @input="$v.location.$touch()"
                   @blur="$v.location.$touch()"
                   outlined
@@ -66,7 +63,6 @@
                 <v-text-field
                   v-model="shortDescription"
                   :error-messages="shortDescriptionErrors"
-                  required
                   @input="$v.shortDescription.$touch()"
                   @blur="$v.shortDescription.$touch()"
                   outlined
@@ -78,7 +74,6 @@
                 <v-textarea
                   v-model="fullDescription"
                   :error-messages="fullDescriptionErrors"
-                  required
                   @input="$v.fullDescription.$touch()"
                   @blur="$v.fullDescription.$touch()"
                   outlined
@@ -111,7 +106,6 @@
                 <v-text-field
                   v-model="linkedInUrl"
                   :error-messages="linkedInUrlErrors"
-                  required
                   @input="$v.linkedInUrl.$touch()"
                   @blur="$v.linkedInUrl.$touch()"
                   outlined
@@ -124,7 +118,6 @@
                 <v-text-field
                   v-model="twitterUrl"
                   :error-messages="twitterUrlErrors"
-                  required
                   @input="$v.twitterUrl.$touch()"
                   @blur="$v.twitterUrl.$touch()"
                   outlined
@@ -137,7 +130,6 @@
                 <v-text-field
                   v-model="mediumUrl"
                   :error-messages="mediumUrlErrors"
-                  required
                   @input="$v.mediumUrl.$touch()"
                   @blur="$v.mediumUrl.$touch()"
                   outlined
@@ -150,7 +142,6 @@
                 <v-text-field
                   v-model="githubUrl"
                   :error-messages="githubUrlErrors"
-                  required
                   @input="$v.githubUrl.$touch()"
                   @blur="$v.githubUrl.$touch()"
                   outlined
@@ -163,7 +154,6 @@
                 <v-text-field
                   v-model="facebookUrl"
                   :error-messages="facebookUrlErrors"
-                  required
                   @input="$v.facebookUrl.$touch()"
                   @blur="$v.facebookUrl.$touch()"
                   outlined
@@ -176,7 +166,6 @@
                 <v-text-field
                   v-model="telegramUrl"
                   :error-messages="telegramUrlErrors"
-                  required
                   @input="$v.telegramUrl.$touch()"
                   @blur="$v.telegramUrl.$touch()"
                   outlined
@@ -189,7 +178,6 @@
                 <v-text-field
                   v-model="steemitUrl"
                   :error-messages="steemitUrlErrors"
-                  required
                   @input="$v.steemitUrl.$touch()"
                   @blur="$v.steemitUrl.$touch()"
                   outlined
@@ -202,7 +190,6 @@
                 <v-text-field
                   v-model="redditUrl"
                   :error-messages="redditUrlErrors"
-                  required
                   @input="$v.redditUrl.$touch()"
                   @blur="$v.redditUrl.$touch()"
                   outlined
@@ -215,7 +202,6 @@
                 <v-text-field
                   v-model="slackUrl"
                   :error-messages="slackUrlErrors"
-                  required
                   @input="$v.slackUrl.$touch()"
                   @blur="$v.slackUrl.$touch()"
                   outlined
@@ -228,7 +214,6 @@
                 <v-text-field
                   v-model="wikipediaUrl"
                   :error-messages="wikipediaUrlErrors"
-                  required
                   @input="$v.wikipediaUrl.$touch()"
                   @blur="$v.wikipediaUrl.$touch()"
                   outlined
@@ -252,9 +237,6 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, url, maxLength, minLength } from 'vuelidate/lib/validators'
-
 import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
