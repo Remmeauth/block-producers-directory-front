@@ -18,20 +18,56 @@
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="details.name" outlined clearable label="Name" prepend-inner-icon="account_circle"></v-text-field>
+                <v-text-field 
+                  v-model="details.name" 
+                  :error-messages="nameErrors"
+                  @input="$v.details.name.$touch()"
+                  @blur="$v.details.name.$touch()"
+                  outlined 
+                  clearable 
+                  label="Name" 
+                  prepend-inner-icon="account_circle"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="details.websiteUrl" outlined clearable label="Website" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="details.websiteUrl" 
+                  :error-messages="websiteUrlErrors"
+                  @input="$v.details.websiteUrl.$touch()"
+                  @blur="$v.details.websiteUrl.$touch()"
+                  outlined 
+                  clearable 
+                  label="Website" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-text-field v-model="details.location" outlined clearable label="Location" prepend-inner-icon="place"></v-text-field>
+                <v-text-field 
+                  v-model="details.location"
+                  :error-messages="locationUrlErrors"
+                  @input="$v.details.location.$touch()"
+                  @blur="$v.details.location.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Location" 
+                  prepend-inner-icon="place"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDetails">Update details</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDetails">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateDetails"
+              >
                 <span v-html="this.successMessage"></span>
-                <v-btn color="pink" text @click="snackBars.updateDetails = false">
+                <v-btn 
+                  color="pink" 
+                  text 
+                  @click="snackBars.updateDetails = false"
+                >
                   Close
                 </v-btn>
               </v-snackbar>
@@ -47,17 +83,42 @@
                 <span>Provide a short description and the full description. For a full description you can use HTML formatting.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-text-field v-model="descriptions.shortDescription" outlined clearable label="Short description"></v-text-field>
+                <v-text-field 
+                  v-model="descriptions.shortDescription"
+                  :error-messages="shortDescriptionErrors"
+                  @input="$v.descriptions.shortDescription.$touch()"
+                  @blur="$v.descriptions.shortDescription.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Short description"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea no-resize v-model="descriptions.fullDescription" outlined label="Full description"></v-textarea>
+                <v-textarea 
+                  no-resize 
+                  v-model="descriptions.fullDescription"
+                  :error-messages="fullDescriptionErrors"
+                  @input="$v.descriptions.fullDescription.$touch()"
+                  @blur="$v.descriptions.fullDescription.$touch()" 
+                  outlined 
+                  label="Full description"
+                ></v-textarea>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDescription">Update descriptions</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDescription">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateDescription"
+              >
                 <span v-html="this.successMessage"></span>
-                <v-btn color="pink" text @click="snackBars.updateDescription = false">
+                <v-btn 
+                  color="pink" 
+                  text 
+                  @click="snackBars.updateDescription = false"
+                >
                   Close
                 </v-btn>
               </v-snackbar>
@@ -73,14 +134,27 @@
                 <span>Upload block producer logotype.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input v-model="other.logotypeFile" outlined label="Select your logotype"></v-file-input>
+                <v-file-input 
+                  v-model="other.logotypeFile" 
+                  outlined 
+                  label="Select your logotype"
+                ></v-file-input>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="submitUploadingBlockProducerLogotype">Update logotype</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.submitUploadingBlockProducerLogotype">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.submitUploadingBlockProducerLogotype"
+              >
                 <span v-html="this.successMessage"></span>
-                <v-btn color="pink" text @click="snackBars.submitUploadingBlockProducerLogotype = false">
+                <v-btn 
+                  color="pink" 
+                  text 
+                  @click="snackBars.submitUploadingBlockProducerLogotype = false"
+                >
                   Close
                 </v-btn>
               </v-snackbar>
@@ -96,41 +170,140 @@
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.linkedInUrl" outlined clearable label="LinkedIn" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.linkedInUrl"
+                  :error-messages="linkedInUrlErrors"
+                  @input="$v.referenceLinks.linkedInUrl.$touch()"
+                  @blur="$v.referenceLinks.linkedInUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="LinkedIn" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.twitterUrl" outlined clearable label="Twitter" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.twitterUrl"
+                  :error-messages="twitterUrlErrors"
+                  @input="$v.referenceLinks.twitterUrl.$touch()"
+                  @blur="$v.referenceLinks.twitterUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Twitter" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.mediumUrl" outlined clearable label="Medium" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.mediumUrl"
+                  :error-messages="mediumUrlErrors"
+                  @input="$v.referenceLinks.mediumUrl.$touch()"
+                  @blur="$v.referenceLinks.mediumUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Medium" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.githubUrl" outlined clearable label="Github" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.githubUrl"
+                  :error-messages="githubUrlErrors"
+                  @input="$v.referenceLinks.githubUrl.$touch()"
+                  @blur="$v.referenceLinks.githubUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Github" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.facebookUrl" outlined clearable label="Facebook" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.facebookUrl"
+                  :error-messages="facebookUrlErrors"
+                  @input="$v.referenceLinks.facebookUrl.$touch()"
+                  @blur="$v.referenceLinks.facebookUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Facebook" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.telegramUrl" outlined clearable label="Telegram" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.telegramUrl"
+                  :error-messages="telegramUrlErrors"
+                  @input="$v.referenceLinks.telegramUrl.$touch()"
+                  @blur="$v.referenceLinks.telegramUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Telegram" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.steemitUrl" outlined clearable label="Steemit" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.steemitUrl"
+                  :error-messages="steemitUrlErrors"
+                  @input="$v.referenceLinks.steemitUrl.$touch()"
+                  @blur="$v.referenceLinks.steemitUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Steemit" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.redditUrl" outlined clearable label="Reddit" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.redditUrl"
+                  :error-messages="redditUrlErrors"
+                  @input="$v.referenceLinks.redditUrl.$touch()"
+                  @blur="$v.referenceLinks.redditUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Reddit" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.slackUrl" outlined clearable label="Slack" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.slackUrl"
+                  :error-messages="slackUrlErrors"
+                  @input="$v.referenceLinks.slackUrl.$touch()"
+                  @blur="$v.referenceLinks.slackUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Slack" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.wikipediaUrl" outlined clearable label="Wikipedia" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.wikipediaUrl"
+                  :error-messages="wikipediaUrlErrors"
+                  @input="$v.referenceLinks.wikipediaUrl.$touch()"
+                  @blur="$v.referenceLinks.wikipediaUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Wikipedia" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateReferenceLinks">Update links</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateReferenceLinks">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateReferenceLinks"
+              >
                 <span v-html="this.successMessage"></span>
-                <v-btn color="pink" text @click="snackBars.updateReferenceLinks = false">
+                <v-btn 
+                  color="pink" 
+                  text 
+                  @click="snackBars.updateReferenceLinks = false"
+                >
                   Close
                 </v-btn>
               </v-snackbar>
@@ -144,6 +317,7 @@
 </template>
 
 <script>
+import editBlockProducerForm from '../../forms/pages/blockProducer/edit'
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
@@ -152,6 +326,7 @@ import { blockProducerStorageActions, blockProducerStorageMutations } from '../.
 
 export default {
   name: 'BlockProducerEditionPage',
+  mixins: [editBlockProducerForm],
   components: {
     Error404,
     Error500,
@@ -201,6 +376,7 @@ export default {
   },
   methods: {
     updateDetails() {
+      this.$v.$touch()
       this.snackBars.updateDetails = true
       store.dispatch(blockProducerStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
@@ -211,7 +387,8 @@ export default {
       })
     },
     updateDescription () {
-    this.snackBars.updateDescription = true
+      this.$v.$touch()
+      this.snackBars.updateDescription = true
       store.dispatch(blockProducerStorageActions.updateDescription, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -220,7 +397,8 @@ export default {
       })
     },
     updateReferenceLinks () {
-    this.snackBars.updateReferenceLinks = true
+      this.$v.$touch()
+      this.snackBars.updateReferenceLinks = true
       store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
@@ -237,7 +415,7 @@ export default {
       })
     },
     submitUploadingBlockProducerLogotype() {
-    this.snackBars.submitUploadingBlockProducerLogotype = true
+      this.snackBars.submitUploadingBlockProducerLogotype = true
       store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
