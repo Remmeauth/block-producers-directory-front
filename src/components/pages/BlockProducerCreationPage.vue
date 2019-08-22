@@ -15,13 +15,43 @@
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="name" outlined clearable label="Name" prepend-inner-icon="account_circle"></v-text-field>
+                <v-text-field
+                  v-model="name"
+                  :error-messages="nameErrors"
+                  required
+                  @input="$v.name.$touch()"
+                  @blur="$v.name.$touch()"
+                  outlined
+                  clearable
+                  label="Name"
+                  prepend-inner-icon="account_circle"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="websiteUrl" outlined clearable label="Website" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="websiteUrl"
+                  :error-messages="websiteUrlErrors"
+                  required
+                  @input="$v.websiteUrl.$touch()"
+                  @blur="$v.websiteUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Website"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-text-field v-model="location" outlined clearable label="Location" prepend-inner-icon="place"></v-text-field>
+                <v-text-field
+                  v-model="location"
+                  :error-messages="locationUrlErrors"
+                  required
+                  @input="$v.location.$touch()"
+                  @blur="$v.location.$touch()"
+                  outlined
+                  clearable
+                  label="Location"
+                  prepend-inner-icon="place"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -33,10 +63,28 @@
                 <span>Provide a short description and the full description. For a full description you can use HTML formatting.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-text-field v-model="shortDescription" outlined clearable label="Short description"></v-text-field>
+                <v-text-field
+                  v-model="shortDescription"
+                  :error-messages="shortDescriptionErrors"
+                  required
+                  @input="$v.shortDescription.$touch()"
+                  @blur="$v.shortDescription.$touch()"
+                  outlined
+                  clearable
+                  label="Short description"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea no-resize v-model="fullDescription" outlined label="Full description"></v-textarea>
+                <v-textarea
+                  v-model="fullDescription"
+                  :error-messages="fullDescriptionErrors"
+                  required
+                  @input="$v.fullDescription.$touch()"
+                  @blur="$v.fullDescription.$touch()"
+                  outlined
+                  clearable
+                  label="Full description"
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-container>
@@ -60,40 +108,140 @@
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="linkedInUrl" outlined clearable label="LinkedIn" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="linkedInUrl"
+                  :error-messages="linkedInUrlErrors"
+                  required
+                  @input="$v.linkedInUrl.$touch()"
+                  @blur="$v.linkedInUrl.$touch()"
+                  outlined
+                  clearable
+                  label="LinkedIn"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="twitterUrl" outlined clearable label="Twitter" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="twitterUrl"
+                  :error-messages="twitterUrlErrors"
+                  required
+                  @input="$v.twitterUrl.$touch()"
+                  @blur="$v.twitterUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Twitter"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="mediumUrl" outlined clearable label="Medium" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="mediumUrl"
+                  :error-messages="mediumUrlErrors"
+                  required
+                  @input="$v.mediumUrl.$touch()"
+                  @blur="$v.mediumUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Medium"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="githubUrl" outlined clearable label="Github" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="githubUrl"
+                  :error-messages="githubUrlErrors"
+                  required
+                  @input="$v.githubUrl.$touch()"
+                  @blur="$v.githubUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Github"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="facebookUrl" outlined clearable label="Facebook" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="facebookUrl"
+                  :error-messages="facebookUrlErrors"
+                  required
+                  @input="$v.facebookUrl.$touch()"
+                  @blur="$v.facebookUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Facebook"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="telegramUrl" outlined clearable label="Telegram" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="telegramUrl"
+                  :error-messages="telegramUrlErrors"
+                  required
+                  @input="$v.telegramUrl.$touch()"
+                  @blur="$v.telegramUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Telegram"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="steemitUrl" outlined clearable label="Steemit" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="steemitUrl"
+                  :error-messages="steemitUrlErrors"
+                  required
+                  @input="$v.steemitUrl.$touch()"
+                  @blur="$v.steemitUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Steemit"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="redditUrl" outlined clearable label="Reddit" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="redditUrl"
+                  :error-messages="redditUrlErrors"
+                  required
+                  @input="$v.redditUrl.$touch()"
+                  @blur="$v.redditUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Reddit"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="slackUrl" outlined clearable label="Slack" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="slackUrl"
+                  :error-messages="slackUrlErrors"
+                  required
+                  @input="$v.slackUrl.$touch()"
+                  @blur="$v.slackUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Slack"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="wikipediaUrl" outlined clearable label="Wikipedia" prepend-inner-icon="link"></v-text-field>
+                <v-text-field
+                  v-model="wikipediaUrl"
+                  :error-messages="wikipediaUrlErrors"
+                  required
+                  @input="$v.wikipediaUrl.$touch()"
+                  @blur="$v.wikipediaUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Wikipedia"
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
           <v-container>
             <v-col cols="12" lg="4" offset-lg="5">
-              <v-btn @click="create">Submit</v-btn>
+              <v-btn :disabled="$v.$anyError" @click="create">Submit</v-btn>
             </v-col>
           </v-container>
         </v-form>
@@ -104,6 +252,10 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, url, maxLength, minLength } from 'vuelidate/lib/validators'
+
+import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
@@ -111,6 +263,7 @@ import { blockProducerStorageActions, blockProducerStorageMutations } from '../.
 
 export default {
   name: 'BlockProducerCreationPage',
+  mixins: [submitBlockProducerForm],
   components: {
     Error500,
   },
@@ -146,6 +299,7 @@ export default {
   },
   methods: {
     create () {
+      this.$v.$touch()
       store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
