@@ -132,6 +132,7 @@ export default {
     }
   },
   mounted() {
+    console.log('mount of sign in page')
     const unsubscribe = store.subscribe((mutation, state) => {
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
@@ -154,7 +155,7 @@ export default {
         console.log('sic! sign in page')
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
-        // this.$router.push({name: 'index'})
+        this.$router.push({name: 'index'})
       }
     });
   }
