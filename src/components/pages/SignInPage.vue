@@ -24,19 +24,23 @@
                       <v-text-field
                         class="mb-4 pl-2 pr-2"
                         v-model="usernameOrEmail"
+                        :error-messages="usernameOrEmailErrors"
+                        @input="$v.usernameOrEmail.$touch()"
+                        @blur="$v.usernameOrEmail.$touch()"
                         label="Username or e-mail"
                         outlined 
                         prepend-inner-icon="person"
-                        required
                       ></v-text-field>
                       <v-text-field
                         class="mb-4 pl-2 pr-2"
-                        v-model="password" 
+                        v-model="password"
+                        :error-messages="passwordErrors"
+                        @input="$v.password.$touch()"
+                        @blur="$v.password.$touch()"
                         label="Password" 
                         outlined 
                         prepend-inner-icon="lock" 
-                        type="password" 
-                        required
+                        type="password"
                       ></v-text-field>
                       <v-card-actions class="justify-center">
                         <v-btn 
@@ -95,12 +99,14 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
+import signInForm from '../../forms/pages/authentication/signIn'
 import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
 export default {
   name: 'SignInPage',
+  mixins: [signInForm],
   components: {
     Error500,
   },
@@ -116,6 +122,9 @@ export default {
   },
   methods: {
     signIn () {
+      this.$v.$touch()
+      if (this.$v.$anyError) { return }
+
       store.dispatch(authenticationStorageActions.signIn, {
         usernameOrEmail: this.usernameOrEmail,
         password: this.password,
