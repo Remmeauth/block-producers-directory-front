@@ -241,7 +241,7 @@
           </v-container>
           <v-container>
             <v-col cols="12" lg="4" offset-lg="5">
-              <v-btn :disabled="$v.$anyError" @click="create">Submit</v-btn>
+              <v-btn @click="create">Submit</v-btn>
             </v-col>
           </v-container>
         </v-form>
@@ -300,6 +300,8 @@ export default {
   methods: {
     create () {
       this.$v.$touch()
+      if (this.$v.$anyError) { return }
+
       store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
