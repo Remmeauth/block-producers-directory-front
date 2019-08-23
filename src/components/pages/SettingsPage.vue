@@ -284,10 +284,9 @@
 </template>
 
 <script>
-import userSettingsForm from '../../forms/pages/user/settings'
-
 import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
+import userSettingsForm from '../../forms/pages/user/settings'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'

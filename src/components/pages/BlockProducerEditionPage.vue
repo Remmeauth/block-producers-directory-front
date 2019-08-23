@@ -377,6 +377,8 @@ export default {
   methods: {
     updateDetails() {
       this.$v.$touch()
+      if (this.$v.details.$anyError) { return }
+
       this.snackBars.updateDetails = true
       store.dispatch(blockProducerStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
@@ -388,6 +390,8 @@ export default {
     },
     updateDescription () {
       this.$v.$touch()
+      if (this.$v.descriptions.$anyError) { return }
+
       this.snackBars.updateDescription = true
       store.dispatch(blockProducerStorageActions.updateDescription, {
         jwtToken: this.localStorage.token,
@@ -398,6 +402,8 @@ export default {
     },
     updateReferenceLinks () {
       this.$v.$touch()
+      if (this.$v.details.$anyError) { return }
+
       this.snackBars.updateReferenceLinks = true
       store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
