@@ -55,7 +55,6 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
 
 export default {
@@ -99,11 +98,11 @@ export default {
       return
     }
 
-    store.dispatch(profileStorageActions.getProfile, {
+    this.$store.dispatch(profileStorageActions.getProfile, {
       username: this.localStorage.username,
     })
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === profileStorageMutations.subscribe.addError) {
         this.error = state.profile.error
         unsubscribe()

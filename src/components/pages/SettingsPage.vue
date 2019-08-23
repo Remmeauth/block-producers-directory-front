@@ -285,7 +285,6 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import userSettingsForm from '../../forms/pages/user/settings'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
@@ -344,7 +343,7 @@ export default {
       if (this.$v.details.$anyError) { return }
 
       this.snackBars.updateDetails = true
-      store.dispatch(settingsStorageActions.updateDetails, {
+      this.$store.dispatch(settingsStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         firstName: this.details.firstName,
@@ -357,7 +356,7 @@ export default {
       if (this.$v.referenceLinks.$anyError) { return }
 
       this.snackBars.updateReferenceLinks = true
-      store.dispatch(settingsStorageActions.updateReferenceLinks, {
+      this.$store.dispatch(settingsStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         websiteUrl: this.referenceLinks.websiteUrl,
@@ -375,7 +374,7 @@ export default {
       if (this.$v.other.$anyError) { return }
 
       this.snackBars.updateAdditionalInformation = true
-      store.dispatch(settingsStorageActions.updateAdditionalInformation, {
+      this.$store.dispatch(settingsStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         additionalInformation: this.other.additionalInformation,
@@ -383,7 +382,7 @@ export default {
     },
     submitUploadingProfileAvatar() {
     this.snackBars.submitUploadingProfileAvatar = true
-      store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
+      this.$store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
         file: this.other.avatarFile,
@@ -391,15 +390,15 @@ export default {
     },
   },
   mounted() {
-    store.dispatch(userStorageActions.getUser, {
+    this.$store.dispatch(userStorageActions.getUser, {
         username: this.localStorage.username,
     })
 
-    store.dispatch(profileStorageActions.getProfile, {
+    this.$store.dispatch(profileStorageActions.getProfile, {
         username: this.localStorage.username,
     })
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === settingsStorageMutations.subscribe.addError) {
         this.error = state.settings.error
         unsubscribe()

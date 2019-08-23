@@ -240,7 +240,6 @@
 <script>
 import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 
@@ -285,7 +284,7 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(blockProducerStorageActions.createBlockProducer, {
+      this.$store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
         location: this.location,
@@ -306,7 +305,7 @@ export default {
     },
   },
   mounted() {
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()
@@ -321,7 +320,7 @@ export default {
         this.createdBlockProducerIdentifier = state.blockProducer.id
 
         if (this.logotypeFile) {
-          store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+          this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
             jwtToken: this.localStorage.token,
             identifier: this.createdBlockProducerIdentifier,
             file: this.logotypeFile,

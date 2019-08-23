@@ -100,7 +100,6 @@
 <script>
 import Error500 from '../../components/ui/Error500'
 import signInForm from '../../forms/pages/authentication/signIn'
-import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
@@ -125,15 +124,14 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(authenticationStorageActions.signIn, {
+      this.$store.dispatch(authenticationStorageActions.signIn, {
         usernameOrEmail: this.usernameOrEmail,
         password: this.password,
       })
     }
   },
   mounted() {
-    console.log('mount of sign in page')
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
         unsubscribe()
@@ -146,13 +144,12 @@ export default {
 
       if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
         this.localStorage.token = state.authentication.token
-        store.dispatch(userStorageActions.getUserFromToken, {
+        this.$store.dispatch(userStorageActions.getUserFromToken, {
           jwtToken: state.authentication.token,
         })
       }
 
       if (mutation.type === userStorageMutations.subscribe.addUser) {
-        console.log('sic! sign in page')
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
         this.$router.push({name: 'index'})
