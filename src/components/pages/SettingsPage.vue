@@ -341,9 +341,9 @@ export default {
   },
   methods: {
     updateDetails() {
-      if (this.$v.$anyError) { return }
-
       this.$v.$touch()
+      if (this.$v.details.$anyError) { return }
+
       this.snackBars.updateDetails = true
       store.dispatch(settingsStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
@@ -354,9 +354,9 @@ export default {
       })
     },
     updateReferenceLinks() {
-      if (this.$v.$anyError) { return }
-
       this.$v.$touch()
+      if (this.$v.referenceLinks.$anyError) { return }
+
       this.snackBars.updateReferenceLinks = true
       store.dispatch(settingsStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
@@ -372,9 +372,9 @@ export default {
       })
     },
     updateAdditionalInformation() {
-      if (this.$v.$anyError) { return }
-
       this.$v.$touch()
+      if (this.$v.other.$anyError) { return }
+
       this.snackBars.updateAdditionalInformation = true
       store.dispatch(settingsStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
