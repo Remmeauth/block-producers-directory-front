@@ -36,7 +36,7 @@ export const submitBlockProducerForm = {
       !this.$v.websiteUrl.required && errors.push('Website is required.')
       return errors
     },
-    locationUrlErrors () {
+    locationErrors () {
       const errors = []
       if (!this.$v.location.$dirty) return errors
       !this.$v.location.maxLength && errors.push('Location must be at most 100 characters long.')

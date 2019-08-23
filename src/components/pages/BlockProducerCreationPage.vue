@@ -43,7 +43,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field
                   v-model="location"
-                  :error-messages="locationUrlErrors"
+                  :error-messages="locationErrors"
                   required
                   @input="$v.location.$touch()"
                   @blur="$v.location.$touch()"
