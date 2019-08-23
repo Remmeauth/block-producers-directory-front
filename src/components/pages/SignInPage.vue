@@ -151,6 +151,7 @@ export default {
       }
 
       if (mutation.type === userStorageMutations.subscribe.addUser) {
+        console.log('fuck! sign in page')
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
         this.$router.push({name: 'index'})
