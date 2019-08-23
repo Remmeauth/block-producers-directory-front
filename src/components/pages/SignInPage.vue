@@ -153,6 +153,7 @@ export default {
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
         this.$router.push({name: 'index'})
+        unsubscribe()
       }
     });
   }
