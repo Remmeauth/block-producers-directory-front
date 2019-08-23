@@ -15,24 +15,73 @@
                 <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="details.username" disabled outlined clearable label="Username" prepend-inner-icon="alternate_email"></v-text-field>
+                <v-text-field 
+                  v-model="details.username" 
+                  disabled 
+                  outlined 
+                  clearable 
+                  label="Username" 
+                  prepend-inner-icon="alternate_email"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="details.email" disabled outlined clearable label="E-mail address" prepend-inner-icon="email"></v-text-field>
+                <v-text-field 
+                  v-model="details.email"
+                  :error-messages="emailErrors"
+                  @input="$v.details.email.$touch()"
+                  @blur="$v.details.email.$touch()" 
+                  disabled 
+                  outlined 
+                  clearable 
+                  label="E-mail address" 
+                  prepend-inner-icon="email"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="details.firstName" outlined clearable label="First name" prepend-inner-icon="account_circle"></v-text-field>
+                <v-text-field 
+                  v-model="details.firstName" 
+                  :error-messages="firstNameErrors"
+                  @input="$v.details.firstName.$touch()"
+                  @blur="$v.details.firstName.$touch()" 
+                  outlined 
+                  clearable 
+                  label="First name" 
+                  prepend-inner-icon="account_circle"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="details.lastName" outlined clearable label="Last name" prepend-inner-icon="account_circle"></v-text-field>
+                <v-text-field 
+                  v-model="details.lastName"
+                  :error-messages="lastNameErrors"
+                  @input="$v.details.lastName.$touch()"
+                  @blur="$v.details.lastName.$touch()"  
+                  outlined 
+                  clearable 
+                  label="Last name" 
+                  prepend-inner-icon="account_circle"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-text-field v-model="details.location" outlined clearable label="Location" prepend-inner-icon="place"></v-text-field>
+                <v-text-field 
+                  v-model="details.location"
+                  :error-messages="locationErrors"
+                  @input="$v.details.location.$touch()"
+                  @blur="$v.details.location.$touch()"  
+                  outlined 
+                  clearable 
+                  label="Location" 
+                  prepend-inner-icon="place"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateDetails">Update details</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateDetails">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateDetails"
+              >
                 <span v-html="this.successMessage"></span>
                 <v-btn color="pink" text @click="snackBars.updateDetails = false">
                   Close
@@ -50,12 +99,25 @@
                 <span>Tell some words about yourself.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea no-resize v-model="other.additionalInformation" outlined label="Additional information"></v-textarea>
+                <v-textarea  
+                  v-model="other.additionalInformation" 
+                  :error-messages="additionalInformationErrors"
+                  @input="$v.other.additionalInformation.$touch()"
+                  @blur="$v.other.additionalInformation.$touch()"
+                  no-resize
+                  outlined 
+                  label="Additional information"
+                ></v-textarea>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateAdditionalInformation">Update information</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateAdditionalInformation">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateAdditionalInformation"
+              >
                 <span v-html="this.successMessage"></span>
                 <v-btn color="pink" text @click="snackBars.updateAdditionalInformation = false">
                   Close
@@ -73,10 +135,19 @@
                 <span>Upload your picture or avatar.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input v-model="other.avatarFile" outlined label="Select your picture"></v-file-input>
+                <v-file-input 
+                  v-model="other.avatarFile" 
+                  outlined 
+                  label="Select your picture"
+                ></v-file-input>
                 <v-btn @click="submitUploadingProfileAvatar">Upload picture</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.submitUploadingProfileAvatar">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.submitUploadingProfileAvatar"
+              >
                 <span v-html="this.successMessage"></span>
                 <v-btn color="pink" text @click="snackBars.submitUploadingProfileAvatar = false">
                   Close
@@ -94,33 +165,110 @@
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.websiteUrl" outlined clearable label="Web-site address" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.websiteUrl"
+                  :error-messages="websiteUrlErrors"
+                  @input="$v.referenceLinks.websiteUrl.$touch()"
+                  @blur="$v.referenceLinks.websiteUrl.$touch()" 
+                  outlined
+                  clearable 
+                  label="Web-site address" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.linkedInUrl" outlined clearable label="LinkedIn" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.linkedInUrl" 
+                  :error-messages="linkedInUrlErrors"
+                  @input="$v.referenceLinks.linkedInUrl.$touch()"
+                  @blur="$v.referenceLinks.linkedInUrl.$touch()"
+                  outlined 
+                  clearable 
+                  label="LinkedIn" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.twitterUrl" outlined clearable label="Twitter" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.twitterUrl"
+                  :error-messages="twitterUrlErrors"
+                  @input="$v.referenceLinks.twitterUrl.$touch()"
+                  @blur="$v.referenceLinks.twitterUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Twitter" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.mediumUrl" outlined clearable label="Medium" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.mediumUrl"
+                  :error-messages="mediumUrlErrors"
+                  @input="$v.referenceLinks.mediumUrl.$touch()"
+                  @blur="$v.referenceLinks.mediumUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Medium" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.githubUrl" outlined clearable label="Github" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.githubUrl"
+                  :error-messages="githubUrlErrors"
+                  @input="$v.referenceLinks.githubUrl.$touch()"
+                  @blur="$v.referenceLinks.githubUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Github" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.facebookUrl" outlined clearable label="Facebook" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.facebookUrl"
+                  :error-messages="facebookUrlErrors"
+                  @input="$v.referenceLinks.facebookUrl.$touch()"
+                  @blur="$v.referenceLinks.facebookUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Facebook" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field v-model="referenceLinks.telegramUrl" outlined clearable label="Telegram" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.telegramUrl"
+                  :error-messages="telegramUrlErrors"
+                  @input="$v.referenceLinks.telegramUrl.$touch()"
+                  @blur="$v.referenceLinks.telegramUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Telegram" 
+                  prepend-inner-icon="link"
+                  ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field v-model="referenceLinks.steemitUrl" outlined clearable label="Steemit" prepend-inner-icon="link"></v-text-field>
+                <v-text-field 
+                  v-model="referenceLinks.steemitUrl"
+                  :error-messages="steemitUrlErrors"
+                  @input="$v.referenceLinks.steemitUrl.$touch()"
+                  @blur="$v.referenceLinks.steemitUrl.$touch()" 
+                  outlined 
+                  clearable 
+                  label="Steemit" 
+                  prepend-inner-icon="link"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn @click="updateReferenceLinks">Update links</v-btn>
               </v-col>
-              <v-snackbar v-if="this.successMessage" right top v-model="snackBars.updateReferenceLinks">
+              <v-snackbar 
+                v-if="this.successMessage" 
+                right 
+                top 
+                v-model="snackBars.updateReferenceLinks"
+              >
                 <span v-html="this.successMessage"></span>
                 <v-btn color="pink" text @click="snackBars.updateReferenceLinks = false">
                   Close
@@ -136,6 +284,8 @@
 </template>
 
 <script>
+import userSettingsForm from '../../forms/pages/user/settings'
+
 import Error500 from '../../components/ui/Error500'
 import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
@@ -145,6 +295,7 @@ import { profileStorageActions, profileStorageMutations } from '../../store/modu
 
 export default {
   name: 'SettingsPage',
+  mixins: [userSettingsForm],
   components: {
     Error500,
   },
@@ -190,6 +341,9 @@ export default {
   },
   methods: {
     updateDetails() {
+      if (this.$v.$anyError) { return }
+
+      this.$v.$touch()
       this.snackBars.updateDetails = true
       store.dispatch(settingsStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
@@ -200,6 +354,9 @@ export default {
       })
     },
     updateReferenceLinks() {
+      if (this.$v.$anyError) { return }
+
+      this.$v.$touch()
       this.snackBars.updateReferenceLinks = true
       store.dispatch(settingsStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
@@ -215,6 +372,9 @@ export default {
       })
     },
     updateAdditionalInformation() {
+      if (this.$v.$anyError) { return }
+
+      this.$v.$touch()
       this.snackBars.updateAdditionalInformation = true
       store.dispatch(settingsStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
