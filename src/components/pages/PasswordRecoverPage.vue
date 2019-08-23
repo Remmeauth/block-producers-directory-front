@@ -173,6 +173,7 @@ export default {
   },
   methods: {
     getPasswordRecoveryRequest () {
+      this.$v.$touch()
       if (this.$v.$anyError) { return }
 
       store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {

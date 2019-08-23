@@ -122,6 +122,7 @@ export default {
   },
   methods: {
     signIn () {
+      this.$v.$touch()
       if (this.$v.$anyError) { return }
 
       store.dispatch(authenticationStorageActions.signIn, {
