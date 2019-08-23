@@ -53,7 +53,7 @@ export const password = {
   actions: {
     getPasswordRecoveryRequest({ commit }, { email }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/password/recovery/`, {
+        .post(process.env.VUE_APP_BACK_END_URL + '/users/password/recovery/', {
           email: email,
         })
         .then(response => {
@@ -77,7 +77,7 @@ export const password = {
     },
     sendNewPasswordToEmail({ commit }, { identifier }) {
       axios
-        .post(`https://bps-directory-back-staging.herokuapp.com/users/password/recovery/${identifier}/`)
+        .post(process.env.VUE_APP_BACK_END_URL + `/users/password/recovery/${identifier}/`)
         .then(response => {
           commit(passwordStorageMutations.commit.sendNewPassword, true)
         })
