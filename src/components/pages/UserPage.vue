@@ -100,7 +100,6 @@
 <script>
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations} from '../../store/modules/blockProducer'
 import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
@@ -151,17 +150,17 @@ export default {
     }
   },
   mounted() {
-    store.dispatch(userStorageActions.getUser, {
+    this.$store.dispatch(userStorageActions.getUser, {
       username: this.$route.params.username,
     })
 
-    store.dispatch(profileStorageActions.getProfile, {
+    this.$store.dispatch(profileStorageActions.getProfile, {
       username: this.$route.params.username,
     })
 
-    store.dispatch(blockProducerStorageActions.getBlockProducers)
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === userStorageMutations.subscribe.addError) {
         this.error = state.user.error
         unsubscribe()

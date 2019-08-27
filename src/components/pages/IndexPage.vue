@@ -82,7 +82,6 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
@@ -136,17 +135,17 @@ export default {
   },
   watch: {
     searchPhrase: function (searchPhrase) {
-      store.dispatch(blockProducerStorageActions.searchBlockProducers, {
+      this.$store.dispatch(blockProducerStorageActions.searchBlockProducers, {
         phrase: this.searchPhrase = searchPhrase,
       })
     }
   },
   mounted() {
-    store.dispatch(commentStorageActions.getCommentsNumbers)
-    store.dispatch(likeStorageActions.getLikesNumbers)
-    store.dispatch(blockProducerStorageActions.getBlockProducers)
+    this.$store.dispatch(commentStorageActions.getCommentsNumbers)
+    this.$store.dispatch(likeStorageActions.getLikesNumbers)
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()

@@ -97,7 +97,6 @@
 <script>
 import Error500 from '../../components/ui/Error500'
 import signUpForm from '../../forms/pages/authentication/signUp'
-import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 
 export default {
@@ -122,7 +121,7 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(authenticationStorageActions.signUp, {
+      this.$store.dispatch(authenticationStorageActions.signUp, {
         email: this.email,
         username: this.username,
         password: this.password,
@@ -130,7 +129,7 @@ export default {
     }
   },
   mounted() {
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
         unsubscribe()
@@ -150,7 +149,7 @@ export default {
         this.localStorage.email = this.email
         this.localStorage.username = this.username
 
-        store.dispatch(authenticationStorageActions.signIn, {
+        this.$store.dispatch(authenticationStorageActions.signIn, {
           usernameOrEmail: this.email,
           password: this.password,
         })
