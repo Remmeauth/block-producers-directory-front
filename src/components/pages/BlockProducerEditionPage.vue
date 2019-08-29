@@ -320,7 +320,6 @@
 import editBlockProducerForm from '../../forms/pages/blockProducer/edit'
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 
@@ -380,7 +379,7 @@ export default {
       if (this.$v.details.$anyError) { return }
 
       this.snackBars.updateDetails = true
-      store.dispatch(blockProducerStorageActions.updateDetails, {
+      this.$store.dispatch(blockProducerStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         name: this.details.name,
@@ -393,7 +392,7 @@ export default {
       if (this.$v.descriptions.$anyError) { return }
 
       this.snackBars.updateDescription = true
-      store.dispatch(blockProducerStorageActions.updateDescription, {
+      this.$store.dispatch(blockProducerStorageActions.updateDescription, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         shortDescription: this.descriptions.shortDescription,
@@ -405,7 +404,7 @@ export default {
       if (this.$v.details.$anyError) { return }
 
       this.snackBars.updateReferenceLinks = true
-      store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
+      this.$store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         facebookUrl: this.referenceLinks.facebookUrl,
@@ -422,7 +421,7 @@ export default {
     },
     submitUploadingBlockProducerLogotype() {
       this.snackBars.submitUploadingBlockProducerLogotype = true
-      store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+      this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
         file: this.other.logotypeFile,
@@ -430,11 +429,11 @@ export default {
     },
   },
   mounted() {
-    store.dispatch(blockProducerStorageActions.getBlockProducer, {
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducer, {
         identifier: this.$route.params.identifier,
     })
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()

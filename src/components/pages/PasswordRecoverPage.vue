@@ -148,7 +148,6 @@
 <script>
 import Error500 from '../../components/ui/Error500'
 import passwordRecoveryRequestForm from '../../forms/pages/authentication/passwordRecovery'
-import store from '../../store/index'
 import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
 
 export default {
@@ -176,13 +175,13 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {
+      this.$store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {
         email: this.email,
       })
     }
   },
   mounted() {
-    store.subscribe((mutation, state) => {
+    this.$store.subscribe((mutation, state) => {
       if (mutation.type === passwordStorageMutations.subscribe.addError) {
         this.error = state.password.error
       }

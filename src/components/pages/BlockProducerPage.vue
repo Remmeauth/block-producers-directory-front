@@ -275,7 +275,6 @@
 <script>
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
@@ -326,7 +325,7 @@ export default {
   },
   methods: {
     createComment() {
-      store.dispatch(commentStorageActions.createComment, {
+      this.$store.dispatch(commentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,
         text: this.comment,
@@ -344,11 +343,13 @@ export default {
     like() {
       this.isLikedByUser = !this.isLikedByUser
       if (this.isLikedByUser) { this.likesNumber++ } else { this.likesNumber-- }
-      store.dispatch(likeStorageActions.putLike, {
+
+      this.$store.dispatch(likeStorageActions.putLike, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier
       })
-      store.subscribe((mutation, state) => {
+
+      this.$store.subscribe((mutation, state) => {
         if (mutation.type === likeStorageMutations.subscribe.addError) {
           this.error = state.like.error
         }
@@ -358,29 +359,30 @@ export default {
   },
   mounted() {
     if (this.localStorage.username) {
-      store.dispatch(profileStorageActions.getProfile, {
+      this.$store.dispatch(profileStorageActions.getProfile, {
         username: this.localStorage.username,
       })
     }
 
-    store.dispatch(blockProducerStorageActions.getBlockProducer, {
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducer, {
       identifier: this.$route.params.identifier,
     })
 
-    store.dispatch(commentStorageActions.getComments, {
+    this.$store.dispatch(commentStorageActions.getComments, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    store.dispatch(likeStorageActions.getLikes, {
+    this.$store.dispatch(likeStorageActions.getLikes, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    store.dispatch(likeStorageActions.isLikedByUser, {
+    this.$store.dispatch(likeStorageActions.isLikedByUser, {
       username: this.localStorage.username,
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()

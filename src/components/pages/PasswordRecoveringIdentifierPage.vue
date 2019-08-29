@@ -56,7 +56,6 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
 
 export default {
@@ -74,11 +73,11 @@ export default {
     }
   },
   mounted() {
-    store.dispatch(passwordStorageActions.sendNewPasswordToEmail, {
+    this.$store.dispatch(passwordStorageActions.sendNewPasswordToEmail, {
       identifier: this.$route.params.identifier,
     })
 
-    store.subscribe((mutation, state) => {
+    this.$store.subscribe((mutation, state) => {
       if (mutation.type === passwordStorageMutations.subscribe.addError) {
         this.error = state.password.error
       }
