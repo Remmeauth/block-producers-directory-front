@@ -391,6 +391,10 @@ export default {
     },
   },
   mounted() {
+    if (!this.localStorage.username) {
+      this.$router.push({name: 'index'})
+    }
+    
     store.dispatch(userStorageActions.getUser, {
         username: this.localStorage.username,
     })
