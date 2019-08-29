@@ -330,15 +330,17 @@ export default {
         blockProducerIdentifier: this.$route.params.identifier,
         text: this.comment,
       })
-    this.comments.unshift({
-      profile_avatar_url: this.profile.avatarUrl,
-      user: {
-        username: this.localStorage.username,
-      },
-      text: this.comment,
-      created_at: (+ new Date() / 1000),
-    })
-    this.comment = ''
+
+      this.comments.unshift({
+        profile_avatar_url: this.profile.avatarUrl,
+        user: {
+          username: this.localStorage.username,
+        },
+        text: this.comment,
+        created_at: (+ new Date() / 1000),
+      })
+
+      this.comment = ''
     },
     like() {
       this.isLikedByUser = !this.isLikedByUser
@@ -353,6 +355,7 @@ export default {
         if (mutation.type === likeStorageMutations.subscribe.addError) {
           this.error = state.like.error
         }
+
         if (mutation.type === likeStorageMutations.subscribe.putLike) {}
       });
     },
@@ -381,27 +384,32 @@ export default {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-
     const unsubscribe = this.$store.subscribe((mutation, state) => {
+
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()
       }
+
       if (mutation.type === commentStorageMutations.subscribe.addError) {
         this.error = state.comment.error
         unsubscribe()
       }
+
       if (mutation.type === commentStorageMutations.subscribe.fieldsErrors) {
         this.fieldsErrors = state.comment.fieldsErrors
         unsubscribe()
       }
+
       if (mutation.type === likeStorageMutations.subscribe.addLikes) {
         this.blockProducerLikes = state.like.likes
         this.likesNumber = state.like.likesNumber
       }
+
       if (mutation.type === likeStorageMutations.subscribe.markAsIsLikedByUser) {
         this.isLikedByUser = state.like.isLikedByUser
       }
+
       if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
         this.blockProducer.user = state.blockProducer.user
         this.blockProducer.id = state.blockProducer.id
@@ -422,9 +430,11 @@ export default {
         this.blockProducer.websiteUrl = state.blockProducer.websiteUrl
         this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
       }
+
       if (mutation.type === profileStorageMutations.subscribe.addProfile) {
         this.profile.avatarUrl = state.profile.avatarUrl
       }
+      
       if (mutation.type === commentStorageMutations.subscribe.createComment) {
         this.successMessage = 'Comment created successfully — view your block producer.'
       }
