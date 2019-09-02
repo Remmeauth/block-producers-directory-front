@@ -5,7 +5,7 @@
   <div v-else>
     <br>
     <v-layout>
-      <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
         <v-form>
           <v-container>
             <v-row>
@@ -74,7 +74,13 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-btn @click="updateDetails">Update details</v-btn>
+                <v-btn
+                  class="text-none white--text"
+                  @click="updateDetails"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update details
+                </v-btn>
               </v-col>
               <v-snackbar 
                 v-if="this.successMessage" 
@@ -110,7 +116,13 @@
                 ></v-textarea>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-btn @click="updateAdditionalInformation">Update information</v-btn>
+                <v-btn
+                  class="text-none white--text"
+                  @click="updateAdditionalInformation"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update information
+                </v-btn>
               </v-col>
               <v-snackbar 
                 v-if="this.successMessage" 
@@ -140,7 +152,13 @@
                   outlined 
                   label="Select your picture"
                 ></v-file-input>
-                <v-btn @click="submitUploadingProfileAvatar">Upload picture</v-btn>
+                <v-btn 
+                  class="text-none white--text"
+                  @click="submitUploadingProfileAvatar"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Upload picture
+                </v-btn>
               </v-col>
               <v-snackbar 
                 v-if="this.successMessage" 
@@ -172,8 +190,8 @@
                   @blur="$v.referenceLinks.websiteUrl.$touch()" 
                   outlined
                   clearable 
-                  label="Web-site address" 
-                  prepend-inner-icon="link"
+                  label="Web-site" 
+                  prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -185,7 +203,7 @@
                   outlined 
                   clearable 
                   label="LinkedIn" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-linkedin-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -197,7 +215,7 @@
                   outlined 
                   clearable 
                   label="Twitter" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-twitter"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -209,7 +227,7 @@
                   outlined 
                   clearable 
                   label="Medium" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -221,7 +239,7 @@
                   outlined 
                   clearable 
                   label="Github" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -233,7 +251,7 @@
                   outlined 
                   clearable 
                   label="Facebook" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -245,7 +263,7 @@
                   outlined 
                   clearable 
                   label="Telegram" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-telegram"
                   ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -257,11 +275,17 @@
                   outlined 
                   clearable 
                   label="Steemit" 
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-btn @click="updateReferenceLinks">Update links</v-btn>
+                <v-btn 
+                  class="text-none white--text"
+                  @click="updateReferenceLinks"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update links
+                </v-btn>
               </v-col>
               <v-snackbar 
                 v-if="this.successMessage" 

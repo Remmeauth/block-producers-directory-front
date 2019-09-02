@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top: 90px;">
+      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -14,12 +14,12 @@
                   outlined
                   style="border-color: #5d80da;"
                 >
-                  <div
+                  <div class="mt-10" 
                     style="text-align: center; font-size:1.7em;"
-                  ><br>
+                  >
                     Sign up to Directory
                   </div>
-                  <v-card flat class="ma-2 pa-10">
+                  <v-card flat class="ma-2 pa-10 pt-5">
                     <v-form>
                       <v-text-field class="mb-4 pl-2 pr-2"
                         v-model="email"
@@ -54,6 +54,7 @@
                         class="ml-2"
                         @verify="onVerify"
                         :sitekey="objects.captcha.siteKey"
+                        :loadRecaptchaScript="true"
                         style="transform:scale(0.78); transform-origin: 0 0;"
                       >
                       </vue-recaptcha>
@@ -72,10 +73,11 @@
                         class="justify-center"
                         style="padding-top: 0; flex-direction: column;"
                       >
-                        <v-btn
-                          class="custom-btn text-none"
+                        <v-btn  
+                          class="custom-btn-second text-none" 
                           :ripple="false"
                           text
+                          style="cursor: auto;"
                         >
                           Already have an account?
                           <v-btn
@@ -86,7 +88,7 @@
                             style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
                           >
-                            Sign in
+                            Sign in!
                           </v-btn>
                         </v-btn>
                       </v-card-actions>
