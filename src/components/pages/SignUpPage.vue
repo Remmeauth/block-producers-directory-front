@@ -54,6 +54,7 @@
                         class="ml-2"
                         @verify="onVerify"
                         :sitekey="objects.captcha.siteKey"
+                        :loadRecaptchaScript="true"
                         style="transform:scale(0.78); transform-origin: 0 0;"
                       >
                       </vue-recaptcha>
