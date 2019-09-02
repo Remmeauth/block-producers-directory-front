@@ -3,86 +3,77 @@
     <Error500/>
   </div>
   <div v-else>
-    <form>
-      <v-container grid-list-xl fluid>
-        <v-layout wrap align-center>
-          <v-flex xs12 sm8 md8 xl8 offset-xs1 offset-sm2 offset-md2>
-            <v-row no-gutters>
-              <v-col cols="9" xs="12" sm="12" md="12">
-                <v-card class="pa-2">
-                  <v-container grid-list-xl fluid>
-                    <v-text-field 
-                      prepend-icon="search" 
-                      v-model="searchPhrase" 
-                      label="Search" 
-                      append-icon="clear"
-                    ></v-text-field>
-                    <v-row>
-                      <v-col
-                        v-for="(blockProducer, n) in getBlockProducersToRender()"
-                        :key="n"
-                        class="d-flex child-flex"
-                        :lg="4"
-                        :md="6"
-                        :sm="12"
-                        :xs="12"
-                        @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
+    <v-container fluid>
+      <v-layout row wrap>
+        <v-flex xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
+          <v-card class="mt-4 mb-4"
+            elevation="10" 
+            outlined
+            style="border-color: #5d80da;"
+          >
+            <v-container>
+              <v-text-field 
+                prepend-icon="search" 
+                v-model="searchPhrase" 
+                label="Search" 
+                append-icon="clear"
+              ></v-text-field>
+              <v-row>
+                <v-col cols="12" xs="8" sm="6" md="6" lg="4" xl="3"
+                  v-for="(blockProducer, n) in getBlockProducersToRender()"
+                  :key="n"
+                  @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
+                >
+                  <v-card 
+                    outlined 
+                    align="center" 
+                    style="height: 300px; border-color: #5d80da; background-color: #EBF5FB; cursor: pointer;"
+                  >
+                    <v-img class="mt-2 mb-2"
+                      v-if="blockProducer.logo_url" 
+                      :src="blockProducer.logo_url"
+                      style="width: 150px; max-width: 35%; border-radius: 50%;"
+                    ></v-img>
+                    <v-divider></v-divider>
+                    <h3 class="mt-4">
+                      <span style="font-size: 1.1em; font-weight: 500; cursor: pointer;">
+                        {{ blockProducer.name }}
+                      </span>
+                    </h3>
+                    <v-card-text
+                      v-if="blockProducer.user" 
+                      class="pt-1 pb-0"
+                      @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id}})"
+                      style="cursor: pointer;"
+                    >
+                      <v-form>
+                        by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-text 
+                      class="pt-2 pb-0" 
+                      style="cursor: pointer;"
                       >
-                        <v-card outlined tile class="justify-center" style="text-align:center; border-color:#5d80da;">
-                          <v-img
-                            src="https://assets.website-files.com/5c9cd8c8d88d003bb6f2f7c6/5caf8a2c585c219feb2b8e0a_remme-protocol-monthly-update-thumb.png"
-                            gradient="to bottom, rgba(0,0,0,0), rgba(0,0,0,0)"
-                          >
-                          </v-img>
-                          <v-card-title class="justify-center">
-                            <v-btn 
-                              class="custom-btn text-capitalize"
-                              :ripple="false" 
-                              text
-                            >
-                              <b>{{blockProducer.name}}</b>
-                            </v-btn>
-                          </v-card-title>
-                          <v-spacer></v-spacer>
-                          <v-btn text class="custom-btn text-capitalize" :ripple="false" style="cursor:auto;">
-                            <v-icon color="deep-purple">location_on</v-icon>
-                            <span>{{ blockProducer.location }}</span>
-                          </v-btn>
-                          <br>
-                          <br>
-                          <v-bottom-navigation horizontal style="box-shadow:none;"
-                          >
-                            <v-btn text class="custom-btn" :ripple="false">
-                              <span>{{ getBlockProducerCommentsNumber(blockProducer.id) }} comments</span>
-                              <v-icon color="deep-purple">comment</v-icon>
-                            </v-btn>
-                            <v-btn text class="custom-btn" :ripple="false">
-                              <span>{{ getBlockProducerLikesNumber(blockProducer.id) }} likes</span>
-                              <v-icon color="deep-purple">favorite</v-icon>
-                            </v-btn>
-                          </v-bottom-navigation>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                    <v-row v-if="searchPhrase && Array.isArray(searchedBlockProducers) && !searchedBlockProducers.length">
-                      <v-flex xs12 sm12 md12 lg12 xl12 style="text-align:center;">
-                        <v-alert>:( Sorry, no results were found for this request.</v-alert>
-                      </v-flex>
-                    </v-row>
-                  </v-container>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </form>
+                      {{ blockProducer.short_description }}
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row v-if="searchPhrase && Array.isArray(searchedBlockProducers) && !searchedBlockProducers.length">
+                <v-flex xs12 sm12 md12 lg12 xl12 style="text-align:center;">
+                  <v-alert>:( Sorry, no results were found for this request.</v-alert>
+                </v-flex>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
@@ -136,17 +127,17 @@ export default {
   },
   watch: {
     searchPhrase: function (searchPhrase) {
-      store.dispatch(blockProducerStorageActions.searchBlockProducers, {
+      this.$store.dispatch(blockProducerStorageActions.searchBlockProducers, {
         phrase: this.searchPhrase = searchPhrase,
       })
     }
   },
   mounted() {
-    store.dispatch(commentStorageActions.getCommentsNumbers)
-    store.dispatch(likeStorageActions.getLikesNumbers)
-    store.dispatch(blockProducerStorageActions.getBlockProducers)
+    this.$store.dispatch(commentStorageActions.getCommentsNumbers)
+    this.$store.dispatch(likeStorageActions.getLikesNumbers)
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()

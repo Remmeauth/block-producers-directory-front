@@ -6,127 +6,324 @@
     <Error500/>
   </div>
   <div v-else>
-    <br>
-    <v-layout row wrap>
-      <v-flex lg10 offset-lg1>
-        <v-spacer></v-spacer>
+    <v-layout class="mb-12 mt-12" row wrap>
+      <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
         <v-layout row wrap>
-          <v-flex lg4 offset-lg1>
-            <v-flex lg12>
-              <v-card
-                max-width="344"
-                class="mx-auto"
+            <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
+              <v-card 
+                v-if="
+                  this.$vuetify.breakpoint.name === 'xs' || 
+                  this.$vuetify.breakpoint.name === 'sm'"
+                class="mx-auto mb-6"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
                 >
-                <v-img v-if="blockProducer.logoUrl" :src="blockProducer.logoUrl" height="194"></v-img>
-                <v-card-title class="align-start">
-                  <div>
-                    <span class="headline">{{ blockProducer.name }}</span>
-                  </div>
-                </v-card-title>
-                <v-card-text>
+                <v-img class="mt-2 mb-2"
+                  v-if="blockProducer.logoUrl" 
+                  :src="blockProducer.logoUrl"
+                  style="max-width: 35%; border-radius: 50%;"
+                ></v-img>
+                <v-divider></v-divider>
+                <h3 class="mt-3">
+                  <span class="headline">
+                    {{ blockProducer.name }}
+                  </span>
+                </h3>
+                <v-card-text class="pt-2 pb-0">
                   {{ blockProducer.shortDescription }}
                 </v-card-text>
-                <v-bottom-navigation
-                  color="deep-purple"
-                  horizontal
-                  style="box-shadow: none"
+                <v-card-text 
+                  v-if="blockProducer.user"
+                  class="pt-1 pb-0"
+                  @click="$router.push({name: 'user', params: {username: blockProducer.user.username }})"
+                  style="cursor: pointer;"
+                >
+                  <v-form>
+                    by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                  </v-form>
+                </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2"
+                  v-if="blockProducer.location"
+                >
+                  <v-icon>location_on</v-icon>
+                  {{ blockProducer.location }}
+                </v-card-text>
+                <v-card-text
+                  class="pt-0"
+                  v-if="blockProducer.websiteUrl"
+                >
+                  <a :href="blockProducer.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
+                    {{ blockProducer.websiteUrl }} 
+                  </a>
+                </v-card-text>
+                <v-divider 
+                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl || blockProducer.githubUrl || 
+                        blockProducer.facebookUrl || blockProducer.mediumUrl || blockProducer.telegramUrl ||
+                        blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
+                        blockProducer.wikipediaUrl"
+                ></v-divider>
+                <v-card-text 
+                  class="pt-3 pb-3"
+                >
+                  <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="blockProducer.twitterUrl" :href="blockProducer.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="blockProducer.githubUrl" :href="blockProducer.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="blockProducer.facebookUrl" :href="blockProducer.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="blockProducer.mediumUrl" :href="blockProducer.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="blockProducer.telegramUrl" :href="blockProducer.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="blockProducer.redditUrl" :href="blockProducer.redditUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="rgb(255, 69, 0)">mdi-reddit</v-icon>
+                  </a>
+                  <a v-if="blockProducer.slackUrl" :href="blockProducer.slackUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-slack</v-icon>
+                  </a>
+                  <a v-if="blockProducer.steemitUrl" :href="blockProducer.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
+                  </a>
+                  <a v-if="blockProducer.wikipediaUrl" :href="blockProducer.wikipediaUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-wikipedia</v-icon>
+                  </a>
+                </v-card-text>
+                <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
+                <v-card-actions v-if="blockProducer.user">
+                  <v-btn 
+                    v-if="blockProducer.user.username === localStorage.username" 
+                    @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})" 
+                    outlined 
+                    color="white" 
+                    block 
+                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
                   >
-                  <v-btn disabled>
-                    <span>{{ commentsNumber }} comments</span>
-                    <v-icon>comment</v-icon>
+                    Edit a block producer
                   </v-btn>
-                  <v-btn class="btn-background-none" v-if="isLikedByUser" @click="like">
-                    <span>{{ likesNumber }} likes</span>
-                    <v-icon>favorite</v-icon>
+                </v-card-actions>
+              </v-card>
+              <v-card 
+                v-if="
+                  this.$vuetify.breakpoint.name === 'md' ||
+                  this.$vuetify.breakpoint.name === 'lg' ||
+                  this.$vuetify.breakpoint.name === 'xl'" 
+                class="mx-auto mr-6 mb-6"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+                >
+                <v-img class="mt-2 mb-2"
+                  v-if="blockProducer.logoUrl" 
+                  :src="blockProducer.logoUrl"
+                  style="max-width: 50%; border-radius: 50%;"
+                ></v-img>
+                <v-divider></v-divider>
+                <h3 class="mt-3">
+                  <span class="headline">
+                    {{ blockProducer.name }}
+                  </span>
+                </h3>
+                <v-card-text class="pt-2 pb-0">
+                  {{ blockProducer.shortDescription }}
+                </v-card-text>
+                <v-card-text
+                  v-if="blockProducer.user" 
+                  class="pt-1 pb-0"
+                  @click="$router.push({name: 'user', params: {username: blockProducer.user.username }})"
+                  style="cursor: pointer;"
+                >
+                  <v-form>
+                    by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                  </v-form>
+                </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2"
+                  v-if="blockProducer.location"
+                >
+                  <v-icon>location_on</v-icon>
+                  {{ blockProducer.location }}
+                </v-card-text>
+                <v-card-text 
+                  class="pt-0"
+                  v-if="blockProducer.websiteUrl"
+                >
+                  <a :href="blockProducer.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
+                    {{ blockProducer.websiteUrl }} 
+                  </a>
+                </v-card-text>
+                <v-divider 
+                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl || blockProducer.githubUrl || 
+                        blockProducer.facebookUrl || blockProducer.mediumUrl || blockProducer.telegramUrl ||
+                        blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
+                        blockProducer.wikipediaUrl"
+                ></v-divider>
+                <v-card-text 
+                  class="pt-3 pb-3"
+                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl"
+                >
+                  <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="blockProducer.twitterUrl" :href="blockProducer.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="blockProducer.githubUrl" :href="blockProducer.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="blockProducer.facebookUrl" :href="blockProducer.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="blockProducer.mediumUrl" :href="blockProducer.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="blockProducer.telegramUrl" :href="blockProducer.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="blockProducer.redditUrl" :href="blockProducer.redditUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="rgb(255, 69, 0)">mdi-reddit</v-icon>
+                  </a>
+                  <a v-if="blockProducer.slackUrl" :href="blockProducer.slackUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-slack</v-icon>
+                  </a>
+                  <a v-if="blockProducer.steemitUrl" :href="blockProducer.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
+                  </a>
+                  <a v-if="blockProducer.wikipediaUrl" :href="blockProducer.wikipediaUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-wikipedia</v-icon>
+                  </a>
+                </v-card-text>
+                <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
+                <v-card-actions v-if="blockProducer.user">
+                  <v-btn 
+                    v-if="blockProducer.user.username === localStorage.username" 
+                    @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
+                    outlined 
+                    color="white" 
+                    block 
+                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                  >
+                    Edit a block producer
                   </v-btn>
-                  <v-btn class="btn-background-none" v-else @click="like">
-                    <span>{{ likesNumber }} likes</span>
-                    <v-icon>favorite_border</v-icon>
-                  </v-btn>
-                </v-bottom-navigation>
+                </v-card-actions>
               </v-card>
             </v-flex>
-            <div v-if="blockProducer.user">
-              <br v-if="blockProducer.user.username === localStorage.username">
-              <v-flex lg12 v-if="blockProducer.user.username === localStorage.username">
-                <v-card max-width="344" class="mx-auto">
-                  <v-btn @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})" width="344">Edit a block producer</v-btn>
-                </v-card>
-              </v-flex>
-            </div>
-            <br>
-            <v-flex lg12>
-              <v-card max-width="344" class="mx-auto">
-                <v-list disabled>
-                  <v-list-item-group color="primary">
-                    <v-list-item>
-                      <v-list-item-icon>
-                        <v-icon>link</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title><a v-bind:href="blockProducer.websiteUrl">{{ blockProducer.websiteUrl }}</a></v-list-item-title>
+            <v-flex xs12 sm8 md6 lg6>
+              <v-card 
+                class="mx-auto"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+              >
+                <v-subheader>Block producer's information</v-subheader>
+                <div class="pa-4 pt-0 caption">
+                  <p 
+                    v-if="blockProducer.fullDescription" 
+                    style="text-align: justify;" 
+                    v-html="blockProducer.fullDescription"
+                  ></p>
+                  <p 
+                    v-else 
+                    style="text-align: justify;"
+                  >
+                    No information has been provided.
+                  </p>
+                </div>
+              </v-card>
+              <v-card 
+                v-if="comments && comments.length > 0"
+                class="mt-6"
+                outlined
+              >
+                <v-card-text class="pb-0 black--text" v-if="!localStorage.username">
+                  Already have an account?
+                  <a class="custom-btn" @click="$router.push({name: 'sign-in'})">
+                    Sign in
+                  </a>
+                  to comment.
+                </v-card-text>
+                <v-list two-line>
+                  <template v-for="(comment, index) in comments">
+                    <v-subheader v-if="index === 0">Comments</v-subheader>
+                    <v-divider v-else-if="index > 0" :inset="true"></v-divider>
+                    <v-list-item v-if="blockProducer.user">
+                      <img 
+                        class="mt-2 mb-2 mr-5 pa-1" 
+                        style="max-width: 10%; border-radius: 50%; cursor: pointer;" 
+                        :src="comment.profile_avatar_url"
+                        @click="$router.push({name: 'user', params: { username: comment.user.username }})"
+                      >
+                      <v-list-item-content 
+                        style="cursor: pointer;"
+                        @click="$router.push({name: 'user', params: { username: comment.user.username }})"
+                      >
+                        <v-list-item-title 
+                          class="mb-1" 
+                          style="font-weight: 500; font-size:0.9em;"
+                        >
+                          {{ comment.user.username }} 
+                          {{ new Date(comment.created_at * 1000).toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item  v-if="blockProducer.location">
-                      <v-list-item-icon>
-                        <v-icon>location_on</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title>{{ blockProducer.location }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list-item-group>
+                  </template>
                 </v-list>
               </v-card>
-            </v-flex>
-            <br>
-          </v-flex>
-          <v-flex lg6>
-            <v-card class="mx-auto overflow-hidden">
-              <v-subheader>Block producer's information</v-subheader>
-              <div class="pa-4 pt-0 caption">
-                <p v-if="blockProducer.fullDescription" style="text-align: justify;" v-html="blockProducer.fullDescription"></p>
-                <p v-else style="text-align: justify;">No information has been provided.</p>
-              </div>
-            </v-card>
-            <br>
-            <v-card v-if="comments && comments.length > 0">
-              <v-list two-line>
-                <template v-for="(comment, index) in comments">
-                  <v-subheader v-if="index === 0">Comments</v-subheader>
-                  <v-divider v-else-if="index > 0" :inset="true"></v-divider>
-                  <v-list-item>
-                    <v-list-item-avatar>
-                      <img :src="comment.profile_avatar_url">
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ comment.user.username }} {{ new Date(comment.created_at * 1000).toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</v-list-item-title>
-                      <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-              </v-list>
-            </v-card>
-            <v-card v-else>
-              <v-subheader>Comments.</v-subheader>
-              <div class="pa-4 pt-0 caption">
-                <p style="text-align: justify;">No comments.</p>
-              </div>
-            </v-card>
-            <br v-if="localStorage.username">
-            <v-flex lg12 v-if="localStorage.username">
-              <h2>Leave a comment</h2>
-              <br>
-              <form>
-                <v-textarea
-                  v-model="comment"
-                  solo
-                  required
+              <v-card 
+                v-else
+                class="mt-6"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+              >
+                <v-card-text class="pb-0 black--text" v-if="!localStorage.username">
+                  Already have an account?
+                  <a class="custom-btn" @click="$router.push({name: 'sign-in'})">
+                    Sign in
+                  </a>
+                  to comment.
+                </v-card-text>
+                <v-subheader>Comments.</v-subheader>
+                <div class="pa-4 pt-0 caption">
+                  <p style="text-align: justify;">No comments.</p>
+                </div>
+              </v-card>
+              <v-flex class="mt-4" v-if="localStorage.username">
+                <h3 class="mb-2">Leave a comment</h3>
+                <form>
+                  <v-textarea 
+                    outlined
+                    v-model="comment"
+                    solo
+                    no-resize
+                    class="mt-0 mb-2"
                   ></v-textarea>
-                <v-btn @click="createComment">Send</v-btn>
-              </form>
+                  <v-flex xs3 sm3 md3 lg3>
+                    <v-btn
+                      outlined 
+                      color="white" 
+                      block 
+                      style="background-color: #43A047; border: 1px solid green; cursor: pointer;"
+                      @click="createComment">Post</v-btn>
+                  </v-flex>
+                </form>
+              </v-flex>
             </v-flex>
-          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -136,13 +333,10 @@
 <script>
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
-
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
 import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
 import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
-
 export default {
   name: 'BlockProducerPage',
   components: {
@@ -189,33 +383,33 @@ export default {
   },
   methods: {
     createComment() {
-      store.dispatch(commentStorageActions.createComment, {
+      this.$store.dispatch(commentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,
         text: this.comment,
       })
 
-    this.comments.unshift({
-      profile_avatar_url: this.profile.avatarUrl,
-      user: {
-        username: this.localStorage.username,
-      },
-      text: this.comment,
-      created_at: (+ new Date() / 1000),
-    })
+      this.comments.unshift({
+        profile_avatar_url: this.profile.avatarUrl,
+        user: {
+          username: this.localStorage.username,
+        },
+        text: this.comment,
+        created_at: (+ new Date() / 1000),
+      })
 
-    this.comment = ''
+      this.comment = ''
     },
     like() {
       this.isLikedByUser = !this.isLikedByUser
       if (this.isLikedByUser) { this.likesNumber++ } else { this.likesNumber-- }
 
-      store.dispatch(likeStorageActions.putLike, {
+      this.$store.dispatch(likeStorageActions.putLike, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier
       })
 
-      store.subscribe((mutation, state) => {
+      this.$store.subscribe((mutation, state) => {
         if (mutation.type === likeStorageMutations.subscribe.addError) {
           this.error = state.like.error
         }
@@ -225,28 +419,30 @@ export default {
     },
   },
   mounted() {
-    store.dispatch(profileStorageActions.getProfile, {
-      username: this.localStorage.username,
-    })
+    if (this.localStorage.username) {
+      this.$store.dispatch(profileStorageActions.getProfile, {
+        username: this.localStorage.username,
+      })
+    }
 
-    store.dispatch(blockProducerStorageActions.getBlockProducer, {
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducer, {
       identifier: this.$route.params.identifier,
     })
 
-    store.dispatch(commentStorageActions.getComments, {
+    this.$store.dispatch(commentStorageActions.getComments, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    store.dispatch(likeStorageActions.getLikes, {
+    this.$store.dispatch(likeStorageActions.getLikes, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    store.dispatch(likeStorageActions.isLikedByUser, {
+    this.$store.dispatch(likeStorageActions.isLikedByUser, {
       username: this.localStorage.username,
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
 
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
@@ -296,7 +492,7 @@ export default {
       if (mutation.type === profileStorageMutations.subscribe.addProfile) {
         this.profile.avatarUrl = state.profile.avatarUrl
       }
-
+      
       if (mutation.type === commentStorageMutations.subscribe.createComment) {
         this.successMessage = 'Comment created successfully — view your block producer.'
       }
@@ -314,7 +510,6 @@ export default {
 .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
     background-color: rgba(0, 0, 0, 0.0) !important;
 }
-
 .btn-background-none::before {
   color: transparent
 }

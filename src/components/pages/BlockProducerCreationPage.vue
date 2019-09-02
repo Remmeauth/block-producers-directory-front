@@ -5,12 +5,12 @@
   <div v-else>
     <br>
     <v-layout>
-      <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Project</h2>
+                <h2>Block producer</h2>
                 <br>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
@@ -35,7 +35,7 @@
                   outlined
                   clearable
                   label="Website"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -77,6 +77,7 @@
                   :error-messages="fullDescriptionErrors"
                   @input="$v.fullDescription.$touch()"
                   @blur="$v.fullDescription.$touch()"
+                  no-resize
                   outlined
                   clearable
                   label="Full description"
@@ -112,7 +113,7 @@
                   outlined
                   clearable
                   label="LinkedIn"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-linkedin-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -124,7 +125,7 @@
                   outlined
                   clearable
                   label="Twitter"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-twitter"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -136,7 +137,7 @@
                   outlined
                   clearable
                   label="Medium"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -148,7 +149,7 @@
                   outlined
                   clearable
                   label="Github"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -160,7 +161,7 @@
                   outlined
                   clearable
                   label="Facebook"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -172,7 +173,7 @@
                   outlined
                   clearable
                   label="Telegram"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-telegram"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -184,7 +185,7 @@
                   outlined
                   clearable
                   label="Steemit"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -196,7 +197,7 @@
                   outlined
                   clearable
                   label="Reddit"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-reddit"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -208,7 +209,7 @@
                   outlined
                   clearable
                   label="Slack"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-slack"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -220,14 +221,20 @@
                   outlined
                   clearable
                   label="Wikipedia"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-wikipedia"
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
           <v-container>
             <v-col cols="12" lg="4" offset-lg="5">
-              <v-btn @click="create">Submit</v-btn>
+              <v-btn 
+                class="text-none white--text"
+                @click="create"
+                style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+              >
+                Submit
+              </v-btn>
             </v-col>
           </v-container>
         </v-form>
@@ -240,7 +247,6 @@
 <script>
 import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
 
@@ -285,7 +291,7 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(blockProducerStorageActions.createBlockProducer, {
+      this.$store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
         location: this.location,
@@ -306,7 +312,7 @@ export default {
     },
   },
   mounted() {
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()
@@ -321,7 +327,7 @@ export default {
         this.createdBlockProducerIdentifier = state.blockProducer.id
 
         if (this.logotypeFile) {
-          store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+          this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
             jwtToken: this.localStorage.token,
             identifier: this.createdBlockProducerIdentifier,
             file: this.logotypeFile,

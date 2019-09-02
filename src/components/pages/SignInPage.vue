@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
+      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -14,12 +14,12 @@
                   outlined
                   style="border-color: #5d80da;"
                 >
-                  <div 
+                  <div class="mt-10"
                     style="text-align: center; font-size:1.7em;"
-                  ><br>
+                  >
                     Sign in to Directory
                   </div>
-                  <v-card flat class="ma-2 pa-10">
+                  <v-card flat class="ma-2 pa-10 pt-5">
                     <v-form>
                       <v-text-field
                         class="mb-4 pl-2 pr-2"
@@ -54,23 +54,23 @@
                       </v-btn>
                       </v-card-actions>
                       <v-card-actions 
-                        class="justify-center" 
-                        style="padding-top: 0; flex-direction: column;"
+                        class="justify-center pt-0 pb-0" 
+                        style="flex-direction: column;"
                       >
                         <v-btn 
                           class="custom-btn text-none" 
                           :ripple="false"
                           text
                           color="#5d80da" 
-                          style="text-decoration: underline;"
                           @click="$router.push({name: 'password-recover'})"
                         >
                           Forgot password?
                         </v-btn>
                         <v-btn  
-                          class="custom-btn text-none" 
+                          class="custom-btn-second text-none" 
                           :ripple="false"
                           text
+                          style="cursor: auto;"
                         >
                           Don't have an account? 
                           <v-btn 
@@ -78,10 +78,9 @@
                             :ripple="false" 
                             text
                             color="#5d80da" 
-                            style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-up'})"
                           >
-                            Sign up
+                            Sign up!
                           </v-btn>
                         </v-btn>
                       </v-card-actions>
@@ -100,7 +99,6 @@
 <script>
 import Error500 from '../../components/ui/Error500'
 import signInForm from '../../forms/pages/authentication/signIn'
-import store from '../../store/index'
 import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
@@ -125,14 +123,14 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(authenticationStorageActions.signIn, {
+      this.$store.dispatch(authenticationStorageActions.signIn, {
         usernameOrEmail: this.usernameOrEmail,
         password: this.password,
       })
     }
   },
   mounted() {
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === authenticationStorageMutations.subscribe.addError) {
         this.error = state.authentication.error
         unsubscribe()
@@ -145,7 +143,7 @@ export default {
 
       if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
         this.localStorage.token = state.authentication.token
-        store.dispatch(userStorageActions.getUserFromToken, {
+        this.$store.dispatch(userStorageActions.getUserFromToken, {
           jwtToken: state.authentication.token,
         })
       }
@@ -154,6 +152,7 @@ export default {
         this.localStorage.email = state.user.email
         this.localStorage.username = state.user.username
         this.$router.push({name: 'index'})
+        unsubscribe()
       }
     });
   }
@@ -166,5 +165,13 @@ export default {
 }
 .custom-btn::before {
   color: transparent;
+}
+
+.custom-btn-second::before {
+  color: transparent;
+}
+
+.custom-btn:hover {
+  text-decoration: underline;
 }
 </style>

@@ -6,91 +6,248 @@
     <Error500/>
   </div>
   <div v-else>
-    <br>
-    <v-layout row wrap>
-      <v-flex lg10 offset-lg1>
-        <v-spacer></v-spacer>
+    <v-layout class="mb-12 mt-12" row wrap>
+      <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
         <v-layout row wrap>
-          <v-flex lg4 offset-lg1>
-            <v-flex lg12>
-              <v-card
-                max-width="344"
-                class="mx-auto"
+            <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
+              <v-card 
+                v-if="this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'"
+                class="mx-auto mb-6"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
                 >
-                <v-img v-if="profile.avatarUrl" :src="profile.avatarUrl" height="194"></v-img>
-                <v-card-title class="align-start">
-                    <span class="headline">{{ profile.firstName }} {{ profile.lastName }}</span>
-                </v-card-title>
-                <v-card-text>
-                  @{{ user.username }}
+                <v-img class="mt-2 mb-2"
+                  v-if="profile.avatarUrl" 
+                  :src="profile.avatarUrl"
+                  style="max-width: 35%; border-radius: 50%;"
+                ></v-img>
+                <v-divider></v-divider>
+                <h3 class="mt-3">
+                  <span class="headline">
+                    {{ profile.firstName }} {{ profile.lastName }}
+                  </span>
+                </h3>
+                <v-card-text 
+                  class="pt-1 pb-0"
+                >
+                  <v-form>
+                    <b style="color: #5d80da;"> @{{ user.username }} </b>
+                  </v-form>
                 </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2" 
+                  v-if="profile.location"
+                >
+                  <v-icon>location_on</v-icon>
+                  {{ profile.location }}
+                </v-card-text>
+                <v-card-text 
+                  class="pt-0"
+                  v-if="profile.websiteUrl"
+                >
+                  <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
+                    {{ profile.websiteUrl }} 
+                  </a>
+                </v-card-text>
+                <v-divider 
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
+                ></v-divider>
+                <v-card-text 
+                  class="pt-3 pb-3"
+                >
+                  <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="profile.twitterUrl" :href="profile.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="profile.githubUrl" :href="profile.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="profile.facebookUrl" :href="profile.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="profile.mediumUrl" :href="profile.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="profile.telegramUrl" :href="profile.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="profile.steemitUrl" :href="profile.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
+                  </a>
+                </v-card-text>
+                <v-divider v-if="user.username === localStorage.username"></v-divider>
+                <v-card-actions>
+                  <v-btn 
+                    v-if="user.username === localStorage.username" 
+                    @click="$router.push({name: 'settings'})"
+                    outlined 
+                    color="white" 
+                    block 
+                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
+                  >
+                    Edit profile
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+              <v-card 
+                v-if="
+                  this.$vuetify.breakpoint.name === 'md' ||
+                  this.$vuetify.breakpoint.name === 'lg' ||
+                  this.$vuetify.breakpoint.name === 'xl'" 
+                class="mx-auto mr-6 mb-6"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+                >
+                <v-img class="mt-2 mb-2"
+                  v-if="profile.avatarUrl" 
+                  :src="profile.avatarUrl"
+                  style="max-width: 50%; border-radius: 50%;"
+                ></v-img>
+                <v-divider></v-divider>
+                <h3 class="mt-3">
+                  <span class="headline">
+                    {{ profile.firstName }} {{ profile.lastName }}
+                  </span>
+                </h3>
+                <v-card-text 
+                  class="pt-1 pb-0"
+                >
+                  <v-form>
+                    <b style="color: #5d80da;"> @{{ user.username }} </b>
+                  </v-form>
+                </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2"
+                  v-if="profile.location"
+                >
+                  <v-icon>location_on</v-icon>
+                  {{ profile.location }}
+                </v-card-text>
+                <v-card-text 
+                  class="pt-0"
+                  v-if="profile.websiteUrl"
+                >
+                  <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
+                    {{ profile.websiteUrl }} 
+                  </a>
+                </v-card-text>
+                <v-divider 
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
+                ></v-divider>
+                <v-card-text 
+                  class="pt-3 pb-3"
+                >
+                  <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="profile.twitterUrl" :href="profile.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="profile.githubUrl" :href="profile.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="profile.facebookUrl" :href="profile.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="profile.mediumUrl" :href="profile.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="profile.telegramUrl" :href="profile.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="profile.steemitUrl" :href="profile.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
+                  </a>
+                </v-card-text>
+                <v-divider v-if="user.username === localStorage.username"></v-divider>
+                <v-card-actions>
+                  <v-btn 
+                    v-if="user.username === localStorage.username" 
+                    @click="$router.push({name: 'settings'})"
+                    outlined 
+                    color="white" 
+                    block 
+                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                  >
+                    Edit profile
+                  </v-btn>
+                </v-card-actions>
               </v-card>
             </v-flex>
-            <div v-if="user">
-              <br v-if="user.username === localStorage.username">
-              <v-flex lg12 v-if="user.username === localStorage.username">
-                <v-card max-width="344" class="mx-auto">
-                  <v-btn @click="$router.push({name: 'settings'})" width="344">Edit profile</v-btn>
-                </v-card>
-              </v-flex>
-            </div>
-            <br>
-            <v-flex lg12>
-              <div v-if="profile.websiteUrl || profile.location">
-                <v-card max-width="344" class="mx-auto">
-                  <v-list>
-                    <v-list-item-group color="primary">
-                      <v-list-item v-if="profile.websiteUrl">
-                        <v-list-item-icon>
-                          <v-icon>link</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                          <v-list-item-title><a v-bind:href="profile.websiteUrl">{{ profile.websiteUrl }}</a></v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                      <v-list-item v-if="profile.location">
-                        <v-list-item-icon>
-                          <v-icon>location_on</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                          <v-list-item-title>{{ profile.location }}</v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
-                </v-card>
-              </div>
-              <div v-if="true"></div>
+            <v-flex xs12 sm8 md6 lg6>
+              <v-card 
+                class="mx-auto"
+                align="center"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+              >
+                <v-subheader>User's information</v-subheader>
+                <div class="pa-4 pt-0 caption">
+                  <p 
+                    v-if="profile.additionalInformation" 
+                    style="text-align: justify;" 
+                    v-html="profile.additionalInformation"
+                  ></p>
+                  <p 
+                    v-else 
+                    style="text-align: justify;"
+                  >
+                    No information has been provided.
+                  </p>
+                </div>
+              </v-card>
+              <v-card 
+                v-if="blockProducers && blockProducersByUser(user.username).length > 0"
+                class="mt-6"
+                elevation="10" 
+                outlined
+                style="border-color: #5d80da;"
+              >
+                <v-list two-line>
+                  <template 
+                    v-for="(blockProducer, index) in blockProducersByUser(user.username) "
+                  >
+                    <v-subheader 
+                      v-if="index === 0"
+                    >User's block producers</v-subheader>
+                    <v-divider 
+                      v-else-if="index > 0" 
+                    ></v-divider>
+                    <v-list-item :to="{name: 'block-producer', params: {identifier: blockProducer.id}}">
+                      <img 
+                        class="mt-2 mb-2 mr-5 pa-1" 
+                        style="max-width:12%;border-radius: 50%;"
+                        :src="blockProducer.logo_url"
+                      >
+                      <v-list-item-content>
+                        <v-list-item-title 
+                          class="mb-1" 
+                          style="font-weight: 500"
+                        >{{ blockProducer.name }}</v-list-item-title>
+                        <v-list-item-subtitle 
+                          style="font-size: 0.8em;"
+                          v-if="blockProducer.location"
+                        >
+                          <v-icon>location_on</v-icon> 
+                          {{ blockProducer.location }}
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-list>
+              </v-card>
             </v-flex>
-            <br>
-          </v-flex>
-          <v-flex lg6>
-            <v-card class="mx-auto overflow-hidden">
-              <v-subheader>User's information</v-subheader>
-              <div class="pa-4 pt-0 caption">
-                <p v-if="profile.additionalInformation" style="text-align: justify;" v-html="profile.additionalInformation"></p>
-                <p v-else style="text-align: justify;">No information has been provided.</p>
-              </div>
-            </v-card>
-            <br>
-            <v-card v-if="blockProducers && blockProducersByUser(user.username).length > 0">
-              <v-list two-line>
-                <template v-for="(blockProducer, index) in blockProducersByUser(user.username)">
-                  <v-subheader v-if="index === 0">User's block producers</v-subheader>
-                  <v-divider v-else-if="index > 0" :inset="true"></v-divider>
-                  <v-list-item :to="{name: 'block-producer', params: {identifier: blockProducer.id}}">
-                    <v-list-item-avatar>
-                      <img src="https://block-producers-directory.s3-us-west-2.amazonaws.com/bps/logos/default-block-producer-logotype.png">
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ blockProducer.name }}</v-list-item-title>
-                      <v-list-item-subtitle><v-icon>place</v-icon>{{ blockProducer.location }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-              </v-list>
-            </v-card>
-          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -100,7 +257,6 @@
 <script>
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { blockProducerStorageActions, blockProducerStorageMutations} from '../../store/modules/blockProducer'
 import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
@@ -133,7 +289,7 @@ export default {
         mediumUrl: null,
         steemitUrl: null,
         telegramUrl: null,
-        tweeterUrl: null,
+        twitterUrl: null,
         websiteUrl: null,
       },
       blockProducers: null,
@@ -151,17 +307,17 @@ export default {
     }
   },
   mounted() {
-    store.dispatch(userStorageActions.getUser, {
+    this.$store.dispatch(userStorageActions.getUser, {
       username: this.$route.params.username,
     })
 
-    store.dispatch(profileStorageActions.getProfile, {
+    this.$store.dispatch(profileStorageActions.getProfile, {
       username: this.$route.params.username,
     })
 
-    store.dispatch(blockProducerStorageActions.getBlockProducers)
+    this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
 
-    const unsubscribe = store.subscribe((mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === userStorageMutations.subscribe.addError) {
         this.error = state.user.error
         unsubscribe()
@@ -189,7 +345,7 @@ export default {
         this.profile.mediumUrl = state.profile.mediumUrl
         this.profile.steemitUrl = state.profile.steemitUrl
         this.profile.telegramUrl = state.profile.telegramUrl
-        this.profile.tweeterUrl = state.profile.tweeterUrl
+        this.profile.twitterUrl = state.profile.twitterUrl
         this.profile.websiteUrl = state.profile.websiteUrl
       }
 
@@ -201,4 +357,14 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+a:link {
+  text-decoration: none;
+}
+.v-icon.v-icon {
+  font-size: 19px;
+}
+.v-icon.links {
+  font-size: 35px;
+}
+</style>

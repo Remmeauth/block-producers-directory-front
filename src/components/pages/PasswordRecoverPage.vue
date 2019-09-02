@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
+      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -45,9 +45,10 @@
                         style="padding-top: 0; flex-direction: column;"
                       >
                         <v-btn  
-                          class="custom-btn text-none" 
+                          class="custom-btn-second text-none" 
                           :ripple="false"
                           text
+                          style="cursor: auto;"
                         >
                           Remembered your password?
                           <v-btn 
@@ -58,7 +59,7 @@
                             style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
                           >
-                            Sign in
+                            Sign in!
                           </v-btn>
                         </v-btn>
                       </v-card-actions>
@@ -112,13 +113,14 @@
                         </v-btn>
                       </v-card-actions>
                       <v-card-actions 
-                        class="justify-center" 
+                        class="justify-center pt-0 pb-0" 
                         style="padding-top: 0; flex-direction: column;"
                       >
                         <v-btn  
-                          class="custom-btn text-none" 
+                          class="custom-btn-second text-none" 
                           :ripple="false"
                           text
+                          style="cursor: auto;"
                         >
                           Remember your password?
                           <v-btn 
@@ -129,7 +131,7 @@
                             style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
                           >
-                            Sign in
+                            Sign in!
                           </v-btn>
                         </v-btn>
                       </v-card-actions>
@@ -148,7 +150,6 @@
 <script>
 import Error500 from '../../components/ui/Error500'
 import passwordRecoveryRequestForm from '../../forms/pages/authentication/passwordRecovery'
-import store from '../../store/index'
 import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
 
 export default {
@@ -176,13 +177,13 @@ export default {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
 
-      store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {
+      this.$store.dispatch(passwordStorageActions.getPasswordRecoveryRequest, {
         email: this.email,
       })
     }
   },
   mounted() {
-    store.subscribe((mutation, state) => {
+    this.$store.subscribe((mutation, state) => {
       if (mutation.type === passwordStorageMutations.subscribe.addError) {
         this.error = state.password.error
       }
@@ -204,7 +205,16 @@ export default {
 .v-card {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
+
 .custom-btn::before {
   color: transparent;
+}
+
+.custom-btn-second::before {
+  color: transparent;
+}
+
+.custom-btn:hover {
+  text-decoration: underline;
 }
 </style>

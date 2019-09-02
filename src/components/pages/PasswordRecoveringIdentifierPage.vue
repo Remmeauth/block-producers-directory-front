@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4 style="margin-top:100px;">
+      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -56,7 +56,6 @@
 
 <script>
 import Error500 from '../../components/ui/Error500'
-import store from '../../store/index'
 import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
 
 export default {
@@ -74,11 +73,11 @@ export default {
     }
   },
   mounted() {
-    store.dispatch(passwordStorageActions.sendNewPasswordToEmail, {
+    this.$store.dispatch(passwordStorageActions.sendNewPasswordToEmail, {
       identifier: this.$route.params.identifier,
     })
 
-    store.subscribe((mutation, state) => {
+    this.$store.subscribe((mutation, state) => {
       if (mutation.type === passwordStorageMutations.subscribe.addError) {
         this.error = state.password.error
       }
