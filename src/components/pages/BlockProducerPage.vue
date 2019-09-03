@@ -6,7 +6,7 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-layout class="mb-12 mt-12" row wrap>
+    <v-layout class="mb-12 mt-4" row wrap>
       <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
         <v-layout row wrap>
             <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
