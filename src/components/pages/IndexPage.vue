@@ -6,7 +6,7 @@
     <v-container fluid>
       <v-layout row wrap>
         <v-flex xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
-          <v-card class="mt-4 mb-4"
+          <v-card class="mt-0 mb-4"
             elevation="10" 
             outlined
             style="border-color: #5d80da;"

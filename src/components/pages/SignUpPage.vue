@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
+      <v-flex class="mt-6 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -21,7 +21,7 @@
                   </div>
                   <v-card flat class="ma-2 pa-10 pt-5">
                     <v-form>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="email"
                         :error-messages="emailErrors"
                         @input="$v.email.$touch()"
@@ -30,7 +30,7 @@
                         outlined
                         prepend-inner-icon="email"
                       ></v-text-field>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="username"
                         :error-messages="usernameErrors"
                         @input="$v.username.$touch()"
@@ -39,7 +39,7 @@
                         outlined
                         prepend-inner-icon="person"
                       ></v-text-field>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="password"
                         :error-messages="passwordErrors"
                         @input="$v.password.$touch()"
