@@ -3,53 +3,129 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-card tile>
-      <v-toolbar style="background-color: rgb(242, 243, 244);">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        <v-toolbar-title>DIRECTORY</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <template v-if="localStorage.token">
-          <v-btn outlined color="#5d80da" @click="$router.push({name: 'block-producer-creation'})">Submit</v-btn>
-          <v-menu offset-y :nudge-width="150" style="margin-top: 20px">
-            <template v-slot:activator="{ on }">
-              <v-btn v-on="on" class="mx-2" :ripple="false" color="#424242" text>
-                <v-avatar tile size="36">
-                  <img v-if="profile.avatarUrl" :src="profile.avatarUrl" alt="avatar">
-                  <img v-else src="https://block-producers-directory.s3-us-west-2.amazonaws.com/users/avatars/default-user-logotype.png" alt="avatar">
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Signed in as</v-list-item-title>
-                  <v-list-item-subtitle>@{{ localStorage.username }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :to="{name: 'user', params: {username: localStorage.username}}">
-                <v-list-item-content>
-                  <v-list-item-title>Your profile</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :to="{name: 'settings'}">
-                <v-list-item-content>
-                  <v-list-item-title>Your settings</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="signOut">
-                <v-list-item-content>
-                  <v-list-item-title>Sign Out</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </template>
-        <template v-else>
-          <v-btn outlined color="#5d80da" style="margin-right: 20px;" @click="$router.push({name: 'sign-in'})">Sign In</v-btn>
-          <v-btn outlined color="#5d80da" style="margin-right: 2px;" @click="$router.push({name: 'sign-up'})">Sign Up</v-btn>
-        </template>
-      </v-toolbar>
-    </v-card>
+    <v-layout row wrap>
+      <v-flex v-if="localStorage.token" xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
+        <v-container class="pa-0">
+          <v-row>
+            <p 
+              class="mt-2 ml-5 mb-0" 
+              style="color: #160d1d; font-size: 1.5em; font-weight: 600;"
+            >
+              Block Producer Directory
+            </p>
+            <v-col cols="12" lg="12" class="pa-0">
+              <v-card-actions 
+                class="ml-4 mt-2"
+                style="flex-direction: row;"
+              >
+                <img 
+                  v-if="profile.avatarUrl"
+                  class="mt-0 mb-0 mr-2 ml-0 pa-1" 
+                  style="max-width: 6%; border-radius: 50%; cursor: pointer;" 
+                  :src="profile.avatarUrl"
+                  @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+                >
+                <v-form style="font-size: 1em;">
+                  Signed in as 
+                  <b 
+                    style="color: #5d80da; cursor: pointer;" 
+                    @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+                  >
+                    @{{ localStorage.username }}
+                  </b>
+                </v-form>
+                <v-layout align-end justify-end>
+                  <v-btn 
+                    class="mr-1" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'index'})"
+                  >
+                    Home
+                  </v-btn>
+                  <v-btn 
+                    class="mr-1" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'block-producer-creation'})"
+                  >
+                    Submit
+                  </v-btn>
+                  <v-btn 
+                    class="mr-1" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+                  >
+                    Your profile
+                  </v-btn>
+                  <v-btn 
+                    class="mr-1" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'settings'})"
+                  >
+                    Settings
+                  </v-btn>
+                  <v-btn 
+                    class="mr-4" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="grey darken-2" 
+                    @click="signOut"
+                  >
+                    Sign out
+                  </v-btn>
+                </v-layout>
+              </v-card-actions>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-flex>
+      <v-flex v-else xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
+        <v-container class="pa-0">
+          <v-row class="justify-center">
+            <p 
+              class="mt-2 mb-0" 
+              style="color: #160d1d; font-size: 1.5em; font-weight: 600;"
+            >
+              Block Producer Directory
+            </p>
+            <v-col cols="12" lg="12" class="pa-0">
+              <v-card-actions 
+                class="ml-4 mt-2"
+                style="flex-direction: row;"
+              >
+                <v-layout align-center justify-center>
+                  <v-btn 
+                    class="mr-1" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'sign-in'})"
+                  >
+                    Sign In
+                  </v-btn>
+                  <v-btn 
+                    class="mr-4" 
+                    outlined 
+                    style="font-weight: 600;" 
+                    color="#5d80da" 
+                    @click="$router.push({name: 'sign-up'})"
+                  >
+                    Sign Up
+                  </v-btn>
+                </v-layout>
+              </v-card-actions>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
