@@ -1,8 +1,8 @@
 <template>
-  <div v-if="error.statusCode === 404">
+  <div v-if="profileError.statusCode === 404">
     <Error404/>
   </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-else-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -226,10 +226,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import { blockProducerStorageActions, blockProducerStorageMutations} from '../../store/modules/blockProducer'
-import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
+import { profileStorageActions } from '../../store/modules/profile'
 import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
 export default {
@@ -248,22 +250,6 @@ export default {
         email: null,
         username: null,
       },
-      profile: {
-        firstName: null,
-        lastName: null,
-        additionalInformation: null,
-        avatarUrl: null,
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        location: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        twitterUrl: null,
-        websiteUrl: null,
-      },
-      blockProducers: null,
       blockProducersByUser: function (username) {
         var filteredBlockProducersByUser = []
 
@@ -276,6 +262,10 @@ export default {
         return filteredBlockProducersByUser
       },
     }
+  },
+  computed: {
+    ...mapGetters('profile', ['profile', 'profileError']),
+    ...mapGetters('blockProducer', ['blockProducers']),
   },
   mounted() {
     this.$store.dispatch(userStorageActions.getUser, {
@@ -294,34 +284,9 @@ export default {
         unsubscribe()
       }
 
-      if (mutation.type === profileStorageMutations.subscribe.addError) {
-        this.error = state.profile.error
-        unsubscribe()
-      }
-
       if (mutation.type === userStorageMutations.subscribe.addUser) {
         this.user.email = state.user.email
         this.user.username = state.user.username
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.profile.firstName = state.profile.firstName
-        this.profile.lastName = state.profile.lastName
-        this.profile.additionalInformation = state.profile.additionalInformation
-        this.profile.avatarUrl = state.profile.avatarUrl
-        this.profile.facebookUrl = state.profile.facebookUrl
-        this.profile.githubUrl = state.profile.githubUrl
-        this.profile.linkedInUrl = state.profile.linkedInUrl
-        this.profile.location = state.profile.location
-        this.profile.mediumUrl = state.profile.mediumUrl
-        this.profile.steemitUrl = state.profile.steemitUrl
-        this.profile.telegramUrl = state.profile.telegramUrl
-        this.profile.twitterUrl = state.profile.twitterUrl
-        this.profile.websiteUrl = state.profile.websiteUrl
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addBlockProducers) {
-        this.blockProducers = state.blockProducer.blockProducers
       }
     });
   },

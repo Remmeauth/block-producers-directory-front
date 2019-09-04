@@ -98,10 +98,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
 import signInForm from '../../forms/pages/authentication/signIn'
-import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
-import { userStorageActions, userStorageMutations } from '../../store/modules/user'
+import { authenticationStorageActions } from '../../store/modules/authentication'
+import { userStorageActions } from '../../store/modules/user'
 
 export default {
   name: 'SignInPage',
@@ -119,10 +121,31 @@ export default {
       password: null,
     }
   },
+  computed: {
+    ...mapGetters('user', ['userError', 'userEvents', 'user']),
+    ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
+  },
+  watch: {
+    'userEvents.isGotten'() {
+      if (!this.user.email && !this.user.username) return
+
+      this.localStorage.email = this.user.email
+      this.localStorage.username = this.user.username
+      this.$router.push({name: 'index'})
+    },
+    'authenticationEvents.signedIn'() {
+      if (!this.credentials.token) return
+
+      this.localStorage.token = this.credentials.token
+      this.$store.dispatch(userStorageActions.getUserFromToken, {
+        jwtToken: this.credentials.token,
+      })
+    }
+  },
   methods: {
     signIn () {
       this.$v.$touch()
-      if (this.$v.$anyError) { return }
+      if (this.$v.$anyError) return
 
       this.$store.dispatch(authenticationStorageActions.signIn, {
         usernameOrEmail: this.usernameOrEmail,
@@ -130,33 +153,6 @@ export default {
       })
     }
   },
-  mounted() {
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === authenticationStorageMutations.subscribe.addError) {
-        this.error = state.authentication.error
-        unsubscribe()
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addError) {
-        this.error = state.user.error
-        unsubscribe()
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
-        this.localStorage.token = state.authentication.token
-        this.$store.dispatch(userStorageActions.getUserFromToken, {
-          jwtToken: state.authentication.token,
-        })
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addUser) {
-        this.localStorage.email = state.user.email
-        this.localStorage.username = state.user.username
-        this.$router.push({name: 'index'})
-        unsubscribe()
-      }
-    });
-  }
 }
 </script>
 

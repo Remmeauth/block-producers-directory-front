@@ -73,10 +73,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
-import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
-import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
 
 export default {
   name: 'IndexPage',
@@ -89,10 +89,8 @@ export default {
         message: null,
         statusCode: null,
       },
-      blockProducers: null,
       commentsNumbers: null,
       likesNumbers: null,
-      searchedBlockProducers: null,
       searchPhrase: null,
       getBlockProducersToRender: function() {
         if (this.searchPhrase) {
@@ -125,6 +123,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('blockProducer', [
+      'blockProducers',
+      'searchedBlockProducers',
+    ])
+  },
   watch: {
     searchPhrase: function (searchPhrase) {
       this.$store.dispatch(blockProducerStorageActions.searchBlockProducers, {
@@ -133,40 +137,12 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch(commentStorageActions.getCommentsNumbers)
-    this.$store.dispatch(likeStorageActions.getLikesNumbers)
     this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
 
     const unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
         this.error = state.blockProducer.error
         unsubscribe()
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.addError) {
-        this.error = state.comment.error
-        unsubscribe()
-      }
-
-      if (mutation.type === likeStorageMutations.subscribe.addError) {
-        this.error = state.like.error
-        unsubscribe()
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addBlockProducers) {
-        this.blockProducers = state.blockProducer.blockProducers
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.searchBlockProducers) {
-        this.searchedBlockProducers = state.blockProducer.searchedBlockProducers
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.addCommentsNumbers) {
-        this.commentsNumbers = state.comment.commentsNumbers
-      }
-
-      if (mutation.type === likeStorageMutations.subscribe.addLikesNumbers) {
-        this.likesNumbers = state.like.likesNumbers
       }
     });
   },

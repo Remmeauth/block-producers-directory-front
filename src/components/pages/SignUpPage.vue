@@ -95,9 +95,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
 import signUpForm from '../../forms/pages/authentication/signUp'
-import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
+import { authenticationStorageActions } from '../../store/modules/authentication'
 
 export default {
   name: 'SinUpPage',
@@ -116,6 +118,28 @@ export default {
       password: null,
     }
   },
+  computed: {
+    ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
+  },
+  watch: {
+    'authenticationEvents.signedIn'() {
+      if (!this.credentials.token) return
+
+      this.localStorage.token = this.credentials.token
+      this.$router.push({name: 'index'})
+    },
+    'authenticationEvents.signedUp'() {
+      if (!this.authenticationEvents.signedUp) return
+
+      this.localStorage.email = this.email
+      this.localStorage.username = this.username
+
+      this.$store.dispatch(authenticationStorageActions.signIn, {
+        usernameOrEmail: this.email,
+        password: this.password,
+      })
+    }
+  },
   methods: {
     signUp () {
       this.$v.$touch()
@@ -128,34 +152,6 @@ export default {
       })
     }
   },
-  mounted() {
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === authenticationStorageMutations.subscribe.addError) {
-        this.error = state.authentication.error
-        unsubscribe()
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.authentication.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
-        this.localStorage.token = state.authentication.token
-        this.$router.push({name: 'index'})
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.markAsSignedUp) {
-        this.localStorage.email = this.email
-        this.localStorage.username = this.username
-
-        this.$store.dispatch(authenticationStorageActions.signIn, {
-          usernameOrEmail: this.email,
-          password: this.password,
-        })
-      }
-    });
-  }
 }
 </script>
 
