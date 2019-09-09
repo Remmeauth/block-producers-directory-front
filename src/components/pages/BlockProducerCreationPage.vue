@@ -70,18 +70,121 @@
                   clearable
                   label="Short description"
                 ></v-text-field>
-              </v-col>
+              </v-col>  
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea
-                  v-model="fullDescription"
-                  :error-messages="fullDescriptionErrors"
-                  @input="$v.fullDescription.$touch()"
-                  @blur="$v.fullDescription.$touch()"
-                  no-resize
-                  outlined
-                  clearable
-                  label="Full description"
-                ></v-textarea>
+                <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
+                  <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                    <div class="menubar">
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bold() }"
+                        @click="commands.bold"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-bold</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.italic() }"
+                        @click="commands.italic"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-italic</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.strike() }"
+                        @click="commands.strike"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-strikethrough-variant</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.underline() }"
+                        @click="commands.underline"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-underline</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.code() }"
+                        @click="commands.code"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-code-tags</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-1</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                        @click="commands.heading({ level: 2 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-2</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                        @click="commands.heading({ level: 3 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-3</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bullet_list() }"
+                        @click="commands.bullet_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-bulleted</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.ordered_list() }"
+                        @click="commands.ordered_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-numbered</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.undo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-undo</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.redo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-redo</v-icon>
+                      </v-btn>
+                    </div>
+                  </editor-menu-bar>
+                  <editor-content class="pa-3" ref="contentEditor" :editor="editor" style="border-top: 1px solid #BEBEBE;" />
+                </div>
               </v-col>
             </v-row>
           </v-container>
@@ -245,15 +348,39 @@
 </template>
 
 <script>
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  HorizontalRule,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions'
+
 import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
 import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
 import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+import { userStorageActions, userStorageMutations } from '../../store/modules/user'
 
 export default {
   name: 'BlockProducerCreationPage',
   mixins: [submitBlockProducerForm],
   components: {
+    EditorContent,
+    EditorMenuBar,
     Error500,
   },
   data() {
@@ -284,13 +411,39 @@ export default {
       twitterUrl: null,
       websiteUrl: null,
       wikipediaUrl: null,
+      html: '',
+      editor: new Editor({
+        onUpdate: ({ getHTML }) => {
+          this.html=getHTML();
+          if (this.html === '<p></p>') this.fullDescription = '';
+          else this.fullDescription = this.html;
+        },
+        extensions: [
+          new Blockquote(),
+          new BulletList(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new ListItem(),
+          new OrderedList(),
+          new TodoItem(),
+          new TodoList(),
+          new Link(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ],
+      }),
     }
   },
   methods: {
     create () {
       this.$v.$touch()
       if (this.$v.$anyError) { return }
-
+      
       this.$store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
         name: this.name,
@@ -341,6 +494,47 @@ export default {
          this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
       }
     });
-  }
+  },
+  beforeDestroy() {
+    this.editor.destroy()
+  },
 }
 </script>
+
+<style>
+.custom-btn::before {
+  color: transparent;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 30px;
+  min-width: 40px;
+}
+
+.editor:hover {
+  border-color: black;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
+.menubar {
+	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+ .menubar.is-hidden {
+	 visibility: hidden;
+	 opacity: 0;
+}
+ .menubar.is-focused {
+	 visibility: visible;
+	 opacity: 1;
+	 transition: visibility 0.2s, opacity 0.2s;
+}
+ .menubar__button:hover {
+	 background-color: rgba(0, 0, 0, 0.05);
+}
+ .menubar__button.is-active {
+	 background-color: rgba(0, 0, 0, 0.1);
+}
+</style>
