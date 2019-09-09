@@ -3,6 +3,9 @@ FROM node:8.15.0 AS production-codebase
 WORKDIR /block-producers-directory-front
 COPY . /block-producers-directory-front
 
+RUN printenv
+RUN $BACK_END_URL
+
 RUN npm install && npm run build
 
 FROM nginx:1.15.8
