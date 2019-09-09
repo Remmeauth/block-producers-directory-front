@@ -218,15 +218,6 @@
                   </editor-menu-bar>
                   <editor-content class="pa-3" ref="contentEditor" :editor="editor" style="border-top: 1px solid #BEBEBE;" /> 
                 </div>
-                <!-- <v-textarea  
-                  v-model="other.additionalInformation" 
-                  :error-messages="additionalInformationErrors"
-                  @input="$v.other.additionalInformation.$touch()"
-                  @blur="$v.other.additionalInformation.$touch()"
-                  no-resize
-                  outlined 
-                  label="Additional information"
-                ></v-textarea> -->
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn
