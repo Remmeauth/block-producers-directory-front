@@ -11,7 +11,7 @@ export const userSettingsForm = {
       firstName: { minLength: minLength(3), maxLength: maxLength(50) },
       lastName: { minLength: minLength(3), maxLength: maxLength(50) },
       location: { maxLength: maxLength(50) },
-      additionalInformation: { maxLength: maxLength(10) },
+      additionalInformation: { maxLength: maxLength(1000) },
       websiteUrl: { url },
       linkedInUrl: { url },
       twitterUrl: { url },

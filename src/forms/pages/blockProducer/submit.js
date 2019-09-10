@@ -20,6 +20,43 @@ export const submitBlockProducerForm = {
     twitterUrl: { url },
     wikipediaUrl: { url },
   },
+  methods: {
+    isFormValid() {
+      this.$v.name.$touch()
+      this.$v.location.$touch()
+      this.$v.websiteUrl.$touch()
+      this.$v.shortDescription.$touch()
+      this.$v.fullDescription.$touch()
+      this.$v.linkedInUrl.$touch()
+      this.$v.twitterUrl.$touch()
+      this.$v.mediumUrl.$touch()
+      this.$v.githubUrl.$touch()
+      this.$v.facebookUrl.$touch()
+      this.$v.redditUrl.$touch()
+      this.$v.telegramUrl.$touch()
+      this.$v.steemitUrl.$touch()
+      this.$v.slackUrl.$touch()
+      this.$v.wikipediaUrl.$touch()
+
+      return !(
+        this.$v.name.$invalid ||
+        this.$v.location.$invalid ||
+        this.$v.websiteUrl.$invalid ||
+        this.$v.shortDescription.$invalid ||
+        this.$v.fullDescription.$invalid ||
+        this.$v.linkedInUrl.$invalid ||
+        this.$v.twitterUrl.$invalid ||
+        this.$v.mediumUrl.$invalid ||
+        this.$v.githubUrl.$invalid ||
+        this.$v.facebookUrl.$invalid ||
+        this.$v.redditUrl.$invalid ||
+        this.$v.telegramUrl.$invalid ||
+        this.$v.steemitUrl.$invalid ||
+        this.$v.slackUrl.$invalid ||
+        this.$v.wikipediaUrl.$invalid
+      )
+    },
+  },
   computed: {
     nameErrors () {
       const errors = []
