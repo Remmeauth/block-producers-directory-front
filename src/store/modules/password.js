@@ -19,7 +19,7 @@ export const passwordStorageMutations = {
 export const passwordStorageActions = {
   sendNewPasswordToEmail: 'password/sendNewPasswordToEmail',
   getPasswordRecoveryRequest: 'password/getPasswordRecoveryRequest',
-}
+} 
 
 
 export const password = {
@@ -33,22 +33,21 @@ export const password = {
       errors: null,
       statusCode: null,
     },
-    isSent: null,
-    isReceived: null,
+    events: {
+      isSent: false,
+      isReceived: false,
+    },
+  },
+  getters: {
+    passwordError: state => state.error,
+    passwordFieldsErrors: state => state.fieldsErrors,
+    passwordEvents: state => state.events,
   },
   mutations: {
-    addError (state, error) {
-      state.error = error
-    },
-    addFieldsErrors (state, errors) {
-      state.fieldsErrors = errors
-    },
-    sendNewPasswordToEmail (state, isSent) {
-      state.isSent = isSent
-    },
-    receivePasswordRecoveryRequest (state, isReceived) {
-      state.isReceived = isReceived
-    },
+    addError: (state, error) => state.error = error,
+    addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
+    sendNewPasswordToEmail: (state) => state.events.isSent = true,
+    receivePasswordRecoveryRequest: (state) => state.events.isReceived = true,
   },
   actions: {
     getPasswordRecoveryRequest({ commit }, { email }) {
@@ -57,7 +56,7 @@ export const password = {
           email: email,
         })
         .then(response => {
-          commit(passwordStorageMutations.commit.receivePasswordRecoveryRequest, true)
+          commit(passwordStorageMutations.commit.receivePasswordRecoveryRequest)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -79,7 +78,7 @@ export const password = {
       axios
         .post(process.env.VUE_APP_BACK_END_URL + `/users/password/recovery/${identifier}/`)
         .then(response => {
-          commit(passwordStorageMutations.commit.sendNewPassword, true)
+          commit(passwordStorageMutations.commit.sendNewPassword)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {

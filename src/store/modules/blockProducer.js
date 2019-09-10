@@ -47,6 +47,12 @@ export const blockProducer = {
       errors: null,
       statusCode: null,
     },
+    events: {
+      detailsAreUpdated: false,
+      descriptionsAreUpdated: false,
+      referenceLinksAreUpdated: false,
+      isCreated: false,
+    },
     entity: {
       name: null,
       location: null,
@@ -69,8 +75,6 @@ export const blockProducer = {
     },
     entities: null,
     searchedEntities: null,
-    isCreated: false,
-    isUpdated: false,
     searchedBlockProducers: null,
   },
   getters: {
@@ -79,6 +83,7 @@ export const blockProducer = {
     blockProducer: state => state.entity,
     blockProducers: state => state.entities,
     searchedBlockProducers: state => state.searchedEntities,
+    blockProducerEvents: state => state.events,
   },
   mutations: {
     addError: (state, error) => state.error = error,
@@ -86,18 +91,12 @@ export const blockProducer = {
     addBlockProducer: (state, { blockProducer }) => state.entity = blockProducer,
     addBlockProducers: (state, { blockProducers }) => state.entities = blockProducers,
     addSearchedBlockProducers: (state, { searchedBlockProducers }) => state.searchedEntities = searchedBlockProducers,
-    updateDetails (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    updateDescription (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    updateReferenceLinks (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    createBlockProducer (state, blockProducerIdentifier) {
+    updateDetails: (state) => state.events.detailsAreUpdated = true,
+    updateDescription: (state) => state.events.descriptionsAreUpdated = true,
+    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = true,
+    createBlockProducer: (state, blockProducerIdentifier) => {
       state.id = blockProducerIdentifier
-      state.isCreated = true
+      state.events.isCreated = true
     },
   },
   actions: {
@@ -180,7 +179,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateDetails, true)
+          commit(blockProducerStorageMutations.commit.updateDetails)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -215,7 +214,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateDescription, true)
+          commit(blockProducerStorageMutations.commit.updateDescription)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -268,7 +267,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateReferenceLinks, true)
+          commit(blockProducerStorageMutations.commit.updateReferenceLinks)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
