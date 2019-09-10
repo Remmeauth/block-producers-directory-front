@@ -55,8 +55,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
-import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
+import { passwordStorageActions } from '../../store/modules/password'
 
 export default {
   name: 'password-recovering-identifier',
@@ -69,23 +71,15 @@ export default {
         message: null,
         statusCode: null,
       },
-      successMessage: null,
     }
+  },
+  computed: {
+    ...mapGetters('password', ['passwordError']),
   },
   mounted() {
     this.$store.dispatch(passwordStorageActions.sendNewPasswordToEmail, {
       identifier: this.$route.params.identifier,
     })
-
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === passwordStorageMutations.subscribe.addError) {
-        this.error = state.password.error
-      }
-
-      if (mutation.type === passwordStorageMutations.subscribe.sendNewPasswordToEmail) {
-        this.successMessage = `New password sent to the email address — check it.`
-      }
-    });
   }
 }
 </script>

@@ -3,7 +3,6 @@
     <Error500/>
   </div>
   <div v-else>
-    {{ profileEvents }}
     <v-layout>
       <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
         <v-form>
@@ -287,14 +286,14 @@
 import { mapGetters } from 'vuex'
 
 import Error500 from '../../components/ui/Error500'
-import userSettingsUpdateDetailsForm from "../../forms/pages/user/settings"
+import { userSettingsForm } from "../../forms/pages/user/settings"
 import { avatarStorageActions } from '../../store/modules/avatar'
 import { userStorageActions } from '../../store/modules/user'
 import { profileStorageActions } from '../../store/modules/profile'
 
 export default {
   name: 'SettingsPage',
-  mixins: [userSettingsUpdateDetailsForm],
+  mixins: [userSettingsForm],
   components: {
     Error500,
   },
@@ -367,7 +366,7 @@ export default {
       this.$store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        file: this.avatarFile,
+        file: this.avatarFile, 
       })
     },
   },

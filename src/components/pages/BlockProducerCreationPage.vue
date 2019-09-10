@@ -238,10 +238,12 @@
 </template>
 
 <script>
-import submitBlockProducerForm from '../../forms/pages/blockProducer/submit'
+import { mapGetters } from 'vuex'
+
+import { submitBlockProducerForm } from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
-import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
-import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+import { avatarStorageActions } from '../../store/modules/avatar'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 
 export default {
   name: 'BlockProducerCreationPage',
@@ -279,10 +281,32 @@ export default {
       wikipediaUrl: null,
     }
   },
+  computed: {
+    ...mapGetters('avatar', ['avatarError', 'avatarEvents']),
+    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError', 'blockProducerEvents']),
+  },
+  watch: {
+    'blockProducerEvents.isCreated'() {
+      this.createdBlockProducerIdentifier = this.blockProducer.id
+
+      if (this.logotypeFile) {
+        this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+          jwtToken: this.localStorage.token,
+          identifier: this.createdBlockProducerIdentifier,
+          file: this.logotypeFile,
+        })
+      } else {
+        this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
+      }
+
+    },
+    'avatarEvents.isUploaded'() {
+      this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
+    }
+  },
   methods: {
     create () {
-      this.$v.$touch()
-      if (this.$v.$anyError) { return }
+      if (!this.isFormValid()) { return }
 
       this.$store.dispatch(blockProducerStorageActions.createBlockProducer, {
         jwtToken: this.localStorage.token,
@@ -303,37 +327,6 @@ export default {
         wikipediaUrl: this.wikipediaUrl,
       })
     },
-  },
-  mounted() {
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
-        this.error = state.blockProducer.error
-        unsubscribe()
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.blockProducer.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.createBlockProducer) {
-        this.createdBlockProducerIdentifier = state.blockProducer.id
-
-        if (this.logotypeFile) {
-          this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
-            jwtToken: this.localStorage.token,
-            identifier: this.createdBlockProducerIdentifier,
-            file: this.logotypeFile,
-          })
-        } else {
-          this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
-        }
-      }
-
-      if (mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded) {
-         this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
-      }
-    });
   }
 }
 </script>

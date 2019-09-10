@@ -232,7 +232,7 @@ import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
 import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 import { profileStorageActions } from '../../store/modules/profile'
-import { userStorageActions, userStorageMutations } from '../../store/modules/user'
+import { userStorageActions } from '../../store/modules/user'
 
 export default {
   name: 'UserPage',
@@ -245,10 +245,6 @@ export default {
       error: {
         message: null,
         statusCode: null,
-      },
-      user: {
-        email: null,
-        username: null,
       },
       blockProducersByUser: function (username) {
         var filteredBlockProducersByUser = []
@@ -264,8 +260,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('user', ['userError', 'user']),
     ...mapGetters('profile', ['profile', 'profileError']),
-    ...mapGetters('blockProducer', ['blockProducers']),
+    ...mapGetters('blockProducer', ['blockProducers']), 
   },
   mounted() {
     this.$store.dispatch(userStorageActions.getUser, {
@@ -277,18 +274,6 @@ export default {
     })
 
     this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === userStorageMutations.subscribe.addError) {
-        this.error = state.user.error
-        unsubscribe()
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addUser) {
-        this.user.email = state.user.email
-        this.user.username = state.user.username
-      }
-    });
   },
 }
 </script>

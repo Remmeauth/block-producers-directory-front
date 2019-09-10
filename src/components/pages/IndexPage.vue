@@ -76,7 +76,7 @@
 import { mapGetters } from 'vuex'
 
 import Error500 from '../../components/ui/Error500'
-import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 
 export default {
   name: 'IndexPage',
@@ -124,10 +124,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('blockProducer', [
-      'blockProducers',
-      'searchedBlockProducers',
-    ])
+    ...mapGetters('blockProducer', ['blockProducers', 'searchedBlockProducers'])
   },
   watch: {
     searchPhrase: function (searchPhrase) {
@@ -138,13 +135,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
-        this.error = state.blockProducer.error
-        unsubscribe()
-      }
-    });
   },
 }
 </script>

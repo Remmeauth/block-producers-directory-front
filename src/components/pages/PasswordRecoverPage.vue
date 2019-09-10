@@ -146,9 +146,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
 import passwordRecoveryRequestForm from '../../forms/pages/authentication/passwordRecovery'
-import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
+import { passwordStorageActions } from '../../store/modules/password'
 
 export default {
   name: 'password-recover',
@@ -166,8 +168,17 @@ export default {
         errors: null,
         statusCode: null,
       },
-      successMessage: null,
       email: null,
+      successMessage: null,
+    }
+  },
+  computed: {
+    ...mapGetters('password', ['passwordError, passwordFieldsErrors', 'passwordEvents']),
+  },
+  watch: {
+    'passwordEvents.isReceived'() {
+      this.successMessage = `Recovery link sent to the email address — check it.`
+      this.localStorage.recoveryEmail = this.email
     }
   },
   methods: {
@@ -180,22 +191,6 @@ export default {
       })
     }
   },
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === passwordStorageMutations.subscribe.addError) {
-        this.error = state.password.error
-      }
-
-      if (mutation.type === passwordStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.password.fieldsErrors
-      }
-
-      if (mutation.type === passwordStorageMutations.subscribe.receivePasswordRecoveryRequest) {
-        this.successMessage = `Recovery link sent to the email address — check it.`
-        this.localStorage.recoveryEmail = this.email
-      }
-    });
-  }
 }
 </script>
 
