@@ -91,7 +91,7 @@ export const blockProducer = {
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
     addBlockProducer: (state, { blockProducer }) => {
       state.entity = blockProducer
-      state.events.isGotten = true
+      state.events.isGotten = Math.random()
     },
     addBlockProducers: (state, { blockProducers }) => state.entities = blockProducers,
     addSearchedBlockProducers: (state, { searchedBlockProducers }) => state.searchedEntities = searchedBlockProducers,

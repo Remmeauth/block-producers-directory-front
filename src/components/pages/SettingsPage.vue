@@ -437,6 +437,7 @@ import { userSettingsForm } from "../../forms/pages/user/settings"
 import { avatarStorageActions } from '../../store/modules/avatar'
 import { userStorageActions } from '../../store/modules/user'
 import { profileStorageActions } from '../../store/modules/profile'
+import { truncate } from 'fs';
 
 export default {
   name: 'SettingsPage',

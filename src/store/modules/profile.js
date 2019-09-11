@@ -42,7 +42,7 @@ export const profile = {
       detailsAreUpdated: false,
       additionalInformationIsUpdated: false,
       referenceLinksAreUpdated: false,
-      isGotten: false,
+      isGotten: null,
     },
     entity: {
       userId: null,
@@ -72,7 +72,7 @@ export const profile = {
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
     addProfile: (state, { profile }) => {
       state.entity = profile
-      state.events.isGotten = true
+      state.events.isGotten = Math.random()
     },
     updateDetails: (state) => state.events.detailsAreUpdated = true,
     updateAdditionalInformation: (state) => state.events.additionalInformationIsUpdated = true,
