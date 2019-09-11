@@ -6,7 +6,7 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-layout class="mb-12 mt-12" row wrap>
+    <v-layout class="mb-12 mt-4" row wrap>
       <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
         <v-layout row wrap>
             <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
@@ -37,37 +37,51 @@
                   </v-form>
                 </v-card-text>
                 <v-card-text 
-                  class="pt-1 pl-2 pb-2" 
+                  class="pt-1 pb-2" 
+                  v-if="profile.location"
                 >
                   <v-icon>location_on</v-icon>
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
-                  class="pt-0 pl-2"
+                  class="pt-0"
+                  v-if="profile.websiteUrl"
                 >
-                  <v-icon>link</v-icon>
                   <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
                     {{ profile.websiteUrl }} 
                   </a>
                 </v-card-text>
-                <v-divider></v-divider>
+                <v-divider 
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
+                ></v-divider>
                 <v-card-text 
-                  class="pt-4 pl-2 pb-2"
+                  class="pt-3 pb-3"
                 >
-                  <v-icon>link</v-icon>
-                  <a :href="profile.twitterUrl" style="text-decoration: none; color: black;">
-                    {{ profile.twitterUrl }} 
+                  <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="profile.twitterUrl" :href="profile.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="profile.githubUrl" :href="profile.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="profile.facebookUrl" :href="profile.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="profile.mediumUrl" :href="profile.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="profile.telegramUrl" :href="profile.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="profile.steemitUrl" :href="profile.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
                   </a>
                 </v-card-text>
-                <v-card-text 
-                  class="pt-0 pl-2"
-                >
-                  <v-icon>link</v-icon>
-                  <a :href="profile.githubUrl" style="text-decoration: none; color: black;">
-                    {{ profile.githubUrl }} 
-                  </a>
-                </v-card-text>
-                <v-divider></v-divider>
+                <v-divider v-if="user.username === localStorage.username"></v-divider>
                 <v-card-actions>
                   <v-btn 
                     v-if="user.username === localStorage.username" 
@@ -112,36 +126,50 @@
                 </v-card-text>
                 <v-card-text 
                   class="pt-1 pb-2"
+                  v-if="profile.location"
                 >
                   <v-icon>location_on</v-icon>
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
                   class="pt-0"
+                  v-if="profile.websiteUrl"
                 >
-                  <v-icon>link</v-icon>
                   <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
+                    <v-icon color="#5d80da">mdi-web</v-icon>
                     {{ profile.websiteUrl }} 
                   </a>
                 </v-card-text>
-                <v-divider></v-divider>
+                <v-divider 
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
+                ></v-divider>
                 <v-card-text 
-                  class="pt-4 pl-2 pb-2"
+                  class="pt-3 pb-3"
                 >
-                  <v-icon>link</v-icon>
-                  <a :href="profile.twitterUrl" style="text-decoration: none; color: black;">
-                    {{ profile.twitterUrl }} 
+                  <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
+                  </a>
+                  <a v-if="profile.twitterUrl" :href="profile.twitterUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
+                  </a>
+                  <a v-if="profile.githubUrl" :href="profile.githubUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
+                  </a>
+                  <a v-if="profile.facebookUrl" :href="profile.facebookUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
+                  </a>
+                  <a v-if="profile.mediumUrl" :href="profile.mediumUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
+                  </a>
+                  <a v-if="profile.telegramUrl" :href="profile.telegramUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="black">mdi-telegram</v-icon>
+                  </a>
+                  <a v-if="profile.steemitUrl" :href="profile.steemitUrl" style="text-decoration: none;">
+                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
                   </a>
                 </v-card-text>
-                <v-card-text 
-                  class="pt-0 pl-2"
-                >
-                  <v-icon>link</v-icon>
-                  <a :href="profile.githubUrl" style="text-decoration: none; color: black;">
-                    {{ profile.githubUrl }} 
-                  </a>
-                </v-card-text>
-                <v-divider></v-divider>
+                <v-divider v-if="user.username === localStorage.username"></v-divider>
                 <v-card-actions>
                   <v-btn 
                     v-if="user.username === localStorage.username" 
@@ -209,6 +237,7 @@
                         >{{ blockProducer.name }}</v-list-item-title>
                         <v-list-item-subtitle 
                           style="font-size: 0.8em;"
+                          v-if="blockProducer.location"
                         >
                           <v-icon>location_on</v-icon> 
                           {{ blockProducer.location }}
@@ -279,16 +308,13 @@ export default {
 </script>
 
 <style>
-.custom-btn::before {
-  color: transparent;
-}
-.custom-btn {
-  color: rgba(0, 0, 0, 0.54);
-}
 a:link {
   text-decoration: none;
 }
 .v-icon.v-icon {
   font-size: 19px;
+}
+.v-icon.links {
+  font-size: 35px;
 }
 </style>

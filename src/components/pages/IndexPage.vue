@@ -6,7 +6,7 @@
     <v-container fluid>
       <v-layout row wrap>
         <v-flex xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
-          <v-card class="mt-4 mb-4"
+          <v-card class="mt-0 mb-4"
             elevation="10" 
             outlined
             style="border-color: #5d80da;"
@@ -16,7 +16,7 @@
                 prepend-icon="search" 
                 v-model="searchPhrase" 
                 label="Search" 
-                append-icon="clear"
+                clearable
               ></v-text-field>
               <v-row>
                 <v-col cols="12" xs="8" sm="6" md="6" lg="4" xl="3"
@@ -32,7 +32,7 @@
                     <v-img class="mt-2 mb-2"
                       v-if="blockProducer.logo_url" 
                       :src="blockProducer.logo_url"
-                      style="width: 150px; max-width: 35%; border-radius: 50%;"
+                      style="max-width: 35%; border-radius: 50%;"
                     ></v-img>
                     <v-divider></v-divider>
                     <h3 class="mt-4">

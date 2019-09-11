@@ -5,12 +5,12 @@
   <div v-else>
     <br>
     <v-layout>
-      <v-flex lg8 offset-lg2 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)">
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Project</h2>
+                <h2>Block producer</h2>
                 <br>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
@@ -35,7 +35,7 @@
                   outlined
                   clearable
                   label="Website"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -70,17 +70,121 @@
                   clearable
                   label="Short description"
                 ></v-text-field>
-              </v-col>
+              </v-col>  
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea
-                  v-model="fullDescription"
-                  :error-messages="fullDescriptionErrors"
-                  @input="$v.fullDescription.$touch()"
-                  @blur="$v.fullDescription.$touch()"
-                  outlined
-                  clearable
-                  label="Full description"
-                ></v-textarea>
+                <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
+                  <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                    <div class="menubar">
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bold() }"
+                        @click="commands.bold"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-bold</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.italic() }"
+                        @click="commands.italic"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-italic</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.strike() }"
+                        @click="commands.strike"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-strikethrough-variant</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.underline() }"
+                        @click="commands.underline"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-underline</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.code() }"
+                        @click="commands.code"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-code-tags</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-1</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                        @click="commands.heading({ level: 2 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-2</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                        @click="commands.heading({ level: 3 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-3</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bullet_list() }"
+                        @click="commands.bullet_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-bulleted</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.ordered_list() }"
+                        @click="commands.ordered_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-numbered</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.undo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-undo</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.redo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-redo</v-icon>
+                      </v-btn>
+                    </div>
+                  </editor-menu-bar>
+                  <editor-content class="pa-3" ref="contentEditor" :editor="editor" style="border-top: 1px solid #BEBEBE;" />
+                </div>
               </v-col>
             </v-row>
           </v-container>
@@ -112,7 +216,7 @@
                   outlined
                   clearable
                   label="LinkedIn"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-linkedin-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -124,7 +228,7 @@
                   outlined
                   clearable
                   label="Twitter"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-twitter"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -136,7 +240,7 @@
                   outlined
                   clearable
                   label="Medium"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -148,7 +252,7 @@
                   outlined
                   clearable
                   label="Github"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -160,7 +264,7 @@
                   outlined
                   clearable
                   label="Facebook"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -172,7 +276,7 @@
                   outlined
                   clearable
                   label="Telegram"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-telegram"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -184,7 +288,7 @@
                   outlined
                   clearable
                   label="Steemit"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -196,7 +300,7 @@
                   outlined
                   clearable
                   label="Reddit"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-reddit"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -208,7 +312,7 @@
                   outlined
                   clearable
                   label="Slack"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-slack"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
@@ -220,14 +324,20 @@
                   outlined
                   clearable
                   label="Wikipedia"
-                  prepend-inner-icon="link"
+                  prepend-inner-icon="mdi mdi-wikipedia"
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
           <v-container>
             <v-col cols="12" lg="4" offset-lg="5">
-              <v-btn @click="create">Submit</v-btn>
+              <v-btn 
+                class="text-none white--text"
+                @click="create"
+                style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+              >
+                Submit
+              </v-btn>
             </v-col>
           </v-container>
         </v-form>
@@ -239,6 +349,26 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  HorizontalRule,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions'
 
 import { submitBlockProducerForm } from '../../forms/pages/blockProducer/submit'
 import Error500 from '../../components/ui/Error500'
@@ -249,6 +379,8 @@ export default {
   name: 'BlockProducerCreationPage',
   mixins: [submitBlockProducerForm],
   components: {
+    EditorContent,
+    EditorMenuBar,
     Error500,
   },
   data() {
@@ -279,6 +411,32 @@ export default {
       twitterUrl: null,
       websiteUrl: null,
       wikipediaUrl: null,
+      html: '',
+      editor: new Editor({
+        onUpdate: ({ getHTML }) => {
+          this.html=getHTML();
+          if (this.html === '<p></p>') this.fullDescription = '';
+          else this.fullDescription = this.html;
+        },
+        extensions: [
+          new Blockquote(),
+          new BulletList(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new ListItem(),
+          new OrderedList(),
+          new TodoItem(),
+          new TodoList(),
+          new Link(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ],
+      }),
     }
   },
   computed: {
@@ -327,6 +485,47 @@ export default {
         wikipediaUrl: this.wikipediaUrl,
       })
     },
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   }
 }
 </script>
+
+<style>
+.custom-btn::before {
+  color: transparent;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 30px;
+  min-width: 40px;
+}
+
+.editor:hover {
+  border-color: black;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
+.menubar {
+	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+ .menubar.is-hidden {
+	 visibility: hidden;
+	 opacity: 0;
+}
+ .menubar.is-focused {
+	 visibility: visible;
+	 opacity: 1;
+	 transition: visibility 0.2s, opacity 0.2s;
+}
+ .menubar__button:hover {
+	 background-color: rgba(0, 0, 0, 0.05);
+}
+ .menubar__button.is-active {
+	 background-color: rgba(0, 0, 0, 0.1);
+}
+</style>

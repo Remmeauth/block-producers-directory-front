@@ -52,6 +52,7 @@ export const blockProducer = {
       descriptionsAreUpdated: false,
       referenceLinksAreUpdated: false,
       isCreated: false,
+      isGotten: false,
     },
     entity: {
       name: null,
@@ -88,7 +89,10 @@ export const blockProducer = {
   mutations: {
     addError: (state, error) => state.error = error,
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
-    addBlockProducer: (state, { blockProducer }) => state.entity = blockProducer,
+    addBlockProducer: (state, { blockProducer }) => {
+      state.entity = blockProducer
+      state.events.isGotten = true
+    },
     addBlockProducers: (state, { blockProducers }) => state.entities = blockProducers,
     addSearchedBlockProducers: (state, { searchedBlockProducers }) => state.searchedEntities = searchedBlockProducers,
     updateDetails: (state) => state.events.detailsAreUpdated = true,

@@ -42,6 +42,7 @@ export const profile = {
       detailsAreUpdated: false,
       additionalInformationIsUpdated: false,
       referenceLinksAreUpdated: false,
+      isGotten: false,
     },
     entity: {
       userId: null,
@@ -69,7 +70,10 @@ export const profile = {
   mutations: {
     addError: (state, error) => state.error = error,
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
-    addProfile: (state, { profile }) => state.entity = profile,
+    addProfile: (state, { profile }) => {
+      state.entity = profile
+      state.events.isGotten = true
+    },
     updateDetails: (state) => state.events.detailsAreUpdated = true,
     updateAdditionalInformation: (state) => state.events.additionalInformationIsUpdated = true,
     updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = true,
