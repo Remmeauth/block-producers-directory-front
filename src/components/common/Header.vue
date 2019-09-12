@@ -1,5 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -147,36 +147,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
-import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
+import { profileStorageActions } from '../../store/modules/profile'
 
 export default {
   name: 'Header',
   components: {
     Error500,
   },
-  data() {
-    return {
-      error: {
-        message: null,
-        statusCode: null,
-      },
-      profile: {
-        firstName: null,
-        lastName: null,
-        additionalInformation: null,
-        avatarUrl: null,
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        location: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        tweeterUrl: null,
-        websiteUrl: null,
-      },
-    }
+  computed: {
+    ...mapGetters('profile', ['profile', 'profileError']),
   },
   methods: {
     signOut () {
@@ -187,36 +169,8 @@ export default {
     }
   },
   mounted() {
-    if (!this.localStorage.username) {
-      return
-    }
-
-    this.$store.dispatch(profileStorageActions.getProfile, {
-      username: this.localStorage.username,
-    })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === profileStorageMutations.subscribe.addError) {
-        this.error = state.profile.error
-        unsubscribe()
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.profile.firstName = state.profile.firstName
-        this.profile.lastName = state.profile.lastName
-        this.profile.additionalInformation = state.profile.additionalInformation
-        this.profile.avatarUrl = state.profile.avatarUrl
-        this.profile.facebookUrl = state.profile.facebookUrl
-        this.profile.githubUrl = state.profile.githubUrl
-        this.profile.linkedInUrl = state.profile.linkedInUrl
-        this.profile.location = state.profile.location
-        this.profile.mediumUrl = state.profile.mediumUrl
-        this.profile.steemitUrl = state.profile.steemitUrl
-        this.profile.telegramUrl = state.profile.telegramUrl
-        this.profile.tweeterUrl = state.profile.tweeterUrl
-        this.profile.websiteUrl = state.profile.websiteUrl
-      }
-    });
+    if (!this.localStorage.username) return
+    this.$store.dispatch(profileStorageActions.getProfile, { username: this.localStorage.username })
   },
 }
 </script>

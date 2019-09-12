@@ -1,8 +1,8 @@
 <template>
-  <div v-if="error.statusCode === 404">
+  <div v-if="blockProducerError.statusCode === 404">
     <Error404/>
   </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-else-if="blockProducerError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -19,10 +19,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="details.name" 
+                  v-model="blockProducer.name" 
                   :error-messages="nameErrors"
-                  @input="$v.details.name.$touch()"
-                  @blur="$v.details.name.$touch()"
+                  @input="$v.blockProducer.name.$touch()"
+                  @blur="$v.blockProducer.name.$touch()"
                   outlined 
                   clearable 
                   label="Name" 
@@ -31,10 +31,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="details.websiteUrl" 
+                  v-model="blockProducer.websiteUrl" 
                   :error-messages="websiteUrlErrors"
-                  @input="$v.details.websiteUrl.$touch()"
-                  @blur="$v.details.websiteUrl.$touch()"
+                  @input="$v.blockProducer.websiteUrl.$touch()"
+                  @blur="$v.blockProducer.websiteUrl.$touch()"
                   outlined 
                   clearable 
                   label="Website" 
@@ -43,10 +43,10 @@
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field 
-                  v-model="details.location"
+                  v-model="blockProducer.location"
                   :error-messages="locationUrlErrors"
-                  @input="$v.details.location.$touch()"
-                  @blur="$v.details.location.$touch()" 
+                  @input="$v.blockProducer.location.$touch()"
+                  @blur="$v.blockProducer.location.$touch()" 
                   outlined 
                   clearable 
                   label="Location" 
@@ -90,10 +90,10 @@
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field 
-                  v-model="descriptions.shortDescription"
+                  v-model="blockProducer.shortDescription"
                   :error-messages="shortDescriptionErrors"
-                  @input="$v.descriptions.shortDescription.$touch()"
-                  @blur="$v.descriptions.shortDescription.$touch()" 
+                  @input="$v.blockProducer.shortDescription.$touch()"
+                  @blur="$v.blockProducer.shortDescription.$touch()" 
                   outlined 
                   clearable 
                   label="Short description"
@@ -251,7 +251,7 @@
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-file-input 
-                  v-model="other.logotypeFile" 
+                  v-model="logotypeFile" 
                   outlined 
                   label="Select your logotype"
                 ></v-file-input>
@@ -293,10 +293,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="referenceLinks.linkedInUrl"
+                  v-model="blockProducer.linkedInUrl"
                   :error-messages="linkedInUrlErrors"
-                  @input="$v.referenceLinks.linkedInUrl.$touch()"
-                  @blur="$v.referenceLinks.linkedInUrl.$touch()" 
+                  @input="$v.blockProducer.linkedInUrl.$touch()"
+                  @blur="$v.blockProducer.linkedInUrl.$touch()" 
                   outlined 
                   clearable 
                   label="LinkedIn" 
@@ -305,10 +305,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="referenceLinks.twitterUrl"
+                  v-model="blockProducer.twitterUrl"
                   :error-messages="twitterUrlErrors"
-                  @input="$v.referenceLinks.twitterUrl.$touch()"
-                  @blur="$v.referenceLinks.twitterUrl.$touch()" 
+                  @input="$v.blockProducer.twitterUrl.$touch()"
+                  @blur="$v.blockProducer.twitterUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Twitter" 
@@ -317,10 +317,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="referenceLinks.mediumUrl"
+                  v-model="blockProducer.mediumUrl"
                   :error-messages="mediumUrlErrors"
-                  @input="$v.referenceLinks.mediumUrl.$touch()"
-                  @blur="$v.referenceLinks.mediumUrl.$touch()" 
+                  @input="$v.blockProducer.mediumUrl.$touch()"
+                  @blur="$v.blockProducer.mediumUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Medium" 
@@ -329,10 +329,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="referenceLinks.githubUrl"
+                  v-model="blockProducer.githubUrl"
                   :error-messages="githubUrlErrors"
-                  @input="$v.referenceLinks.githubUrl.$touch()"
-                  @blur="$v.referenceLinks.githubUrl.$touch()" 
+                  @input="$v.blockProducer.githubUrl.$touch()"
+                  @blur="$v.blockProducer.githubUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Github" 
@@ -341,10 +341,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="referenceLinks.facebookUrl"
+                  v-model="blockProducer.facebookUrl"
                   :error-messages="facebookUrlErrors"
-                  @input="$v.referenceLinks.facebookUrl.$touch()"
-                  @blur="$v.referenceLinks.facebookUrl.$touch()" 
+                  @input="$v.blockProducer.facebookUrl.$touch()"
+                  @blur="$v.blockProducer.facebookUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Facebook" 
@@ -353,10 +353,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="referenceLinks.telegramUrl"
+                  v-model="blockProducer.telegramUrl"
                   :error-messages="telegramUrlErrors"
-                  @input="$v.referenceLinks.telegramUrl.$touch()"
-                  @blur="$v.referenceLinks.telegramUrl.$touch()" 
+                  @input="$v.blockProducer.telegramUrl.$touch()"
+                  @blur="$v.blockProducer.telegramUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Telegram" 
@@ -365,10 +365,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="referenceLinks.steemitUrl"
+                  v-model="blockProducer.steemitUrl"
                   :error-messages="steemitUrlErrors"
-                  @input="$v.referenceLinks.steemitUrl.$touch()"
-                  @blur="$v.referenceLinks.steemitUrl.$touch()" 
+                  @input="$v.blockProducer.steemitUrl.$touch()"
+                  @blur="$v.blockProducer.steemitUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Steemit" 
@@ -377,10 +377,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="referenceLinks.redditUrl"
+                  v-model="blockProducer.redditUrl"
                   :error-messages="redditUrlErrors"
-                  @input="$v.referenceLinks.redditUrl.$touch()"
-                  @blur="$v.referenceLinks.redditUrl.$touch()" 
+                  @input="$v.blockProducer.redditUrl.$touch()"
+                  @blur="$v.blockProducer.redditUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Reddit" 
@@ -389,10 +389,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="referenceLinks.slackUrl"
+                  v-model="blockProducer.slackUrl"
                   :error-messages="slackUrlErrors"
-                  @input="$v.referenceLinks.slackUrl.$touch()"
-                  @blur="$v.referenceLinks.slackUrl.$touch()" 
+                  @input="$v.blockProducer.slackUrl.$touch()"
+                  @blur="$v.blockProducer.slackUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Slack" 
@@ -401,10 +401,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="referenceLinks.wikipediaUrl"
+                  v-model="blockProducer.wikipediaUrl"
                   :error-messages="wikipediaUrlErrors"
-                  @input="$v.referenceLinks.wikipediaUrl.$touch()"
-                  @blur="$v.referenceLinks.wikipediaUrl.$touch()" 
+                  @input="$v.blockProducer.wikipediaUrl.$touch()"
+                  @blur="$v.blockProducer.wikipediaUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Wikipedia" 
@@ -445,6 +445,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -469,8 +470,8 @@ import {
 import editBlockProducerForm from '../../forms/pages/blockProducer/edit'
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
-import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
+import { avatarStorageActions } from '../../store/modules/avatar'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 
 export default {
   name: 'BlockProducerEditionPage',
@@ -497,37 +498,14 @@ export default {
         updateReferenceLinks: null,
         submitUploadingBlockProducerLogotype: null,
       },
+      logotypeFile: null,
       successMessage: null,
-      details: {
-        name: null,
-        location: null,
-        websiteUrl: null,
-      },
-      descriptions: {
-        shortDescription: null,
-        fullDescription: null,
-      },
-      referenceLinks: {
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        redditUrl: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        slackUrl: null,
-        twitterUrl: null,
-        wikipediaUrl: null,
-      },
-      other: {
-        logotypeFile: null,
-      },
       html: '',
       editor: new Editor({
         onUpdate: ({ getHTML }) => {
           this.html=getHTML();
-          if (this.html === '<p></p>') this.descriptions.fullDescription = '';
-          else this.descriptions.fullDescription = this.html;
+          if (this.html === '<p></p>') this.blockProducer.fullDescription = '';
+          else this.blockProducer.fullDescription = this.html;
         },
         extensions: [
           new Blockquote(),
@@ -550,50 +528,80 @@ export default {
       }),
     }
   },
+  computed: {
+    ...mapGetters('avatar', ['avatarEvents']),
+    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError', 'blockProducerEvents']),
+  },
+  watch: {
+    'blockProducerEvents.isGotten'() {
+      this.editor.setContent(this.blockProducer.fullDescription)
+    },
+    'blockProducerEvents.detailsAreUpdated'() {
+      this.successMessage =
+        "Block producer updated successfully — <a href=\"" +
+        `/block-producers/${this.$route.params.identifier}` +
+        "\">view your block producer</a>"
+    },
+    'blockProducerEvents.descriptionsAreUpdated'() {
+      this.successMessage =
+        "Block producer updated successfully — <a href=\"" +
+        `/block-producers/${this.$route.params.identifier}` +
+        "\">view your block producer</a>"
+    },
+    'blockProducerEvents.referenceLinksAreUpdated'() {
+      this.successMessage =
+        "Block producer updated successfully — <a href=\"" +
+        `/block-producers/${this.$route.params.identifier}` +
+        "\">view your block producer</a>"
+    },
+    'avatarEvents.isUploaded'() {
+      this.successMessage =
+        "Block producer updated successfully — <a href=\"" +
+        `/block-producers/${this.$route.params.identifier}` +
+        "\">view your block producer</a>"
+    },
+  },
   methods: {
     updateDetails() {
-      this.$v.$touch()
-      if (this.$v.details.$anyError) { return }
+      if (!this.isDetailsFormValid()) { return }
 
       this.snackBars.updateDetails = true
       this.$store.dispatch(blockProducerStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
-        name: this.details.name,
-        location: this.details.location,
-        websiteUrl: this.details.websiteUrl,
+        name: this.blockProducer.name,
+        location: this.blockProducer.location,
+        websiteUrl: this.blockProducer.websiteUrl,
       })
     },
     updateDescription () {
-      this.$v.$touch()
-      if (this.$v.descriptions.$anyError) { return }
+      if (!this.isDescriptionFormValid()) { return }
 
       this.snackBars.updateDescription = true
       this.$store.dispatch(blockProducerStorageActions.updateDescription, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
-        shortDescription: this.descriptions.shortDescription,
-        fullDescription: this.descriptions.fullDescription,
+        shortDescription: this.blockProducer.shortDescription,
+        fullDescription: this.blockProducer.fullDescription,
       })
     },
     updateReferenceLinks () {
-      this.$v.$touch()
-      if (this.$v.details.$anyError) { return }
+      if (!this.isReferenceLinksFormValid()) { return }
 
       this.snackBars.updateReferenceLinks = true
       this.$store.dispatch(blockProducerStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
-        facebookUrl: this.referenceLinks.facebookUrl,
-        githubUrl: this.referenceLinks.githubUrl,
-        linkedInUrl: this.referenceLinks.linkedInUrl,
-        redditUrl: this.referenceLinks.redditUrl,
-        mediumUrl: this.referenceLinks.mediumUrl,
-        steemitUrl: this.referenceLinks.steemitUrl,
-        telegramUrl: this.referenceLinks.telegramUrl,
-        slackUrl: this.referenceLinks.slackUrl,
-        twitterUrl: this.referenceLinks.twitterUrl,
-        wikipediaUrl: this.referenceLinks.wikipediaUrl,
+        facebookUrl: this.blockProducer.facebookUrl,
+        githubUrl: this.blockProducer.githubUrl,
+        linkedInUrl: this.blockProducer.linkedInUrl,
+        redditUrl: this.blockProducer.redditUrl,
+        mediumUrl: this.blockProducer.mediumUrl,
+        steemitUrl: this.blockProducer.steemitUrl,
+        telegramUrl: this.blockProducer.telegramUrl,
+        slackUrl: this.blockProducer.slackUrl,
+        twitterUrl: this.blockProducer.twitterUrl,
+        wikipediaUrl: this.blockProducer.wikipediaUrl,
       })
     },
     submitUploadingBlockProducerLogotype() {
@@ -601,7 +609,7 @@ export default {
       this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
         jwtToken: this.localStorage.token,
         identifier: this.$route.params.identifier,
-        file: this.other.logotypeFile,
+        file: this.logotypeFile,
       })
     },
   },
@@ -609,51 +617,6 @@ export default {
     this.$store.dispatch(blockProducerStorageActions.getBlockProducer, {
         identifier: this.$route.params.identifier,
     })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
-        this.error = state.blockProducer.error
-        unsubscribe()
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.blockProducer.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
-        this.details.name = state.blockProducer.name
-        this.details.location = state.blockProducer.location
-        this.details.websiteUrl = state.blockProducer.websiteUrl
-        this.descriptions.shortDescription = state.blockProducer.shortDescription
-        this.descriptions.fullDescription = state.blockProducer.fullDescription
-        this.other.logoUrl = state.blockProducer.logoUrl
-        this.referenceLinks.facebookUrl = state.blockProducer.facebookUrl
-        this.referenceLinks.githubUrl = state.blockProducer.githubUrl
-        this.referenceLinks.linkedInUrl = state.blockProducer.linkedInUrl
-        this.referenceLinks.redditUrl = state.blockProducer.redditUrl
-        this.referenceLinks.mediumUrl = state.blockProducer.mediumUrl
-        this.referenceLinks.steemitUrl = state.blockProducer.steemitUrl
-        this.referenceLinks.telegramUrl = state.blockProducer.telegramUrl
-        this.referenceLinks.slackUrl = state.blockProducer.slackUrl
-        this.referenceLinks.twitterUrl = state.blockProducer.twitterUrl
-        this.referenceLinks.wikipediaUrl = state.blockProducer.wikipediaUrl
-        
-        this.editor.setContent(this.descriptions.fullDescription)
-      }
-
-      if (
-        mutation.type === blockProducerStorageMutations.subscribe.updateDetails ||
-        mutation.type === blockProducerStorageMutations.subscribe.updateDescription ||
-        mutation.type === blockProducerStorageMutations.subscribe.updateReferenceLinks ||
-        mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
-      ) {
-        this.successMessage =
-          "Block producer updated successfully — <a href=\"" +
-          `/block-producers/${this.$route.params.identifier}` +
-          "\">view your block producer</a>"
-      }
-    });
   }
 }
 </script>

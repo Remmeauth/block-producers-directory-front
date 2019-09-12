@@ -5,23 +5,23 @@ export const blockProducerStorageMutations = {
   subscribe: {
     addError: 'blockProducer/addError',
     addFieldsErrors: 'blockProducer/addFieldsErrors',
-    getBlockProducer: 'blockProducer/getBlockProducer',
+    addBlockProducer: 'blockProducer/addBlockProducer',
     addBlockProducers: 'blockProducer/addBlockProducers',
+    addSearchedBlockProducers: 'blockProducer/addSearchedBlockProducers',
     updateDetails: 'blockProducer/updateDetails',
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
-    searchBlockProducers: 'blockProducer/searchBlockProducers',
     createBlockProducer: 'blockProducer/createBlockProducer',
   },
   commit: {
     addError: 'addError',
     addFieldsErrors: 'addFieldsErrors',
-    getBlockProducer: 'getBlockProducer',
+    addBlockProducer: 'addBlockProducer',
     addBlockProducers: 'addBlockProducers',
+    addSearchedBlockProducers: 'addSearchedBlockProducers',
     updateDetails: 'updateDetails',
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
-    searchBlockProducers: 'searchBlockProducers',
     createBlockProducer: 'createBlockProducer',
   },
 }
@@ -29,10 +29,10 @@ export const blockProducerStorageMutations = {
 export const blockProducerStorageActions = {
   getBlockProducer: 'blockProducer/get',
   getBlockProducers: 'blockProducer/getAll',
+  searchBlockProducers: 'blockProducer/searchBlockProducers',
   updateDetails: 'blockProducer/updateDetails',
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
-  searchBlockProducers: 'blockProducer/searchBlockProducers',
   createBlockProducer: 'blockProducer/create',
 }
 
@@ -47,93 +47,60 @@ export const blockProducer = {
       errors: null,
       statusCode: null,
     },
-    isCreated: false,
-    isUpdated: false,
-    blockProducers: null,
+    events: {
+      detailsAreUpdated: null,
+      descriptionsAreUpdated: null,
+      referenceLinksAreUpdated: null,
+      isCreated: null,
+      isGotten: null,
+    },
+    entity: {
+      name: null,
+      location: null,
+      shortDescription: null,
+      fullDescription: null,
+      logoUrl: null,
+      facebookUrl: null,
+      githubUrl: null,
+      linkedInUrl: null,
+      redditUrl: null,
+      mediumUrl: null,
+      steemitUrl: null,
+      telegramUrl: null,
+      slackUrl: null,
+      twitterUrl: null,
+      websiteUrl: null,
+      wikipediaUrl: null,
+      user: null,
+      id: null,
+    },
+    entities: null,
+    searchedEntities: null,
     searchedBlockProducers: null,
-    name: null,
-    location: null,
-    shortDescription: null,
-    fullDescription: null,
-    logoUrl: null,
-    facebookUrl: null,
-    githubUrl: null,
-    linkedInUrl: null,
-    redditUrl: null,
-    mediumUrl: null,
-    steemitUrl: null,
-    telegramUrl: null,
-    slackUrl: null,
-    twitterUrl: null,
-    websiteUrl: null,
-    wikipediaUrl: null,
-    user: null,
-    id: null,
+  },
+  getters: {
+    blockProducerError: state => state.error,
+    blockProducerFieldsErrors: state => state.fieldsErrors,
+    blockProducer: state => state.entity,
+    blockProducers: state => state.entities,
+    searchedBlockProducers: state => state.searchedEntities,
+    blockProducerEvents: state => state.events,
   },
   mutations: {
-    addError (state, error) {
-      state.error = error
+    addError: (state, error) => state.error = error,
+    addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
+    addBlockProducer: (state, { blockProducer }) => {
+      state.entity = blockProducer
+      state.events.isGotten = Math.random()
     },
-    addFieldsErrors (state, errors) {
-      state.fieldsErrors = errors
-    },
-    getBlockProducer (state, {
-      user,
-      id,
-      name,
-      location,
-      shortDescription,
-      fullDescription,
-      logoUrl,
-      facebookUrl,
-      githubUrl,
-      linkedInUrl,
-      redditUrl,
-      mediumUrl,
-      steemitUrl,
-      telegramUrl,
-      slackUrl,
-      twitterUrl,
-      websiteUrl,
-      wikipediaUrl,
-    }) {
-      state.user = user
-      state.id = id
-      state.name = name
-      state.location = location
-      state.shortDescription = shortDescription
-      state.fullDescription = fullDescription
-      state.logoUrl = logoUrl
-      state.facebookUrl = facebookUrl
-      state.githubUrl = githubUrl
-      state.linkedInUrl = linkedInUrl
-      state.redditUrl = redditUrl
-      state.mediumUrl = mediumUrl
-      state.steemitUrl = steemitUrl
-      state.telegramUrl = telegramUrl
-      state.slackUrl = slackUrl
-      state.twitterUrl = twitterUrl
-      state.websiteUrl = websiteUrl
-      state.wikipediaUrl = wikipediaUrl
-    },
-    addBlockProducers (state, blockProducers) {
-      state.blockProducers = blockProducers.blockProducers
-    },
-    updateDetails (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    updateDescription (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    updateReferenceLinks (state, isUpdated) {
-      state.isUpdated = isUpdated
-    },
-    searchBlockProducers (state, searchedBlockProducers) {
-      state.searchedBlockProducers = searchedBlockProducers
-    },
-    createBlockProducer (state, blockProducerIdentifier) {
+    addBlockProducers: (state, { blockProducers }) => state.entities = blockProducers,
+    addSearchedBlockProducers: (state, { searchedBlockProducers }) => state.searchedEntities = searchedBlockProducers,
+    updateDetails: (state) => state.events.detailsAreUpdated = Math.random(),
+    updateDescription: (state) => state.events.descriptionsAreUpdated = Math.random(),
+    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
+    createBlockProducer: (state, blockProducerIdentifier) => {
       state.id = blockProducerIdentifier
-      state.isCreated = true
+      state.events.isCreated = Math.random()
     },
   },
   actions: {
@@ -141,25 +108,27 @@ export const blockProducer = {
       axios
         .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`)
         .then(response => {
-          commit(blockProducerStorageMutations.commit.getBlockProducer, {
-            user: response.data.result.user,
-            name: response.data.result.name,
-            location: response.data.result.location,
-            shortDescription: response.data.result.short_description,
-            fullDescription: response.data.result.full_description,
-            logoUrl: response.data.result.logo_url,
-            facebookUrl: response.data.result.facebook_url,
-            githubUrl: response.data.result.github_url,
-            linkedInUrl: response.data.result.linkedin_url,
-            redditUrl: response.data.result.reddit_url,
-            mediumUrl: response.data.result.medium_url,
-            steemitUrl: response.data.result.steemit_url,
-            telegramUrl: response.data.result.telegram_url,
-            slackUrl: response.data.result.slack_url,
-            twitterUrl: response.data.result.twitter_url,
-            websiteUrl: response.data.result.website_url,
-            wikipediaUrl: response.data.result.wikipedia_url,
-            id: response.data.result.id,
+          commit(blockProducerStorageMutations.commit.addBlockProducer, {
+            blockProducer: {
+              user: response.data.result.user,
+              name: response.data.result.name,
+              location: response.data.result.location,
+              shortDescription: response.data.result.short_description,
+              fullDescription: response.data.result.full_description,
+              logoUrl: response.data.result.logo_url,
+              facebookUrl: response.data.result.facebook_url,
+              githubUrl: response.data.result.github_url,
+              linkedInUrl: response.data.result.linkedin_url,
+              redditUrl: response.data.result.reddit_url,
+              mediumUrl: response.data.result.medium_url,
+              steemitUrl: response.data.result.steemit_url,
+              telegramUrl: response.data.result.telegram_url,
+              slackUrl: response.data.result.slack_url,
+              twitterUrl: response.data.result.twitter_url,
+              websiteUrl: response.data.result.website_url,
+              wikipediaUrl: response.data.result.wikipedia_url,
+              id: response.data.result.id,
+            },
           })
         })
         .catch(error => {
@@ -214,7 +183,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateDetails, true)
+          commit(blockProducerStorageMutations.commit.updateDetails)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -249,7 +218,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateDescription, true)
+          commit(blockProducerStorageMutations.commit.updateDescription)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -302,7 +271,7 @@ export const blockProducer = {
             }
         })
         .then(response => {
-          commit(blockProducerStorageMutations.commit.updateReferenceLinks, true)
+          commit(blockProducerStorageMutations.commit.updateReferenceLinks)
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -324,7 +293,9 @@ export const blockProducer = {
       axios
         .get(process.env.VUE_APP_BACK_END_URL + `/block-producers/search/?phrase=${phrase}/`)
         .then(response => {
-          commit(blockProducerStorageMutations.commit.searchBlockProducers, response.data.result)
+          commit(blockProducerStorageMutations.commit.addSearchedBlockProducers, {
+            searchedBlockProducers: response.data.result,
+          })
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="error.statusCode === 404">
+  <div v-if="blockProducerError.statusCode === 404 || blockProducerCommentError.statusCode === 404">
     <Error404/>
   </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-else-if="blockProducerError.statusCode === 500 || blockProducerCommentError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -10,18 +10,18 @@
       <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
         <v-layout row wrap>
             <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
-              <v-card 
+              <v-card
                 v-if="
-                  this.$vuetify.breakpoint.name === 'xs' || 
+                  this.$vuetify.breakpoint.name === 'xs' ||
                   this.$vuetify.breakpoint.name === 'sm'"
                 class="mx-auto mb-6"
                 align="center"
-                elevation="10" 
+                elevation="10"
                 outlined
                 style="border-color: #5d80da;"
                 >
                 <v-img class="mt-2 mb-2"
-                  v-if="blockProducer.logoUrl" 
+                  v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl"
                   style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
@@ -34,7 +34,7 @@
                 <v-card-text class="pt-2 pb-0">
                   {{ blockProducer.shortDescription }}
                 </v-card-text>
-                <v-card-text 
+                <v-card-text
                   v-if="blockProducer.user"
                   class="pt-1 pb-0"
                   @click="$router.push({name: 'user', params: {username: blockProducer.user.username }})"
@@ -101,32 +101,35 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user">
-                  <v-btn 
-                    v-if="blockProducer.user.username === localStorage.username" 
-                    @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})" 
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
+                <v-card-actions 
+                  v-if="blockProducer.user" 
+                  class="justify-center"
+                >
+                  <v-btn
+                    v-if="blockProducer.user.username === localStorage.username"
+                    @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit a block producer
                   </v-btn>
                 </v-card-actions>
               </v-card>
-              <v-card 
+              <v-card
                 v-if="
                   this.$vuetify.breakpoint.name === 'md' ||
                   this.$vuetify.breakpoint.name === 'lg' ||
-                  this.$vuetify.breakpoint.name === 'xl'" 
+                  this.$vuetify.breakpoint.name === 'xl'"
                 class="mx-auto mr-6 mb-6"
                 align="center"
-                elevation="10" 
+                elevation="10"
                 outlined
                 style="border-color: #5d80da;"
                 >
                 <v-img class="mt-2 mb-2"
-                  v-if="blockProducer.logoUrl" 
+                  v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl"
                   style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
@@ -140,7 +143,7 @@
                   {{ blockProducer.shortDescription }}
                 </v-card-text>
                 <v-card-text
-                  v-if="blockProducer.user" 
+                  v-if="blockProducer.user"
                   class="pt-1 pb-0"
                   @click="$router.push({name: 'user', params: {username: blockProducer.user.username }})"
                   style="cursor: pointer;"
@@ -207,14 +210,14 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user">
-                  <v-btn 
-                    v-if="blockProducer.user.username === localStorage.username" 
+                <v-card-actions v-if="blockProducer.user" class="justify-center">
+                  <v-btn
+                    v-if="blockProducer.user.username === localStorage.username"
                     @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit a block producer
                   </v-btn>
@@ -222,29 +225,29 @@
               </v-card>
             </v-flex>
             <v-flex xs12 sm8 md6 lg6>
-              <v-card 
+              <v-card
                 class="mx-auto"
                 align="center"
-                elevation="10" 
+                elevation="10"
                 outlined
                 style="border-color: #5d80da;"
               >
                 <v-subheader>Block producer's information</v-subheader>
                 <div class="pa-4 pt-0 caption">
-                  <p 
-                    v-if="blockProducer.fullDescription" 
-                    style="text-align: justify;" 
+                  <p
+                    v-if="blockProducer.fullDescription"
+                    style="text-align: justify;"
                     v-html="blockProducer.fullDescription"
                   ></p>
-                  <p 
-                    v-else 
+                  <p
+                    v-else
                     style="text-align: justify;"
                   >
                     No information has been provided.
                   </p>
                 </div>
               </v-card>
-              <v-card 
+              <v-card
                 v-if="comments && comments.length > 0"
                 class="mt-6"
                 outlined
@@ -261,21 +264,21 @@
                     <v-subheader v-if="index === 0">Comments</v-subheader>
                     <v-divider v-else-if="index > 0" :inset="true"></v-divider>
                     <v-list-item v-if="blockProducer.user">
-                      <img 
-                        class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width: 10%; border-radius: 50%; cursor: pointer;" 
+                      <img
+                        class="mt-2 mb-2 mr-5 pa-1"
+                        style="max-width: 10%; border-radius: 50%; cursor: pointer;"
                         :src="comment.profile_avatar_url"
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >
-                      <v-list-item-content 
+                      <v-list-item-content
                         style="cursor: pointer;"
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >
-                        <v-list-item-title 
-                          class="mb-1" 
+                        <v-list-item-title
+                          class="mb-1"
                           style="font-weight: 500; font-size:0.9em;"
                         >
-                          {{ comment.user.username }} 
+                          {{ comment.user.username }}
                           {{ new Date(comment.created_at * 1000).toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}
                         </v-list-item-title>
                         <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
@@ -284,7 +287,7 @@
                   </template>
                 </v-list>
               </v-card>
-              <v-card 
+              <v-card
                 v-else
                 class="mt-6"
                 elevation="10" 
@@ -306,20 +309,29 @@
               <v-flex class="mt-4" v-if="localStorage.username">
                 <h3 class="mb-2">Leave a comment</h3>
                 <form>
-                  <v-textarea 
+                  <v-textarea
                     outlined
                     v-model="comment"
                     solo
                     no-resize
                     class="mt-0 mb-2"
                   ></v-textarea>
-                  <v-flex xs3 sm3 md3 lg3>
+                  <v-flex xs3 sm3 md3 lg3 xl3>
                     <v-btn
-                      outlined 
-                      color="white" 
-                      block 
-                      style="background-color: #43A047; border: 1px solid green; cursor: pointer;"
-                      @click="createComment">Post</v-btn>
+                      v-if="comment"
+                      class="create-comment-btn white--text"
+                      @click="createComment"
+                      style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-size: 0.8em; font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                    >
+                      Post
+                    </v-btn>
+                    <v-btn
+                      v-else
+                      class="create-comment-btn-disabled white--text"
+                      style="height: 35px; min-width: 110px; font-size: 0.8em; font-weight: 600; background-color: #94d3a2; border: 1px solid rgba(27,31,35,.2);" 
+                    >
+                      Post
+                    </v-btn>
                   </v-flex>
                 </form>
               </v-flex>
@@ -331,12 +343,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import { blockProducerStorageActions, blockProducerStorageMutations } from '../../store/modules/blockProducer'
-import { commentStorageActions, commentStorageMutations } from '../../store/modules/comment'
-import { likeStorageActions, likeStorageMutations } from '../../store/modules/like'
-import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
+import { blockProducerCommentStorageActions } from '../../store/modules/blockProducerComment'
+import { profileStorageActions } from '../../store/modules/profile'
 export default {
   name: 'BlockProducerPage',
   components: {
@@ -345,45 +358,17 @@ export default {
   },
   data() {
     return {
-      error: {
-        message: null,
-        statusCode: null,
-      },
-      profile: {
-        avatarUrl: null,
-      },
-      blockProducer: {
-        name: null,
-        location: null,
-        shortDescription: null,
-        fullDescription: null,
-        logoUrl: null,
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        redditUrl: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        slackUrl: null,
-        twitterUrl: null,
-        websiteUrl: null,
-        wikipediaUrl: null,
-        user: null,
-        id: null,
-      },
       comment: null,
-      comments: null,
-      commentsNumber: null,
-      successMessage: null,
-      blockProducerLikes: null,
-      likesNumber: null,
-      isLikedByUser: false,
     }
+  },
+  computed: {
+    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError']),
+    ...mapGetters('blockProducerComment', ['comments', 'blockProducerCommentError']),
+    ...mapGetters('profile', ['profile', 'profileError']),
   },
   methods: {
     createComment() {
-      this.$store.dispatch(commentStorageActions.createComment, {
+      this.$store.dispatch(blockProducerCommentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,
         text: this.comment,
@@ -400,23 +385,6 @@ export default {
 
       this.comment = ''
     },
-    like() {
-      this.isLikedByUser = !this.isLikedByUser
-      if (this.isLikedByUser) { this.likesNumber++ } else { this.likesNumber-- }
-
-      this.$store.dispatch(likeStorageActions.putLike, {
-        jwtToken: this.localStorage.token,
-        blockProducerIdentifier: this.$route.params.identifier
-      })
-
-      this.$store.subscribe((mutation, state) => {
-        if (mutation.type === likeStorageMutations.subscribe.addError) {
-          this.error = state.like.error
-        }
-
-        if (mutation.type === likeStorageMutations.subscribe.putLike) {}
-      });
-    },
   },
   mounted() {
     if (this.localStorage.username) {
@@ -429,79 +397,9 @@ export default {
       identifier: this.$route.params.identifier,
     })
 
-    this.$store.dispatch(commentStorageActions.getComments, {
+    this.$store.dispatch(blockProducerCommentStorageActions.getComments, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
-
-    this.$store.dispatch(likeStorageActions.getLikes, {
-      blockProducerIdentifier: this.$route.params.identifier,
-    })
-
-    this.$store.dispatch(likeStorageActions.isLikedByUser, {
-      username: this.localStorage.username,
-      blockProducerIdentifier: this.$route.params.identifier,
-    })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addError) {
-        this.error = state.blockProducer.error
-        unsubscribe()
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.addError) {
-        this.error = state.comment.error
-        unsubscribe()
-      }
-
-      if (mutation.type === commentStorageMutations.subscribe.fieldsErrors) {
-        this.fieldsErrors = state.comment.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === likeStorageMutations.subscribe.addLikes) {
-        this.blockProducerLikes = state.like.likes
-        this.likesNumber = state.like.likesNumber
-      }
-
-      if (mutation.type === likeStorageMutations.subscribe.markAsIsLikedByUser) {
-        this.isLikedByUser = state.like.isLikedByUser
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.getBlockProducer) {
-        this.blockProducer.user = state.blockProducer.user
-        this.blockProducer.id = state.blockProducer.id
-        this.blockProducer.name = state.blockProducer.name
-        this.blockProducer.location = state.blockProducer.location
-        this.blockProducer.shortDescription = state.blockProducer.shortDescription
-        this.blockProducer.fullDescription = state.blockProducer.fullDescription
-        this.blockProducer.logoUrl = state.blockProducer.logoUrl
-        this.blockProducer.facebookUrl = state.blockProducer.facebookUrl
-        this.blockProducer.githubUrl = state.blockProducer.githubUrl
-        this.blockProducer.linkedInUrl = state.blockProducer.linkedInUrl
-        this.blockProducer.redditUrl = state.blockProducer.redditUrl
-        this.blockProducer.mediumUrl = state.blockProducer.mediumUrl
-        this.blockProducer.steemitUrl = state.blockProducer.steemitUrl
-        this.blockProducer.telegramUrl = state.blockProducer.telegramUrl
-        this.blockProducer.slackUrl = state.blockProducer.slackUrl
-        this.blockProducer.twitterUrl = state.blockProducer.twitterUrl
-        this.blockProducer.websiteUrl = state.blockProducer.websiteUrl
-        this.blockProducer.wikipediaUrl = state.blockProducer.wikipediaUrl
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.profile.avatarUrl = state.profile.avatarUrl
-      }
-      
-      if (mutation.type === commentStorageMutations.subscribe.createComment) {
-        this.successMessage = 'Comment created successfully — view your block producer.'
-      }
-      
-      if (mutation.type === commentStorageMutations.subscribe.addComments) {
-        this.comments = state.comment.comments
-        this.commentsNumber = state.comment.commentsNumber
-      }
-    });
   }
 }
 </script>
@@ -510,7 +408,28 @@ export default {
 .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
     background-color: rgba(0, 0, 0, 0.0) !important;
 }
+
 .btn-background-none::before {
-  color: transparent
+  color: transparent;
 }
+
+.v-btn.create-comment-btn:not(.v-btn--round).v-size--default {
+  height: 35px;
+  min-width: 110px;
+}
+
+.edit-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+  border: 1px solid rgba(27,31,35,.2);
+  color: #24292e;
+  font-size: 0.8em;
+  font-weight: 600;
+  background-color: #eff3f6; 
+  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+}
+
+.edit-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined):hover {
+  background-color: #E6EBF2; 
+  border: 1px solid #9FA3A9;
+}
+
 </style>

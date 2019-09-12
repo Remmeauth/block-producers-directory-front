@@ -1,9 +1,8 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
-    <br>
     <v-layout>
       <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
         <v-form>
@@ -16,7 +15,7 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="details.username" 
+                  v-model="user.username"
                   disabled 
                   outlined 
                   clearable 
@@ -26,10 +25,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="details.email"
+                  v-model="user.email"
                   :error-messages="emailErrors"
-                  @input="$v.details.email.$touch()"
-                  @blur="$v.details.email.$touch()" 
+                  @input="$v.user.email.$touch()"
+                  @blur="$v.user.email.$touch()"
                   disabled 
                   outlined 
                   clearable 
@@ -39,10 +38,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="details.firstName" 
+                  v-model="profile.firstName"
                   :error-messages="firstNameErrors"
-                  @input="$v.details.firstName.$touch()"
-                  @blur="$v.details.firstName.$touch()" 
+                  @input="$v.profile.firstName.$touch()"
+                  @blur="$v.profile.firstName.$touch()"
                   outlined 
                   clearable 
                   label="First name" 
@@ -51,10 +50,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="details.lastName"
+                  v-model="profile.lastName"
                   :error-messages="lastNameErrors"
-                  @input="$v.details.lastName.$touch()"
-                  @blur="$v.details.lastName.$touch()"  
+                  @input="$v.profile.lastName.$touch()"
+                  @blur="$v.profile.lastName.$touch()"
                   outlined 
                   clearable 
                   label="Last name" 
@@ -63,10 +62,10 @@
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field 
-                  v-model="details.location"
+                  v-model="profile.location"
                   :error-messages="locationErrors"
-                  @input="$v.details.location.$touch()"
-                  @blur="$v.details.location.$touch()"  
+                  @input="$v.profile.location.$touch()"
+                  @blur="$v.profile.location.$touch()"
                   outlined 
                   clearable 
                   label="Location" 
@@ -228,10 +227,10 @@
                   Update information
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.updateAdditionalInformation"
               >
                 <span v-html="this.successMessage"></span>
@@ -251,9 +250,9 @@
                 <span>Upload your picture or avatar.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input 
-                  v-model="other.avatarFile" 
-                  outlined 
+                <v-file-input
+                  v-model="avatarFile"
+                  outlined
                   label="Select your picture"
                 ></v-file-input>
                 <v-btn 
@@ -264,10 +263,10 @@
                   Upload picture
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.submitUploadingProfileAvatar"
               >
                 <span v-html="this.successMessage"></span>
@@ -287,11 +286,11 @@
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.websiteUrl"
+                <v-text-field
+                  v-model="profile.websiteUrl"
                   :error-messages="websiteUrlErrors"
-                  @input="$v.referenceLinks.websiteUrl.$touch()"
-                  @blur="$v.referenceLinks.websiteUrl.$touch()" 
+                  @input="$v.profile.websiteUrl.$touch()"
+                  @blur="$v.profile.websiteUrl.$touch()"
                   outlined
                   clearable 
                   label="Web-site" 
@@ -299,11 +298,11 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.linkedInUrl" 
+                <v-text-field
+                  v-model="profile.linkedInUrl"
                   :error-messages="linkedInUrlErrors"
-                  @input="$v.referenceLinks.linkedInUrl.$touch()"
-                  @blur="$v.referenceLinks.linkedInUrl.$touch()"
+                  @input="$v.profile.linkedInUrl.$touch()"
+                  @blur="$v.profile.linkedInUrl.$touch()"
                   outlined 
                   clearable 
                   label="LinkedIn" 
@@ -311,11 +310,11 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.twitterUrl"
+                <v-text-field
+                  v-model="profile.twitterUrl"
                   :error-messages="twitterUrlErrors"
-                  @input="$v.referenceLinks.twitterUrl.$touch()"
-                  @blur="$v.referenceLinks.twitterUrl.$touch()" 
+                  @input="$v.profile.twitterUrl.$touch()"
+                  @blur="$v.profile.twitterUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Twitter" 
@@ -323,62 +322,62 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.mediumUrl"
+                <v-text-field
+                  v-model="profile.mediumUrl"
                   :error-messages="mediumUrlErrors"
-                  @input="$v.referenceLinks.mediumUrl.$touch()"
-                  @blur="$v.referenceLinks.mediumUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Medium" 
+                  @input="$v.profile.mediumUrl.$touch()"
+                  @blur="$v.profile.mediumUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Medium"
                   prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.githubUrl"
+                <v-text-field
+                  v-model="profile.githubUrl"
                   :error-messages="githubUrlErrors"
-                  @input="$v.referenceLinks.githubUrl.$touch()"
-                  @blur="$v.referenceLinks.githubUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Github" 
+                  @input="$v.profile.githubUrl.$touch()"
+                  @blur="$v.profile.githubUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Github"
                   prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.facebookUrl"
+                <v-text-field
+                  v-model="profile.facebookUrl"
                   :error-messages="facebookUrlErrors"
-                  @input="$v.referenceLinks.facebookUrl.$touch()"
-                  @blur="$v.referenceLinks.facebookUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Facebook" 
+                  @input="$v.profile.facebookUrl.$touch()"
+                  @blur="$v.profile.facebookUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Facebook"
                   prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.telegramUrl"
+                <v-text-field
+                  v-model="profile.telegramUrl"
                   :error-messages="telegramUrlErrors"
-                  @input="$v.referenceLinks.telegramUrl.$touch()"
-                  @blur="$v.referenceLinks.telegramUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Telegram" 
+                  @input="$v.profile.telegramUrl.$touch()"
+                  @blur="$v.profile.telegramUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Telegram"
                   prepend-inner-icon="mdi mdi-telegram"
                   ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.steemitUrl"
+                <v-text-field
+                  v-model="profile.steemitUrl"
                   :error-messages="steemitUrlErrors"
-                  @input="$v.referenceLinks.steemitUrl.$touch()"
-                  @blur="$v.referenceLinks.steemitUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Steemit" 
+                  @input="$v.profile.steemitUrl.$touch()"
+                  @blur="$v.profile.steemitUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Steemit"
                   prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
@@ -391,10 +390,10 @@
                   Update links
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.updateReferenceLinks"
               >
                 <span v-html="this.successMessage"></span>
@@ -412,6 +411,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -433,11 +433,11 @@ import {
 } from 'tiptap-extensions'
 
 import Error500 from '../../components/ui/Error500'
-import userSettingsForm from '../../forms/pages/user/settings'
-import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
-import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
-import { userStorageActions, userStorageMutations } from '../../store/modules/user'
-import { profileStorageActions, profileStorageMutations } from '../../store/modules/profile'
+import { userSettingsForm } from "../../forms/pages/user/settings"
+import { avatarStorageActions } from '../../store/modules/avatar'
+import { userStorageActions } from '../../store/modules/user'
+import { profileStorageActions } from '../../store/modules/profile'
+import { truncate } from 'fs';
 
 export default {
   name: 'SettingsPage',
@@ -463,34 +463,14 @@ export default {
         updateAdditionalInformation: null,
         submitUploadingProfileAvatar: null,
       },
+      avatarFile: null,
       successMessage: null,
-      details: {
-        email: null,
-        username: null,
-        firstName: null,
-        lastName: null,
-        location: null,
-      },
-      referenceLinks: {
-        websiteUrl: null,
-        linkedInUrl: null,
-        twitterUrl: null,
-        mediumUrl: null,
-        githubUrl: null,
-        facebookUrl: null,
-        telegramUrl: null,
-        steemitUrl: null,
-      },
-      other: {
-        additionalInformation: null,
-        avatarFile: null,
-      },
       html: '',
       editor: new Editor({
         onUpdate: ({ getHTML }) => {
-          this.html=getHTML();
-          if (this.html === '<p></p>') this.other.additionalInformation = '';
-          else this.other.additionalInformation = this.html;
+          this.html = getHTML();
+          if (this.html === '<p></p>') this.profile.additionalInformation = '';
+          else this.profile.additionalInformation = this.html;
         },
         extensions: [
           new Blockquote(),
@@ -513,59 +493,70 @@ export default {
       }),
     }
   },
+  computed: {
+    ...mapGetters('user', ['userError', 'user']),
+    ...mapGetters('profile', ['profileError', 'profileFieldsErrors', 'profile', 'profileEvents']),
+  },
+  watch: {
+    'profileEvents.isGotten'() {
+      this.editor.setContent(this.profile.additionalInformation)
+    },
+  },
   methods: {
     updateDetails() {
-      this.$v.$touch()
-      if (this.$v.details.$anyError) { return }
+      if (!this.isDetailsFormValid()) { return }
 
       this.snackBars.updateDetails = true
-      this.$store.dispatch(settingsStorageActions.updateDetails, {
+      this.$store.dispatch(profileStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        firstName: this.details.firstName,
-        lastName: this.details.lastName,
-        location: this.details.location,
+        firstName: this.profile.firstName,
+        lastName: this.profile.lastName,
+        location: this.profile.location,
       })
     },
     updateReferenceLinks() {
-      this.$v.$touch()
-      if (this.$v.referenceLinks.$anyError) { return }
+      if (!this.isReferenceLinksFormValid()) { return }
 
       this.snackBars.updateReferenceLinks = true
-      this.$store.dispatch(settingsStorageActions.updateReferenceLinks, {
+      this.$store.dispatch(profileStorageActions.updateReferenceLinks, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        websiteUrl: this.referenceLinks.websiteUrl,
-        linkedInUrl: this.referenceLinks.linkedInUrl,
-        twitterUrl: this.referenceLinks.twitterUrl,
-        mediumUrl: this.referenceLinks.mediumUrl,
-        githubUrl: this.referenceLinks.githubUrl,
-        facebookUrl: this.referenceLinks.facebookUrl,
-        telegramUrl: this.referenceLinks.telegramUrl,
-        steemitUrl: this.referenceLinks.steemitUrl,
+        websiteUrl: this.profile.websiteUrl,
+        linkedInUrl: this.profile.linkedInUrl,
+        twitterUrl: this.profile.twitterUrl,
+        mediumUrl: this.profile.mediumUrl,
+        githubUrl: this.profile.githubUrl,
+        facebookUrl: this.profile.facebookUrl,
+        telegramUrl: this.profile.telegramUrl,
+        steemitUrl: this.profile.steemitUrl,
       })
     },
     updateAdditionalInformation() {
-      this.$v.$touch()
-      if (this.$v.other.$anyError) { return }
+      if (!this.isAdditionalInformationFormValid()) { return }
 
       this.snackBars.updateAdditionalInformation = true
-      this.$store.dispatch(settingsStorageActions.updateAdditionalInformation, {
+      this.$store.dispatch(profileStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        additionalInformation: this.other.additionalInformation,
+        additionalInformation: this.profile.additionalInformation,
       })
     },
     submitUploadingProfileAvatar() {
-    this.snackBars.submitUploadingProfileAvatar = true
+      this.snackBars.submitUploadingProfileAvatar = true
       this.$store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        file: this.other.avatarFile,
+        file: this.avatarFile, 
       })
     },
   },
   mounted() {
+    this.successMessage =
+      "Profile updated successfully — <a href=\"" +
+      `/users/${this.localStorage.username}` +
+      "\">view your profile</a>"
+
     if (!this.localStorage.username) {
       this.$router.push({name: 'index'})
     }
@@ -577,53 +568,9 @@ export default {
     this.$store.dispatch(profileStorageActions.getProfile, {
         username: this.localStorage.username,
     })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === settingsStorageMutations.subscribe.addError) {
-        this.error = state.settings.error
-        unsubscribe()
-      }
-
-      if (mutation.type === settingsStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.settings.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addUser) {
-        this.details.email = state.user.email
-        this.details.username = state.user.username
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.details.firstName = state.profile.firstName
-        this.details.lastName = state.profile.lastName
-        this.details.location = state.profile.location
-        this.other.additionalInformation = state.profile.additionalInformation
-        this.other.avatarUrl = state.profile.avatarUrl
-        this.referenceLinks.facebookUrl = state.profile.facebookUrl
-        this.referenceLinks.githubUrl = state.profile.githubUrl
-        this.referenceLinks.linkedInUrl = state.profile.linkedInUrl
-        this.referenceLinks.mediumUrl = state.profile.mediumUrl
-        this.referenceLinks.steemitUrl = state.profile.steemitUrl
-        this.referenceLinks.telegramUrl = state.profile.telegramUrl
-        this.referenceLinks.twitterUrl = state.profile.twitterUrl
-        this.referenceLinks.websiteUrl = state.profile.websiteUrl
-
-        this.editor.setContent(this.other.additionalInformation)
-      }
-
-      if (
-        mutation.type === settingsStorageMutations.subscribe.updateReferenceLinks ||
-        mutation.type === settingsStorageMutations.subscribe.updateAdditionalInformation ||
-        mutation.type === settingsStorageMutations.subscribe.updateDetails ||
-        mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
-      ) {
-      this.successMessage =
-          "Profile updated successfully — <a href=\"" +
-          `/users/${this.localStorage.username}` +
-          "\">view your profile</a>"
-      }
-    });
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   }
 }
 </script>
