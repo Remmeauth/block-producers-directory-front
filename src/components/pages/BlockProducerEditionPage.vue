@@ -1,8 +1,8 @@
 <template>
-  <div v-if="error.statusCode === 404">
+  <div v-if="blockProducerError.statusCode === 404">
     <Error404/>
   </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-else-if="blockProducerError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>

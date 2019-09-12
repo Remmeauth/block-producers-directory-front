@@ -1,5 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="blockProducerError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -124,7 +124,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('blockProducer', ['blockProducers', 'searchedBlockProducers'])
+    ...mapGetters('blockProducer', ['blockProducers', 'searchedBlockProducers', 'blockProducerError'])
   },
   watch: {
     searchPhrase: function (searchPhrase) {

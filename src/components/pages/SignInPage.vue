@@ -1,5 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="authenticationError.statusCode === 500 || userError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>

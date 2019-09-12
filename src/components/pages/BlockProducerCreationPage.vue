@@ -1,5 +1,5 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="blockProducerError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
