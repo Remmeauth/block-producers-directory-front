@@ -33,7 +33,7 @@ export const blockProducerComment = {
       statusCode: null,
     },
     events: {
-      isCreated: false,
+      isCreated: null,
     },
     entities: null,
   },
@@ -47,7 +47,7 @@ export const blockProducerComment = {
     addError: (state, error) => state.error = error,
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
     addComments: (state, { comments }) => state.entities = comments,
-    commentIsCreated: (state) => state.events.isCreated = true,
+    commentIsCreated: (state) => state.events.isCreated = Math.random(),
   },
   actions: {
     getAll({ commit }, { blockProducerIdentifier }) {

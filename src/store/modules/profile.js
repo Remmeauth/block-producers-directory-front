@@ -39,9 +39,9 @@ export const profile = {
       statusCode: null,
     },
     events: {
-      detailsAreUpdated: false,
-      additionalInformationIsUpdated: false,
-      referenceLinksAreUpdated: false,
+      detailsAreUpdated: null,
+      additionalInformationIsUpdated: null,
+      referenceLinksAreUpdated: null,
       isGotten: null,
     },
     entity: {
@@ -74,9 +74,9 @@ export const profile = {
       state.entity = profile
       state.events.isGotten = Math.random()
     },
-    updateDetails: (state) => state.events.detailsAreUpdated = true,
-    updateAdditionalInformation: (state) => state.events.additionalInformationIsUpdated = true,
-    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = true,
+    updateDetails: (state) => state.events.detailsAreUpdated = Math.random(),
+    updateAdditionalInformation: (state) => state.events.additionalInformationIsUpdated = Math.random(),
+    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
   },
   actions: {
     get({ commit }, { username }) {

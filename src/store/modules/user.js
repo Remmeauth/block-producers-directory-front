@@ -25,7 +25,7 @@ export const user = {
       statusCode: null,
     },
     events: {
-      isGotten: false
+      isGotten: null,
     },
     entity: {
       email: null,
@@ -41,7 +41,7 @@ export const user = {
     addError: (state, error) => state.error = error,
     addUser: (state, user) => {
       state.entity = user
-      state.events.isGotten = true
+      state.events.isGotten = Math.random()
     },
   },
   actions: {

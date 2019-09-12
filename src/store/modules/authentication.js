@@ -28,8 +28,8 @@ export const authentication = {
       statusCode: null,
     },
     events: {
-      signedIn: false,
-      signedUp: false,
+      signedIn: null,
+      signedUp: null,
     },
     entity: {
       token: null,
@@ -44,9 +44,9 @@ export const authentication = {
     addError: (state, error) => state.error = error,
     addToken: (state, credentials) => {
       state.entity = credentials
-      state.events.signedIn = true
+      state.events.signedIn = Math.random()
     },
-    signUp: (state) => state.events.signedUp = true,
+    signUp: (state) => state.events.signedUp = Math.random(),
   },
   actions: {
     signIn({ commit }, { usernameOrEmail, password }) {

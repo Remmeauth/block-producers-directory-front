@@ -48,11 +48,11 @@ export const blockProducer = {
       statusCode: null,
     },
     events: {
-      detailsAreUpdated: false,
-      descriptionsAreUpdated: false,
-      referenceLinksAreUpdated: false,
-      isCreated: false,
-      isGotten: false,
+      detailsAreUpdated: null,
+      descriptionsAreUpdated: null,
+      referenceLinksAreUpdated: null,
+      isCreated: null,
+      isGotten: null,
     },
     entity: {
       name: null,
@@ -95,12 +95,12 @@ export const blockProducer = {
     },
     addBlockProducers: (state, { blockProducers }) => state.entities = blockProducers,
     addSearchedBlockProducers: (state, { searchedBlockProducers }) => state.searchedEntities = searchedBlockProducers,
-    updateDetails: (state) => state.events.detailsAreUpdated = true,
-    updateDescription: (state) => state.events.descriptionsAreUpdated = true,
-    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = true,
+    updateDetails: (state) => state.events.detailsAreUpdated = Math.random(),
+    updateDescription: (state) => state.events.descriptionsAreUpdated = Math.random(),
+    updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
     createBlockProducer: (state, blockProducerIdentifier) => {
       state.id = blockProducerIdentifier
-      state.events.isCreated = true
+      state.events.isCreated = Math.random()
     },
   },
   actions: {

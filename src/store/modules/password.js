@@ -34,8 +34,8 @@ export const password = {
       statusCode: null,
     },
     events: {
-      isSent: false,
-      isReceived: false,
+      isSent: null,
+      isReceived: null,
     },
   },
   getters: {
@@ -46,8 +46,8 @@ export const password = {
   mutations: {
     addError: (state, error) => state.error = error,
     addFieldsErrors: (state, errors) => state.fieldsErrors = errors,
-    sendNewPasswordToEmail: (state) => state.events.isSent = true,
-    receivePasswordRecoveryRequest: (state) => state.events.isReceived = true,
+    sendNewPasswordToEmail: (state) => state.events.isSent = Math.random(),
+    receivePasswordRecoveryRequest: (state) => state.events.isReceived = Math.random(),
   },
   actions: {
     getPasswordRecoveryRequest({ commit }, { email }) {

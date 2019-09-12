@@ -26,7 +26,7 @@ export const avatar = {
       statusCode: null,
     },
     events: {
-      isUploaded: false,
+      isUploaded: null,
     },
   },
   getters: {
@@ -35,7 +35,7 @@ export const avatar = {
   },
   mutations: {
     addError: (state, error) => state.error = error,
-    markAvatarAsUploaded: (state) => state.events.isUploaded = true,
+    markAvatarAsUploaded: (state) => state.events.isUploaded = Math.random(),
   },
   actions: {
     uploadForUser({ commit }, { jwtToken, username, file }) {
