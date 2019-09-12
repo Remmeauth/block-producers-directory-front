@@ -82,14 +82,14 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions>
+                <v-card-actions v-if="user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit profile
                   </v-btn>
@@ -170,14 +170,14 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions>
+                <v-card-actions v-if="user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit profile
                   </v-btn>

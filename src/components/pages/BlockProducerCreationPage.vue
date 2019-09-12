@@ -497,10 +497,10 @@ export default {
   color: transparent;
 }
 
-.v-btn:not(.v-btn--round).v-size--default {
+/* .v-btn:not(.v-btn--round).v-size--default {
   height: 30px;
   min-width: 40px;
-}
+} */
 
 .editor:hover {
   border-color: black;

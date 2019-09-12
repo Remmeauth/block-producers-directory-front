@@ -101,14 +101,17 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user">
+                <v-card-actions 
+                  v-if="blockProducer.user" 
+                  class="justify-center"
+                >
                   <v-btn
                     v-if="blockProducer.user.username === localStorage.username"
                     @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
-                    outlined
-                    color="white"
+                    class="edit-button"
                     block
-                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
+                    :ripple="false"
+                    depressed
                   >
                     Edit a block producer
                   </v-btn>
@@ -207,14 +210,14 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user">
+                <v-card-actions v-if="blockProducer.user" class="justify-center">
                   <v-btn
                     v-if="blockProducer.user.username === localStorage.username"
                     @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
-                    outlined
-                    color="white"
+                    class="edit-button"
                     block
-                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                    :ripple="false"
+                    depressed
                   >
                     Edit a block producer
                   </v-btn>
@@ -313,13 +316,22 @@
                     no-resize
                     class="mt-0 mb-2"
                   ></v-textarea>
-                  <v-flex xs3 sm3 md3 lg3>
+                  <v-flex xs3 sm3 md3 lg3 xl3>
                     <v-btn
-                      outlined
-                      color="white"
-                      block
-                      style="background-color: #43A047; border: 1px solid green; cursor: pointer;"
-                      @click="createComment">Post</v-btn>
+                      v-if="comment"
+                      class="create-comment-btn white--text"
+                      @click="createComment"
+                      style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-size: 0.8em; font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                    >
+                      Post
+                    </v-btn>
+                    <v-btn
+                      v-else
+                      class="create-comment-btn-disabled white--text"
+                      style="height: 35px; min-width: 110px; font-size: 0.8em; font-weight: 600; background-color: #94d3a2; border: 1px solid rgba(27,31,35,.2);" 
+                    >
+                      Post
+                    </v-btn>
                   </v-flex>
                 </form>
               </v-flex>
@@ -396,7 +408,28 @@ export default {
 .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
     background-color: rgba(0, 0, 0, 0.0) !important;
 }
+
 .btn-background-none::before {
-  color: transparent
+  color: transparent;
 }
+
+.v-btn.create-comment-btn:not(.v-btn--round).v-size--default {
+  height: 35px;
+  min-width: 110px;
+}
+
+.edit-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+  border: 1px solid rgba(27,31,35,.2);
+  color: #24292e;
+  font-size: 0.8em;
+  font-weight: 600;
+  background-color: #eff3f6; 
+  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+}
+
+.edit-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined):hover {
+  background-color: #E6EBF2; 
+  border: 1px solid #9FA3A9;
+}
+
 </style>
