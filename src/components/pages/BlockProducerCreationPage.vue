@@ -8,9 +8,9 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Block producer</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Block producer</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -54,9 +54,9 @@
           </v-container>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Description</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Description</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Provide a short description and the full description. For a full description you can use HTML formatting.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -189,9 +189,9 @@
           </v-container>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Logotype</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Logotype</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Upload block producer logotype.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -201,9 +201,9 @@
           </v-container>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Reference links</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Reference links</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
