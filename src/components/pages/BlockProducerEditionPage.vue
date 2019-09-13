@@ -13,7 +13,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Block producer</h2>
+                <h2>Block producer settings</h2>
                 <br>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
@@ -621,4 +621,35 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.editor:hover {
+  border-color: black;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
+.menubar {
+	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+
+.menubar.is-hidden {
+	 visibility: hidden;
+	 opacity: 0;
+}
+
+.menubar.is-focused {
+	 visibility: visible;
+	 opacity: 1;
+	 transition: visibility 0.2s, opacity 0.2s;
+}
+
+.menubar__button:hover {
+	 background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menubar__button.is-active {
+	 background-color: rgba(0, 0, 0, 0.1);
+}
+</style>
