@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex class="mt-6 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
+      <v-flex class="mt-6 mb-12" xs12 sm8 md6 lg4 xl4 offset-xs offset-sm2 offset-md3 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -14,8 +14,8 @@
                   outlined
                   style="border-color: #5d80da;"
                 >
-                  <div class="mt-10"
-                    style="text-align: center; font-size:1.7em;"
+                  <div class="mt-6"
+                    style="text-align: center; font-size:1.3em;"
                   >
                     Sign in to Directory
                   </div>
