@@ -3,13 +3,12 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-container fluid>
+    <v-container fluid class="pt-0">
       <v-layout row wrap>
         <v-flex xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
-          <v-card class="mt-0 mb-4"
-            elevation="10" 
+          <v-card 
+            class="mb-4"
             outlined
-            style="border-color: #5d80da;"
           >
             <v-container>
               <v-text-field 
@@ -27,7 +26,7 @@
                   <v-card 
                     outlined 
                     align="center" 
-                    style="height: 300px; border-color: #5d80da; background-color: #EBF5FB; cursor: pointer;"
+                    style="height: 300px; cursor: pointer;"
                   >
                     <v-img class="mt-2 mb-2"
                       v-if="blockProducer.logo_url" 

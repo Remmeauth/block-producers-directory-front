@@ -7,17 +7,15 @@
   </div>
   <div v-else>
     <v-layout class="mb-12 mt-4" row wrap>
-      <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
+      <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
         <v-layout row wrap>
-            <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
+            <v-flex xs12 sm8 md4 lg4 xl4 offset-sm2 offset-md1 offset-lg1 offset-xl1>
               <v-card 
                 v-if="this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'"
                 class="mx-auto mb-6"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
-                >
+              >
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl"
@@ -102,9 +100,7 @@
                   this.$vuetify.breakpoint.name === 'xl'" 
                 class="mx-auto mr-6 mb-6"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
                 >
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
@@ -184,13 +180,11 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm8 md6 lg6>
+            <v-flex xs12 sm8 md6 lg6 offset-sm2 offset-md0 offset-lg0 offset-xl0>
               <v-card 
                 class="mx-auto"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-subheader>User's information</v-subheader>
                 <div class="pa-4 pt-0 caption">
@@ -210,9 +204,7 @@
               <v-card 
                 v-if="blockProducers && blockProducersByUser(user.username).length > 0"
                 class="mt-6"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-list two-line>
                   <template 
@@ -227,7 +219,7 @@
                     <v-list-item :to="{name: 'block-producer', params: {identifier: blockProducer.id}}">
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width:12%;border-radius: 50%;"
+                        style="max-width:12%;border-radius: 50%; border: 1px solid grey"
                         :src="blockProducer.logo_url"
                       >
                       <v-list-item-content>

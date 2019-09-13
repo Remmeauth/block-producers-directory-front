@@ -73,7 +73,7 @@
                   style="border-color: #5d80da;"
                 >
                   <div 
-                    style="text-align: center; font-size:1.6em;"
+                    style="text-align: center; font-size: 1.3em;"
                   ><br>
                     Send a password recover request
                   </div>

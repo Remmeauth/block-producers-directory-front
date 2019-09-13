@@ -7,19 +7,17 @@
   </div>
   <div v-else>
     <v-layout class="mb-12 mt-4" row wrap>
-      <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
+      <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
         <v-layout row wrap>
-            <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
+            <v-flex xs12 sm8 md4 lg4 xl4 offset-sm2 offset-md1 offset-lg1 offset-xl1>
               <v-card
                 v-if="
                   this.$vuetify.breakpoint.name === 'xs' ||
                   this.$vuetify.breakpoint.name === 'sm'"
                 class="mx-auto mb-6"
                 align="center"
-                elevation="10"
                 outlined
-                style="border-color: #5d80da;"
-                >
+              >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl"
@@ -124,9 +122,7 @@
                   this.$vuetify.breakpoint.name === 'xl'"
                 class="mx-auto mr-6 mb-6"
                 align="center"
-                elevation="10"
                 outlined
-                style="border-color: #5d80da;"
                 >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
@@ -224,13 +220,11 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm8 md6 lg6>
+            <v-flex xs12 sm8 md6 lg6 offset-sm2 offset-md0 offset-lg0 offset-xl0>
               <v-card
                 class="mx-auto"
                 align="center"
-                elevation="10"
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-subheader>Block producer's information</v-subheader>
                 <div class="pa-4 pt-0 caption">
@@ -266,7 +260,7 @@
                     <v-list-item v-if="blockProducer.user">
                       <img
                         class="mt-2 mb-2 mr-5 pa-1"
-                        style="max-width: 10%; border-radius: 50%; cursor: pointer;"
+                        style="max-width: 10%; border-radius: 50%; cursor: pointer; border: 1px solid grey"
                         :src="comment.profile_avatar_url"
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >
@@ -290,9 +284,7 @@
               <v-card
                 v-else
                 class="mt-6"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-card-text class="pb-0 black--text" v-if="!localStorage.username">
                   Already have an account?

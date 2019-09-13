@@ -4,13 +4,13 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3>
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Personal details</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Personal details</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -98,9 +98,9 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Additional information</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Additional information</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Tell some words about yourself.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -244,9 +244,9 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Profile picture</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Profile picture</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Upload your picture or avatar.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -280,9 +280,9 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Reference links</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Reference links</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -586,5 +586,45 @@ export default {
 
 .v-file-input {
   height: 86px;
+}
+
+.custom-btn::before {
+  color: transparent;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 30px;
+  min-width: 40px;
+}
+
+.editor:hover {
+  border-color: black;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
+.menubar {
+	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+
+.menubar.is-hidden {
+	 visibility: hidden;
+	 opacity: 0;
+}
+
+.menubar.is-focused {
+	 visibility: visible;
+	 opacity: 1;
+	 transition: visibility 0.2s, opacity 0.2s;
+}
+
+.menubar__button:hover {
+	 background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menubar__button.is-active {
+	 background-color: rgba(0, 0, 0, 0.1);
 }
 </style>
