@@ -66,7 +66,7 @@
                     <span>rejected</span>
                   </v-tooltip>
                 </v-form>
-                <h3 class="mt-3">
+                <h3 class="mt-2">
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>
@@ -214,7 +214,7 @@
                     <span>rejected</span>
                   </v-tooltip>
                 </v-form>
-                <h3 class="mt-3">
+                <h3 class="mt-2">
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>
@@ -444,7 +444,6 @@ export default {
   },
   methods: {
     createComment() {
-      console.log(this.blockProducer)
       this.$store.dispatch(blockProducerCommentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,

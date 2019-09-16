@@ -444,7 +444,6 @@ export default {
   },
   watch: {
     'blockProducerEvents.isCreated'() {
-      console.log(this.blockProducer.id)
       this.createdBlockProducerIdentifier = this.blockProducer.id
 
       if (!this.logotypeFile) { return }
