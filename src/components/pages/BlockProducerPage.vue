@@ -35,7 +35,7 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status active</span>
+                    <span>active</span>
                   </v-tooltip>
                 </v-form>
                 <v-form 
@@ -49,7 +49,7 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status on moderation</span>
+                    <span>on moderation</span>
                   </v-tooltip>
                 </v-form>
                 <v-form 
@@ -63,7 +63,7 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status rejected</span>
+                    <span>rejected</span>
                   </v-tooltip>
                 </v-form>
                 <h3 class="mt-3">
@@ -183,7 +183,7 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status active</span>
+                    <span>active</span>
                   </v-tooltip>
                 </v-form>
                 <v-form 
@@ -197,7 +197,7 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status on moderation</span>
+                    <span>on moderation</span>
                   </v-tooltip>
                 </v-form>
                 <v-form 
@@ -211,10 +211,10 @@
                         style="font-size: 30px;"
                       >mdi-account-check</v-icon> 
                     </template>
-                    <span>Status rejected</span>
+                    <span>rejected</span>
                   </v-tooltip>
                 </v-form>
-                <h3>
+                <h3 class="mt-3">
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>

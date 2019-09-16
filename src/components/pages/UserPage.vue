@@ -271,7 +271,7 @@
                                 mdi-account-check
                               </v-icon> 
                             </template>
-                            <span>Status active</span>
+                            <span>active</span>
                           </v-tooltip>
                           <v-tooltip 
                             v-else-if="blockProducer.status === 'moderation'" 
@@ -287,7 +287,7 @@
                                 mdi-account-check
                               </v-icon> 
                             </template>
-                            <span>Status on moderation</span>
+                            <span>on moderation</span>
                           </v-tooltip>
                           <v-tooltip 
                             v-else-if="blockProducer.status === 'declined'" 
@@ -303,7 +303,7 @@
                                 mdi-account-check
                               </v-icon> 
                             </template>
-                            <span>Status rejected</span>
+                            <span>rejected</span>
                           </v-tooltip>
                         </v-list-item-title>
                         <v-list-item-subtitle 
