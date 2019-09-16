@@ -444,6 +444,7 @@ export default {
   },
   methods: {
     createComment() {
+      console.log(this.blockProducer)
       this.$store.dispatch(blockProducerCommentStorageActions.createComment, {
         jwtToken: this.localStorage.token,
         blockProducerIdentifier: this.$route.params.identifier,

@@ -444,18 +444,15 @@ export default {
   },
   watch: {
     'blockProducerEvents.isCreated'() {
+      console.log(this.blockProducer.id)
       this.createdBlockProducerIdentifier = this.blockProducer.id
 
-      if (this.logotypeFile) {
-        this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
-          jwtToken: this.localStorage.token,
-          identifier: this.createdBlockProducerIdentifier,
-          file: this.logotypeFile,
-        })
-      } else {
-        this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
-      }
-
+      if (!this.logotypeFile) { return }
+      this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
+        jwtToken: this.localStorage.token,
+        identifier: this.createdBlockProducerIdentifier,
+        file: this.logotypeFile,
+      })
     },
     'avatarEvents.isUploaded'() {
       this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})

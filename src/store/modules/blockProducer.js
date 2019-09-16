@@ -100,7 +100,7 @@ export const blockProducer = {
     updateDescription: (state) => state.events.descriptionsAreUpdated = Math.random(),
     updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
     createBlockProducer: (state, blockProducerIdentifier) => {
-      state.id = blockProducerIdentifier
+      state.entity.id = blockProducerIdentifier
       state.events.isCreated = Math.random()
     },
   },
