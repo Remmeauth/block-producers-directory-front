@@ -24,6 +24,48 @@
                   style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
+                <v-form 
+                  v-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'active'" align="center">
+                  <v-tooltip right color="green lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="green lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status active</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'moderation'" align="center">
+                  <v-tooltip right color="grey lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="grey lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status on moderation</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'declined'" align="center">
+                  <v-tooltip right color="red lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="red lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status rejected</span>
+                  </v-tooltip>
+                </v-form>
                 <h3 class="mt-3">
                   <span class="headline">
                     {{ blockProducer.name }}
@@ -130,7 +172,49 @@
                   style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
-                <h3 class="mt-3">
+                <v-form 
+                  v-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'active'" align="center">
+                  <v-tooltip right color="green lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="green lighten-1"
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status active</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'moderation'" align="center">
+                  <v-tooltip right color="grey lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="grey lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status on moderation</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'declined'" align="center">
+                  <v-tooltip right color="red lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="red lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>Status rejected</span>
+                  </v-tooltip>
+                </v-form>
+                <h3>
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>

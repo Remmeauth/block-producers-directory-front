@@ -56,6 +56,7 @@ export const blockProducer = {
     },
     entity: {
       name: null,
+      status: null,
       location: null,
       shortDescription: null,
       fullDescription: null,
@@ -111,6 +112,7 @@ export const blockProducer = {
           commit(blockProducerStorageMutations.commit.addBlockProducer, {
             blockProducer: {
               user: response.data.result.user,
+              status: response.data.result.status,
               name: response.data.result.name,
               location: response.data.result.location,
               shortDescription: response.data.result.short_description,

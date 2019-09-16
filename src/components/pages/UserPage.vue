@@ -216,17 +216,96 @@
                     <v-divider 
                       v-else-if="index > 0" 
                     ></v-divider>
-                    <v-list-item :to="{name: 'block-producer', params: {identifier: blockProducer.id}}">
+                    <v-list-item :ripple="false" v-if="
+                      blockProducer.status === 'active' &&
+                      $route.params.username !== localStorage.username"  
+                      :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                    >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width:12%;border-radius: 50%; border: 1px solid grey"
+                        style="max-width:12%; border-radius: 50%; border: 1px solid grey;"
                         :src="blockProducer.logo_url"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
                           class="mb-1" 
-                          style="font-weight: 500"
-                        >{{ blockProducer.name }}</v-list-item-title>
+                          style="font-weight: 500; display:inline-block;"
+                        >
+                          {{ blockProducer.name }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle 
+                          style="font-size: 0.8em;"
+                          v-if="blockProducer.location"
+                        >
+                          <v-icon>location_on</v-icon> 
+                          {{ blockProducer.location }}
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item :ripple="false" v-else-if="
+                      $route.params.username === localStorage.username"  
+                      :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                    >
+                      <img 
+                        class="mt-2 mb-2 mr-5 pa-1" 
+                        style="max-width:12%; border-radius: 50%; border: 1px solid grey;"
+                        :src="blockProducer.logo_url"
+                      >
+                      <v-list-item-content>
+                        <v-list-item-title 
+                          class="mb-1" 
+                          style="font-weight: 500; display:inline-block;"
+                        >
+                          {{ blockProducer.name }}
+                          <v-tooltip 
+                            v-if="blockProducer.status === 'active'"  
+                            right 
+                            color="green lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="green lighten-1"  
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>Status active</span>
+                          </v-tooltip>
+                          <v-tooltip 
+                            v-else-if="blockProducer.status === 'moderation'" 
+                            right 
+                            color="grey lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="grey lighten-1" 
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>Status on moderation</span>
+                          </v-tooltip>
+                          <v-tooltip 
+                            v-else-if="blockProducer.status === 'declined'" 
+                            right 
+                            color="red lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="red lighten-1" 
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>Status rejected</span>
+                          </v-tooltip>
+                        </v-list-item-title>
                         <v-list-item-subtitle 
                           style="font-size: 0.8em;"
                           v-if="blockProducer.location"

@@ -21,41 +21,42 @@
                 <v-col cols="12" xs="8" sm="6" md="6" lg="4" xl="3"
                   v-for="(blockProducer, n) in getBlockProducersToRender()"
                   :key="n"
-                  @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
                 >
-                  <v-card 
-                    outlined 
-                    align="center" 
-                    style="height: 300px; cursor: pointer;"
-                  >
-                    <v-img class="mt-2 mb-2"
-                      v-if="blockProducer.logo_url" 
-                      :src="blockProducer.logo_url"
-                      style="max-width: 35%; border-radius: 50%;"
-                    ></v-img>
-                    <v-divider></v-divider>
-                    <h3 class="mt-4">
-                      <span style="font-size: 1.1em; font-weight: 500; cursor: pointer;">
-                        {{ blockProducer.name }}
-                      </span>
-                    </h3>
-                    <v-card-text
-                      v-if="blockProducer.user" 
-                      class="pt-1 pb-0"
-                      @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id}})"
-                      style="cursor: pointer;"
+                  <template v-if="blockProducer.status === 'moderation'">
+                    <v-card 
+                      outlined 
+                      align="center" 
+                      style="height: 300px; cursor: pointer;"
+                      :ripple="false"
                     >
-                      <v-form>
-                        by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
-                      </v-form>
-                    </v-card-text>
-                    <v-card-text 
-                      class="pt-2 pb-0" 
-                      style="cursor: pointer;"
+                      <v-img class="mt-2 mb-2"
+                        v-if="blockProducer.logo_url" 
+                        :src="blockProducer.logo_url"
+                        style="max-width: 35%; border-radius: 50%;"
+                        @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
+                      ></v-img>
+                      <v-divider></v-divider>
+                      <h3 class="mt-4" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})">
+                        <span style="font-size: 1.1em; font-weight: 500;">
+                          {{ blockProducer.name }}
+                        </span>
+                      </h3>
+                      <v-card-text
+                        v-if="blockProducer.user" 
+                        class="pt-1 pb-0"
+                        @click="$router.push({name: 'user', params: {username: blockProducer.user.username}})"
                       >
-                      {{ blockProducer.short_description }}
-                    </v-card-text>
-                  </v-card>
+                        <v-form>
+                          by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                        </v-form>
+                      </v-card-text>
+                      <v-card-text 
+                        class="pt-2 pb-0" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
+                        >
+                        {{ blockProducer.short_description }}
+                      </v-card-text>
+                    </v-card>
+                  </template>
                 </v-col>
               </v-row>
               <v-row v-if="searchPhrase && Array.isArray(searchedBlockProducers) && !searchedBlockProducers.length">
