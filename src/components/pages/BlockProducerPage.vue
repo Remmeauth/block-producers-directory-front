@@ -20,7 +20,7 @@
               >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
-                  :src="blockProducer.logoUrl"
+                  :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
@@ -168,7 +168,7 @@
                 >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
-                  :src="blockProducer.logoUrl"
+                  :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
@@ -256,7 +256,6 @@
                 ></v-divider>
                 <v-card-text 
                   class="pt-3 pb-3"
-                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl"
                 >
                   <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
                     <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
@@ -426,6 +425,7 @@ import Error500 from '../../components/ui/Error500'
 import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 import { blockProducerCommentStorageActions } from '../../store/modules/blockProducerComment'
 import { profileStorageActions } from '../../store/modules/profile'
+
 export default {
   name: 'BlockProducerPage',
   components: {
