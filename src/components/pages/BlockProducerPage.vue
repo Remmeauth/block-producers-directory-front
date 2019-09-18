@@ -20,11 +20,53 @@
               >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
-                  :src="blockProducer.logoUrl"
+                  :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
-                <h3 class="mt-3">
+                <v-form 
+                  v-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'active'" align="center">
+                  <v-tooltip right color="green lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="green lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>active</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'moderation'" align="center">
+                  <v-tooltip right color="grey lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="grey lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>on moderation</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'declined'" align="center">
+                  <v-tooltip right color="red lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="red lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>rejected</span>
+                  </v-tooltip>
+                </v-form>
+                <h3 class="mt-2">
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>
@@ -126,11 +168,53 @@
                 >
                 <v-img class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
-                  :src="blockProducer.logoUrl"
+                  :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
-                <h3 class="mt-3">
+                <v-form 
+                  v-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'active'" align="center">
+                  <v-tooltip right color="green lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="green lighten-1"
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>active</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'moderation'" align="center">
+                  <v-tooltip right color="grey lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="grey lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>on moderation</span>
+                  </v-tooltip>
+                </v-form>
+                <v-form 
+                  v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'declined'" align="center">
+                  <v-tooltip right color="red lighten-1">
+                    <template v-slot:activator="{ on }">
+                      <v-icon 
+                        class="pt-2" 
+                        color="red lighten-1" 
+                        v-on="on" 
+                        style="font-size: 30px;"
+                      >mdi-account-check</v-icon> 
+                    </template>
+                    <span>rejected</span>
+                  </v-tooltip>
+                </v-form>
+                <h3 class="mt-2">
                   <span class="headline">
                     {{ blockProducer.name }}
                   </span>
@@ -172,7 +256,6 @@
                 ></v-divider>
                 <v-card-text 
                   class="pt-3 pb-3"
-                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl"
                 >
                   <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
                     <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
@@ -342,6 +425,7 @@ import Error500 from '../../components/ui/Error500'
 import { blockProducerStorageActions } from '../../store/modules/blockProducer'
 import { blockProducerCommentStorageActions } from '../../store/modules/blockProducerComment'
 import { profileStorageActions } from '../../store/modules/profile'
+
 export default {
   name: 'BlockProducerPage',
   components: {

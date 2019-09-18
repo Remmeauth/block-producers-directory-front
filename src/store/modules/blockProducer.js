@@ -56,6 +56,7 @@ export const blockProducer = {
     },
     entity: {
       name: null,
+      status: null,
       location: null,
       shortDescription: null,
       fullDescription: null,
@@ -99,7 +100,7 @@ export const blockProducer = {
     updateDescription: (state) => state.events.descriptionsAreUpdated = Math.random(),
     updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
     createBlockProducer: (state, blockProducerIdentifier) => {
-      state.id = blockProducerIdentifier
+      state.entity.id = blockProducerIdentifier
       state.events.isCreated = Math.random()
     },
   },
@@ -111,6 +112,7 @@ export const blockProducer = {
           commit(blockProducerStorageMutations.commit.addBlockProducer, {
             blockProducer: {
               user: response.data.result.user,
+              status: response.data.result.status,
               name: response.data.result.name,
               location: response.data.result.location,
               shortDescription: response.data.result.short_description,
