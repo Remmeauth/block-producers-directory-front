@@ -1,11 +1,11 @@
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export const signInForm = {
   mixins: [validationMixin],
   validations: {
       usernameOrEmail: { required },
-      password: { required },
+      password: { required, minLength: minLength(5) },
   },
   computed: {
     usernameOrEmailErrors () {
@@ -17,6 +17,7 @@ export const signInForm = {
     passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength && errors.push('Password must be at least 5 characters long.')
       !this.$v.password.required && errors.push('Password is required.')
       return errors
     },

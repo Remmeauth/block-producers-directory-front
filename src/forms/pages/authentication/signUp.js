@@ -6,7 +6,7 @@ export const signUpForm = {
   validations: {
       email: { required, email },
       username: { required, minLength: minLength(3), maxLength: maxLength(25) },
-      password: { required },
+      password: { required, minLength: minLength(5) },
   },
   computed: {
     emailErrors () {
@@ -27,6 +27,7 @@ export const signUpForm = {
     passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength && errors.push('Password must be at least 5 characters long.')
       !this.$v.password.required && errors.push('Password is required.')
       return errors
     },
