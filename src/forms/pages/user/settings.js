@@ -1,12 +1,14 @@
 import { validationMixin } from 'vuelidate'
-import { email, maxLength, minLength, url } from 'vuelidate/lib/validators'
+import { required, email, maxLength, minLength, url } from 'vuelidate/lib/validators'
 
 export const userSettingsForm = {
   mixins: [validationMixin],
   validations: {
     user: {
-      email: { email },
+      email: { required, email },
     },
+    oldPassword: { required, minLength: minLength(5) },
+    newPassword: { required, minLength: minLength(5) },
     profile: {
       firstName: { minLength: minLength(3), maxLength: maxLength(50) },
       lastName: { minLength: minLength(3), maxLength: maxLength(50) },
@@ -25,16 +27,27 @@ export const userSettingsForm = {
   },
   methods: {
     isDetailsFormValid() {
-      this.$v.user.email.$touch()
       this.$v.profile.firstName.$touch()
       this.$v.profile.lastName.$touch()
       this.$v.profile.location.$touch()
 
       return !(
-        this.$v.user.email.$invalid ||
         this.$v.profile.firstName.$invalid ||
         this.$v.profile.lastName.$invalid ||
         this.$v.profile.location.$invalid
+      )
+    },
+    isEmailFormValid() {
+      this.$v.user.email.$touch()
+      return !this.$v.user.email.$invalid
+    },
+    isPasswordFormValid() {
+      this.$v.oldPassword.$touch()
+      this.$v.newPassword.$touch()
+
+      return !(
+        this.$v.oldPassword.$invalid ||
+        this.$v.newPassword.$invalid
       )
     },
     isAdditionalInformationFormValid() {
@@ -70,6 +83,21 @@ export const userSettingsForm = {
       const errors = []
       if (!this.$v.user.email.$dirty) return errors
       !this.$v.user.email.email && errors.push('Please enter a valid email address.')
+      !this.$v.user.email.required && errors.push('Email is required.')
+      return errors
+    },
+    oldPasswordErrors () {
+      const errors = []
+      if (!this.$v.oldPassword.$dirty) return errors
+      !this.$v.oldPassword.minLength && errors.push('Password must be at least 5 characters long.')
+      !this.$v.oldPassword.required && errors.push('Password is required.')
+      return errors
+    },
+    newPasswordErrors () {
+      const errors = []
+      if (!this.$v.newPassword.$dirty) return errors
+      !this.$v.newPassword.minLength && errors.push('Password must be at least 5 characters long.')
+      !this.$v.newPassword.required && errors.push('Password is required.')
       return errors
     },
     firstNameErrors () {
