@@ -96,7 +96,7 @@ export const authentication = {
 
           if (error.response.status === HttpStatus.BAD_REQUEST) {
             commit(authenticationStorageMutations.commit.addError, {
-              message: error.response.data.errors,
+              message: error.response.data.error,
               statusCode: error.response.status
             })
           }

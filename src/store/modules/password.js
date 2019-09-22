@@ -101,9 +101,9 @@ export const password = {
             })
           }
 
-          if (error.response.status === HttpStatus.BAD_REQUEST) {
+          if (error.response.status === HttpStatus.NOT_FOUND) {
             commit(passwordStorageMutations.commit.addFieldsErrors, {
-              errors: error.response.data.errors,
+              errors: error.response.data.error,
               statusCode: error.response.status
             })
           }
