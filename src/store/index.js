@@ -5,6 +5,7 @@ import authentication from './modules/authentication'
 import avatar from './modules/avatar'
 import blockProducer from './modules/blockProducer'
 import blockProducerComment from './modules/blockProducerComment'
+import email from './modules/email'
 import password from './modules/password'
 import profile from './modules/profile'
 import user from './modules/user'
@@ -17,6 +18,7 @@ const store = new Vuex.Store({
     avatar: avatar,
     blockProducer: blockProducer,
     blockProducerComment: blockProducerComment,
+    email: email,
     password: password,
     profile: profile,
     user: user,
