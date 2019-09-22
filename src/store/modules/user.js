@@ -24,16 +24,24 @@ export const user = {
       message: null,
       statusCode: null,
     },
-    email: null,
-    username: null,
+    events: {
+      isGotten: null,
+    },
+    entity: {
+      email: null,
+      username: null,
+    },
+  },
+  getters: {
+    userError: state => state.error,
+    userEvents: state => state.events,
+    user: state => state.entity,
   },
   mutations: {
-    addError (state, error) {
-      state.error = error
-    },
-    addUser (state, { email, username}) {
-      state.email = email
-      state.username = username
+    addError: (state, error) => state.error = error,
+    addUser: (state, user) => {
+      state.entity = user
+      state.events.isGotten = Math.random()
     },
   },
   actions: {
@@ -43,7 +51,7 @@ export const user = {
       .then(response => {
         commit(userStorageMutations.commit.addUser, {
           email: response.data.result.email,
-          username: response.data.result.username
+          username: response.data.result.username,
         })
       })
       .catch(error => {
@@ -69,11 +77,11 @@ export const user = {
                 'Authorization': `JWT ${jwtToken}`,
                 'Content-Type': 'application/json',
             }
-        })
+      })
       .then(response => {
         commit(userStorageMutations.commit.addUser, {
           email: response.data.result.email,
-          username: response.data.result.username
+          username: response.data.result.username,
         })
       })
       .catch(error => {

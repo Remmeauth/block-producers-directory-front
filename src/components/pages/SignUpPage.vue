@@ -1,10 +1,10 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="authenticationError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
     <v-layout>
-      <v-flex class="mt-12 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
+      <v-flex class="mt-6 mb-12" xs12 sm8 md6 lg4 xl4 offset-xs offset-sm2 offset-md3 offset-lg4 offset-xl4>
         <v-form>
           <v-container>
             <v-row>
@@ -14,14 +14,14 @@
                   outlined
                   style="border-color: #5d80da;"
                 >
-                  <div class="mt-10" 
-                    style="text-align: center; font-size:1.7em;"
+                  <div class="mt-6" 
+                    style="text-align: center; font-size: 1.3em;"
                   >
                     Sign up to Directory
                   </div>
                   <v-card flat class="ma-2 pa-10 pt-5">
                     <v-form>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="email"
                         :error-messages="emailErrors"
                         @input="$v.email.$touch()"
@@ -30,7 +30,7 @@
                         outlined
                         prepend-inner-icon="email"
                       ></v-text-field>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="username"
                         :error-messages="usernameErrors"
                         @input="$v.username.$touch()"
@@ -39,7 +39,7 @@
                         outlined
                         prepend-inner-icon="person"
                       ></v-text-field>
-                      <v-text-field class="mb-4 pl-2 pr-2"
+                      <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="password"
                         :error-messages="passwordErrors"
                         @input="$v.password.$touch()"
@@ -105,11 +105,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha';
 
 import Error500 from '../../components/ui/Error500'
 import signUpForm from '../../forms/pages/authentication/signUp'
-import { authenticationStorageActions, authenticationStorageMutations } from '../../store/modules/authentication'
+import { authenticationStorageActions } from '../../store/modules/authentication'
 
 export default {
   name: 'SinUpPage',
@@ -134,6 +135,28 @@ export default {
       password: null,
     }
   },
+  computed: {
+    ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
+  },
+  watch: {
+    'authenticationEvents.signedIn'() {
+      if (!this.credentials.token) return
+
+      this.localStorage.token = this.credentials.token
+      this.$router.push({name: 'index'})
+    },
+    'authenticationEvents.signedUp'() {
+      if (!this.authenticationEvents.signedUp) return
+
+      this.localStorage.email = this.email
+      this.localStorage.username = this.username
+
+      this.$store.dispatch(authenticationStorageActions.signIn, {
+        usernameOrEmail: this.email,
+        password: this.password,
+      })
+    }
+  },
   methods: {
     onVerify(response) {
       this.objects.captcha.isValid = response
@@ -151,34 +174,6 @@ export default {
       })
     }
   },
-  mounted() {
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === authenticationStorageMutations.subscribe.addError) {
-        this.error = state.authentication.error
-        unsubscribe()
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.authentication.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.addToken) {
-        this.localStorage.token = state.authentication.token
-        this.$router.push({name: 'index'})
-      }
-
-      if (mutation.type === authenticationStorageMutations.subscribe.markAsSignedUp) {
-        this.localStorage.email = this.email
-        this.localStorage.username = this.username
-
-        this.$store.dispatch(authenticationStorageActions.signIn, {
-          usernameOrEmail: this.email,
-          password: this.password,
-        })
-      }
-    });
-  }
 }
 </script>
 

@@ -1,22 +1,21 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
-    <br>
     <v-layout>
-      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3 style="box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px #5d80da">
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3>
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Personal details</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Personal details</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="details.username" 
+                  v-model="user.username"
                   disabled 
                   outlined 
                   clearable 
@@ -26,10 +25,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="details.email"
+                  v-model="user.email"
                   :error-messages="emailErrors"
-                  @input="$v.details.email.$touch()"
-                  @blur="$v.details.email.$touch()" 
+                  @input="$v.user.email.$touch()"
+                  @blur="$v.user.email.$touch()"
                   disabled 
                   outlined 
                   clearable 
@@ -39,10 +38,10 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="details.firstName" 
+                  v-model="profile.firstName"
                   :error-messages="firstNameErrors"
-                  @input="$v.details.firstName.$touch()"
-                  @blur="$v.details.firstName.$touch()" 
+                  @input="$v.profile.firstName.$touch()"
+                  @blur="$v.profile.firstName.$touch()"
                   outlined 
                   clearable 
                   label="First name" 
@@ -51,10 +50,10 @@
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
-                  v-model="details.lastName"
+                  v-model="profile.lastName"
                   :error-messages="lastNameErrors"
-                  @input="$v.details.lastName.$touch()"
-                  @blur="$v.details.lastName.$touch()"  
+                  @input="$v.profile.lastName.$touch()"
+                  @blur="$v.profile.lastName.$touch()"
                   outlined 
                   clearable 
                   label="Last name" 
@@ -63,10 +62,10 @@
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field 
-                  v-model="details.location"
+                  v-model="profile.location"
                   :error-messages="locationErrors"
-                  @input="$v.details.location.$touch()"
-                  @blur="$v.details.location.$touch()"  
+                  @input="$v.profile.location.$touch()"
+                  @blur="$v.profile.location.$touch()"
                   outlined 
                   clearable 
                   label="Location" 
@@ -99,21 +98,173 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Additional information</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Change password</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Provide your old password and enter a new password to change the password.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field 
+                  v-model="oldPassword"
+                  :error-messages="emailErrors"
+                  outlined 
+                  clearable 
+                  label="Old password" 
+                  prepend-inner-icon="lock"
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field 
+                  v-model="newPassword"
+                  :error-messages="emailErrors"
+                  outlined 
+                  clearable 
+                  label="New password" 
+                  prepend-inner-icon="lock"
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-if="passwordFieldsErrors.errors" class="pt-0">
+                <span style="color: red; font-size: 0.9em;">The password does not match. Type the correct password.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-else-if="passwordIsUpdated && !passwordFieldsErrors.errors" class="pt-0">
+                <span style="color: green; font-size: 0.9em;">The password is updated.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn
+                  class="text-none white--text"
+                  @click="updatePassword"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update password
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Additional information</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Tell some words about yourself.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-textarea  
-                  v-model="other.additionalInformation" 
-                  :error-messages="additionalInformationErrors"
-                  @input="$v.other.additionalInformation.$touch()"
-                  @blur="$v.other.additionalInformation.$touch()"
-                  no-resize
-                  outlined 
-                  label="Additional information"
-                ></v-textarea>
+                <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
+                  <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                    <div class="menubar">
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bold() }"
+                        @click="commands.bold"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-bold</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.italic() }"
+                        @click="commands.italic"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-italic</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.strike() }"
+                        @click="commands.strike"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-strikethrough-variant</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.underline() }"
+                        @click="commands.underline"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-underline</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.code() }"
+                        @click="commands.code"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-code-tags</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-1</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                        @click="commands.heading({ level: 2 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-2</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                        @click="commands.heading({ level: 3 })"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-header-3</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.bullet_list() }"
+                        @click="commands.bullet_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-bulleted</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        :class="{ 'is-active': isActive.ordered_list() }"
+                        @click="commands.ordered_list"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-format-list-numbered</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.undo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-undo</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="commands.redo"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-redo</v-icon>
+                      </v-btn>
+                    </div>
+                  </editor-menu-bar>
+                  <editor-content class="pa-3" ref="contentEditor" :editor="editor" style="border-top: 1px solid #BEBEBE;" /> 
+                </div>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn
@@ -124,10 +275,10 @@
                   Update information
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.updateAdditionalInformation"
               >
                 <span v-html="this.successMessage"></span>
@@ -141,15 +292,15 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Profile picture</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Profile picture</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Upload your picture or avatar.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <v-file-input 
-                  v-model="other.avatarFile" 
-                  outlined 
+                <v-file-input
+                  v-model="avatarFile"
+                  outlined
                   label="Select your picture"
                 ></v-file-input>
                 <v-btn 
@@ -160,10 +311,10 @@
                   Upload picture
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.submitUploadingProfileAvatar"
               >
                 <span v-html="this.successMessage"></span>
@@ -177,17 +328,17 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" lg="12" offset-lg="1">
-                <h2>Reference links</h2>
-                <br>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Reference links</h2>
+                <v-divider class="mb-7"></v-divider>
                 <span>Provide your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.websiteUrl"
+                <v-text-field
+                  v-model="profile.websiteUrl"
                   :error-messages="websiteUrlErrors"
-                  @input="$v.referenceLinks.websiteUrl.$touch()"
-                  @blur="$v.referenceLinks.websiteUrl.$touch()" 
+                  @input="$v.profile.websiteUrl.$touch()"
+                  @blur="$v.profile.websiteUrl.$touch()"
                   outlined
                   clearable 
                   label="Web-site" 
@@ -195,11 +346,11 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.linkedInUrl" 
+                <v-text-field
+                  v-model="profile.linkedInUrl"
                   :error-messages="linkedInUrlErrors"
-                  @input="$v.referenceLinks.linkedInUrl.$touch()"
-                  @blur="$v.referenceLinks.linkedInUrl.$touch()"
+                  @input="$v.profile.linkedInUrl.$touch()"
+                  @blur="$v.profile.linkedInUrl.$touch()"
                   outlined 
                   clearable 
                   label="LinkedIn" 
@@ -207,11 +358,11 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.twitterUrl"
+                <v-text-field
+                  v-model="profile.twitterUrl"
                   :error-messages="twitterUrlErrors"
-                  @input="$v.referenceLinks.twitterUrl.$touch()"
-                  @blur="$v.referenceLinks.twitterUrl.$touch()" 
+                  @input="$v.profile.twitterUrl.$touch()"
+                  @blur="$v.profile.twitterUrl.$touch()" 
                   outlined 
                   clearable 
                   label="Twitter" 
@@ -219,62 +370,62 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.mediumUrl"
+                <v-text-field
+                  v-model="profile.mediumUrl"
                   :error-messages="mediumUrlErrors"
-                  @input="$v.referenceLinks.mediumUrl.$touch()"
-                  @blur="$v.referenceLinks.mediumUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Medium" 
+                  @input="$v.profile.mediumUrl.$touch()"
+                  @blur="$v.profile.mediumUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Medium"
                   prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.githubUrl"
+                <v-text-field
+                  v-model="profile.githubUrl"
                   :error-messages="githubUrlErrors"
-                  @input="$v.referenceLinks.githubUrl.$touch()"
-                  @blur="$v.referenceLinks.githubUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Github" 
+                  @input="$v.profile.githubUrl.$touch()"
+                  @blur="$v.profile.githubUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Github"
                   prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.facebookUrl"
+                <v-text-field
+                  v-model="profile.facebookUrl"
                   :error-messages="facebookUrlErrors"
-                  @input="$v.referenceLinks.facebookUrl.$touch()"
-                  @blur="$v.referenceLinks.facebookUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Facebook" 
+                  @input="$v.profile.facebookUrl.$touch()"
+                  @blur="$v.profile.facebookUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Facebook"
                   prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
-                  v-model="referenceLinks.telegramUrl"
+                <v-text-field
+                  v-model="profile.telegramUrl"
                   :error-messages="telegramUrlErrors"
-                  @input="$v.referenceLinks.telegramUrl.$touch()"
-                  @blur="$v.referenceLinks.telegramUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Telegram" 
+                  @input="$v.profile.telegramUrl.$touch()"
+                  @blur="$v.profile.telegramUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Telegram"
                   prepend-inner-icon="mdi mdi-telegram"
                   ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="referenceLinks.steemitUrl"
+                <v-text-field
+                  v-model="profile.steemitUrl"
                   :error-messages="steemitUrlErrors"
-                  @input="$v.referenceLinks.steemitUrl.$touch()"
-                  @blur="$v.referenceLinks.steemitUrl.$touch()" 
-                  outlined 
-                  clearable 
-                  label="Steemit" 
+                  @input="$v.profile.steemitUrl.$touch()"
+                  @blur="$v.profile.steemitUrl.$touch()"
+                  outlined
+                  clearable
+                  label="Steemit"
                   prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
@@ -287,10 +438,10 @@
                   Update links
                 </v-btn>
               </v-col>
-              <v-snackbar 
-                v-if="this.successMessage" 
-                right 
-                top 
+              <v-snackbar
+                v-if="this.successMessage"
+                right
+                top
                 v-model="snackBars.updateReferenceLinks"
               >
                 <span v-html="this.successMessage"></span>
@@ -308,17 +459,41 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions'
+
 import Error500 from '../../components/ui/Error500'
-import userSettingsForm from '../../forms/pages/user/settings'
-import { avatarStorageActions, avatarStorageMutations } from '../../store/modules/avatar'
-import { settingsStorageActions, settingsStorageMutations } from '../../store/modules/settings'
-import { userStorageActions, userStorageMutations } from '../../store/modules/user'
-import { profileStorageActions, profileStorageMutations } from '../../store/modules/profile'
+import { userSettingsForm } from "../../forms/pages/user/settings"
+import { avatarStorageActions } from '../../store/modules/avatar'
+import { userStorageActions } from '../../store/modules/user'
+import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
+import { profileStorageActions } from '../../store/modules/profile'
+import { truncate } from 'fs';
 
 export default {
   name: 'SettingsPage',
   mixins: [userSettingsForm],
   components: {
+    EditorContent,
+    EditorMenuBar,
     Error500,
   },
   data() {
@@ -337,83 +512,113 @@ export default {
         updateAdditionalInformation: null,
         submitUploadingProfileAvatar: null,
       },
+      oldPassword: null,
+      newPassword: null,
+      passwordIsUpdated: false,
+      avatarFile: null,
       successMessage: null,
-      details: {
-        email: null,
-        username: null,
-        firstName: null,
-        lastName: null,
-        location: null,
-      },
-      referenceLinks: {
-        websiteUrl: null,
-        linkedInUrl: null,
-        twitterUrl: null,
-        mediumUrl: null,
-        githubUrl: null,
-        facebookUrl: null,
-        telegramUrl: null,
-        steemitUrl: null,
-      },
-      other: {
-        additionalInformation: null,
-        avatarFile: null,
-      }
+      html: '',
+      editor: new Editor({
+        onUpdate: ({ getHTML }) => {
+          this.html = getHTML();
+          if (this.html === '<p></p>') this.profile.additionalInformation = '';
+          else this.profile.additionalInformation = this.html;
+        },
+        extensions: [
+          new Blockquote(),
+          new BulletList(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new ListItem(),
+          new OrderedList(),
+          new TodoItem(),
+          new TodoList(),
+          new Link(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ],
+      }),
     }
+  },
+  computed: {
+    ...mapGetters('user', ['userError', 'user']),
+    ...mapGetters('profile', ['profileError', 'profileFieldsErrors', 'profile', 'profileEvents']),
+    ...mapGetters('password', ['passwordError', 'passwordFieldsErrors', 'passwordEvents']),
+  },
+  watch: {
+    'profileEvents.isGotten'() {
+      this.editor.setContent(this.profile.additionalInformation)
+    },
   },
   methods: {
     updateDetails() {
-      this.$v.$touch()
-      if (this.$v.details.$anyError) { return }
+      if (!this.isDetailsFormValid()) { return }
 
       this.snackBars.updateDetails = true
-      this.$store.dispatch(settingsStorageActions.updateDetails, {
+      this.$store.dispatch(profileStorageActions.updateDetails, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        firstName: this.details.firstName,
-        lastName: this.details.lastName,
-        location: this.details.location,
+        firstName: this.profile.firstName,
+        lastName: this.profile.lastName,
+        location: this.profile.location,
       })
     },
-    updateReferenceLinks() {
-      this.$v.$touch()
-      if (this.$v.referenceLinks.$anyError) { return }
-
-      this.snackBars.updateReferenceLinks = true
-      this.$store.dispatch(settingsStorageActions.updateReferenceLinks, {
+    updatePassword() {
+      this.$store.dispatch(passwordStorageActions.changePassword, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        websiteUrl: this.referenceLinks.websiteUrl,
-        linkedInUrl: this.referenceLinks.linkedInUrl,
-        twitterUrl: this.referenceLinks.twitterUrl,
-        mediumUrl: this.referenceLinks.mediumUrl,
-        githubUrl: this.referenceLinks.githubUrl,
-        facebookUrl: this.referenceLinks.facebookUrl,
-        telegramUrl: this.referenceLinks.telegramUrl,
-        steemitUrl: this.referenceLinks.steemitUrl,
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword,
+      })
+      this.passwordIsUpdated = true
+    },
+    updateReferenceLinks() {
+      if (!this.isReferenceLinksFormValid()) { return }
+
+      this.snackBars.updateReferenceLinks = true
+      this.$store.dispatch(profileStorageActions.updateReferenceLinks, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+        websiteUrl: this.profile.websiteUrl,
+        linkedInUrl: this.profile.linkedInUrl,
+        twitterUrl: this.profile.twitterUrl,
+        mediumUrl: this.profile.mediumUrl,
+        githubUrl: this.profile.githubUrl,
+        facebookUrl: this.profile.facebookUrl,
+        telegramUrl: this.profile.telegramUrl,
+        steemitUrl: this.profile.steemitUrl,
       })
     },
     updateAdditionalInformation() {
-      this.$v.$touch()
-      if (this.$v.other.$anyError) { return }
+      if (!this.isAdditionalInformationFormValid()) { return }
 
       this.snackBars.updateAdditionalInformation = true
-      this.$store.dispatch(settingsStorageActions.updateAdditionalInformation, {
+      this.$store.dispatch(profileStorageActions.updateAdditionalInformation, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        additionalInformation: this.other.additionalInformation,
+        additionalInformation: this.profile.additionalInformation,
       })
     },
     submitUploadingProfileAvatar() {
-    this.snackBars.submitUploadingProfileAvatar = true
+      this.snackBars.submitUploadingProfileAvatar = true
       this.$store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
-        file: this.other.avatarFile,
+        file: this.avatarFile, 
       })
     },
   },
   mounted() {
+    this.successMessage =
+      "Profile updated successfully — <a href=\"" +
+      `/users/${this.localStorage.username}` +
+      "\">view your profile</a>"
+
     if (!this.localStorage.username) {
       this.$router.push({name: 'index'})
     }
@@ -425,51 +630,9 @@ export default {
     this.$store.dispatch(profileStorageActions.getProfile, {
         username: this.localStorage.username,
     })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === settingsStorageMutations.subscribe.addError) {
-        this.error = state.settings.error
-        unsubscribe()
-      }
-
-      if (mutation.type === settingsStorageMutations.subscribe.addFieldsErrors) {
-        this.fieldsErrors = state.settings.fieldsErrors
-        unsubscribe()
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addUser) {
-        this.details.email = state.user.email
-        this.details.username = state.user.username
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.details.firstName = state.profile.firstName
-        this.details.lastName = state.profile.lastName
-        this.details.location = state.profile.location
-        this.other.additionalInformation = state.profile.additionalInformation
-        this.other.avatarUrl = state.profile.avatarUrl
-        this.referenceLinks.facebookUrl = state.profile.facebookUrl
-        this.referenceLinks.githubUrl = state.profile.githubUrl
-        this.referenceLinks.linkedInUrl = state.profile.linkedInUrl
-        this.referenceLinks.mediumUrl = state.profile.mediumUrl
-        this.referenceLinks.steemitUrl = state.profile.steemitUrl
-        this.referenceLinks.telegramUrl = state.profile.telegramUrl
-        this.referenceLinks.twitterUrl = state.profile.twitterUrl
-        this.referenceLinks.websiteUrl = state.profile.websiteUrl
-      }
-
-      if (
-        mutation.type === settingsStorageMutations.subscribe.updateReferenceLinks ||
-        mutation.type === settingsStorageMutations.subscribe.updateAdditionalInformation ||
-        mutation.type === settingsStorageMutations.subscribe.updateDetails ||
-        mutation.type === avatarStorageMutations.subscribe.markAvatarAsUploaded
-      ) {
-      this.successMessage =
-          "Profile updated successfully — <a href=\"" +
-          `/users/${this.localStorage.username}` +
-          "\">view your profile</a>"
-      }
-    });
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   }
 }
 </script>
@@ -485,5 +648,45 @@ export default {
 
 .v-file-input {
   height: 86px;
+}
+
+.custom-btn::before {
+  color: transparent;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 30px;
+  min-width: 40px;
+}
+
+.editor:hover {
+  border-color: black;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
+.menubar {
+	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+}
+
+.menubar.is-hidden {
+	 visibility: hidden;
+	 opacity: 0;
+}
+
+.menubar.is-focused {
+	 visibility: visible;
+	 opacity: 1;
+	 transition: visibility 0.2s, opacity 0.2s;
+}
+
+.menubar__button:hover {
+	 background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menubar__button.is-active {
+	 background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

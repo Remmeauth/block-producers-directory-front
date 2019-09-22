@@ -1,26 +1,24 @@
 <template>
-  <div v-if="error.statusCode === 404">
+  <div v-if="profileError.statusCode === 404">
     <Error404/>
   </div>
-  <div v-else-if="error.statusCode === 500">
+  <div v-else-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
-    <v-layout class="mb-12 mt-12" row wrap>
-      <v-flex xs10 sm10 md10 lg10 xl8 offset-xs1 offset-sm3 offset-md2 offset-lg1 offset-xl2>
+    <v-layout class="mb-12 mt-4" row wrap>
+      <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
         <v-layout row wrap>
-            <v-flex xs12 sm8 md4 lg4 xl3 offset-lg1>
+            <v-flex xs12 sm8 md4 lg4 xl4 offset-sm2 offset-md1 offset-lg1 offset-xl1>
               <v-card 
                 v-if="this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'"
                 class="mx-auto mb-6"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
-                >
+              >
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
-                  :src="profile.avatarUrl"
+                  :src="profile.avatarUrl + `?${Math.random()}`"
                   style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
@@ -82,14 +80,14 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions>
+                <v-card-actions v-if="user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 2px solid #2962FF;"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit profile
                   </v-btn>
@@ -102,13 +100,11 @@
                   this.$vuetify.breakpoint.name === 'xl'" 
                 class="mx-auto mr-6 mb-6"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
                 >
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
-                  :src="profile.avatarUrl"
+                  :src="profile.avatarUrl + `?${Math.random()}`"
                   style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
@@ -170,27 +166,25 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions>
+                <v-card-actions v-if="user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
-                    outlined 
-                    color="white" 
-                    block 
-                    style="background-color: #4d70d5; border: 1px solid #304FFE; cursor: pointer;"
+                    class="edit-button"
+                    block
+                    :ripple="false"
+                    depressed
                   >
                     Edit profile
                   </v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm8 md6 lg6>
+            <v-flex xs12 sm8 md6 lg6 offset-sm2 offset-md0 offset-lg0 offset-xl0>
               <v-card 
                 class="mx-auto"
                 align="center"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-subheader>User's information</v-subheader>
                 <div class="pa-4 pt-0 caption">
@@ -210,9 +204,7 @@
               <v-card 
                 v-if="blockProducers && blockProducersByUser(user.username).length > 0"
                 class="mt-6"
-                elevation="10" 
                 outlined
-                style="border-color: #5d80da;"
               >
                 <v-list two-line>
                   <template 
@@ -224,17 +216,96 @@
                     <v-divider 
                       v-else-if="index > 0" 
                     ></v-divider>
-                    <v-list-item :to="{name: 'block-producer', params: {identifier: blockProducer.id}}">
+                    <v-list-item :ripple="false" v-if="
+                      blockProducer.status === 'active' &&
+                      $route.params.username !== localStorage.username"  
+                      :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                    >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width:12%;border-radius: 50%;"
+                        style="max-width:12%; border-radius: 50%; border: 1px solid grey;"
                         :src="blockProducer.logo_url"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
                           class="mb-1" 
-                          style="font-weight: 500"
-                        >{{ blockProducer.name }}</v-list-item-title>
+                          style="font-weight: 500; display:inline-block;"
+                        >
+                          {{ blockProducer.name }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle 
+                          style="font-size: 0.8em;"
+                          v-if="blockProducer.location"
+                        >
+                          <v-icon>location_on</v-icon> 
+                          {{ blockProducer.location }}
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item :ripple="false" v-else-if="
+                      $route.params.username === localStorage.username"  
+                      :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                    >
+                      <img 
+                        class="mt-2 mb-2 mr-5 pa-1" 
+                        style="max-width:12%; border-radius: 50%;"
+                        :src="blockProducer.logo_url"
+                      >
+                      <v-list-item-content>
+                        <v-list-item-title 
+                          class="mb-1" 
+                          style="font-weight: 500; display:inline-block;"
+                        >
+                          {{ blockProducer.name }}
+                          <v-tooltip 
+                            v-if="blockProducer.status === 'active'"  
+                            right 
+                            color="green lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="green lighten-1"  
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>active</span>
+                          </v-tooltip>
+                          <v-tooltip 
+                            v-else-if="blockProducer.status === 'moderation'" 
+                            right 
+                            color="grey lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="grey lighten-1" 
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>on moderation</span>
+                          </v-tooltip>
+                          <v-tooltip 
+                            v-else-if="blockProducer.status === 'declined'" 
+                            right 
+                            color="red lighten-1"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-icon 
+                                class="pb-1" 
+                                color="red lighten-1" 
+                                v-on="on"
+                              >
+                                mdi-account-check
+                              </v-icon> 
+                            </template>
+                            <span>rejected</span>
+                          </v-tooltip>
+                        </v-list-item-title>
                         <v-list-item-subtitle 
                           style="font-size: 0.8em;"
                           v-if="blockProducer.location"
@@ -255,11 +326,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error404 from '../../components/ui/Error404'
 import Error500 from '../../components/ui/Error500'
-import { blockProducerStorageActions, blockProducerStorageMutations} from '../../store/modules/blockProducer'
-import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
-import { userStorageActions, userStorageMutations } from '../../store/modules/user'
+import { blockProducerStorageActions } from '../../store/modules/blockProducer'
+import { profileStorageActions } from '../../store/modules/profile'
+import { userStorageActions } from '../../store/modules/user'
 
 export default {
   name: 'UserPage',
@@ -273,26 +346,6 @@ export default {
         message: null,
         statusCode: null,
       },
-      user: {
-        email: null,
-        username: null,
-      },
-      profile: {
-        firstName: null,
-        lastName: null,
-        additionalInformation: null,
-        avatarUrl: null,
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        location: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        twitterUrl: null,
-        websiteUrl: null,
-      },
-      blockProducers: null,
       blockProducersByUser: function (username) {
         var filteredBlockProducersByUser = []
 
@@ -306,6 +359,11 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters('user', ['userError', 'user']),
+    ...mapGetters('profile', ['profile', 'profileError']),
+    ...mapGetters('blockProducer', ['blockProducers']), 
+  },
   mounted() {
     this.$store.dispatch(userStorageActions.getUser, {
       username: this.$route.params.username,
@@ -316,43 +374,6 @@ export default {
     })
 
     this.$store.dispatch(blockProducerStorageActions.getBlockProducers)
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === userStorageMutations.subscribe.addError) {
-        this.error = state.user.error
-        unsubscribe()
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addError) {
-        this.error = state.profile.error
-        unsubscribe()
-      }
-
-      if (mutation.type === userStorageMutations.subscribe.addUser) {
-        this.user.email = state.user.email
-        this.user.username = state.user.username
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.profile.firstName = state.profile.firstName
-        this.profile.lastName = state.profile.lastName
-        this.profile.additionalInformation = state.profile.additionalInformation
-        this.profile.avatarUrl = state.profile.avatarUrl
-        this.profile.facebookUrl = state.profile.facebookUrl
-        this.profile.githubUrl = state.profile.githubUrl
-        this.profile.linkedInUrl = state.profile.linkedInUrl
-        this.profile.location = state.profile.location
-        this.profile.mediumUrl = state.profile.mediumUrl
-        this.profile.steemitUrl = state.profile.steemitUrl
-        this.profile.telegramUrl = state.profile.telegramUrl
-        this.profile.twitterUrl = state.profile.twitterUrl
-        this.profile.websiteUrl = state.profile.websiteUrl
-      }
-
-      if (mutation.type === blockProducerStorageMutations.subscribe.addBlockProducers) {
-        this.blockProducers = state.blockProducer.blockProducers
-      }
-    });
   },
 }
 </script>

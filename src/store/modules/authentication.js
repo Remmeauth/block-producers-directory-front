@@ -1,16 +1,17 @@
 import axios from 'axios'
 import HttpStatus from 'http-status-codes'
+import Vue from 'vue'
 
 export const authenticationStorageMutations = {
   subscribe: {
     addError: 'authentication/addError',
     addToken: 'authentication/addToken',
-    markAsSignedUp: 'authentication/markAsSignedUp',
+    signUp: 'authentication/signUp',
   },
   commit: {
     addError: 'addError',
     addToken: 'addToken',
-    markAsSignedUp: 'markAsSignedUp',
+    signUp: 'signUp',
   },
 }
 
@@ -26,20 +27,26 @@ export const authentication = {
       message: null,
       statusCode: null,
     },
-    errors: null,
-    isUpdated: false,
-    token: null,
+    events: {
+      signedIn: null,
+      signedUp: null,
+    },
+    entity: {
+      token: null,
+    }
+  },
+  getters: {
+    authenticationError: state => state.error,
+    authenticationEvents: state => state.events,
+    credentials: state => state.entity,
   },
   mutations: {
-    addError (state, error) {
-      state.error = error
+    addError: (state, error) => state.error = error,
+    addToken: (state, credentials) => {
+      state.entity = credentials
+      state.events.signedIn = Math.random()
     },
-    addToken (state, token) {
-      state.token = token
-    },
-    markAsSignedUp (state) {
-      state.isUpdated = true
-    },
+    signUp: (state) => state.events.signedUp = Math.random(),
   },
   actions: {
     signIn({ commit }, { usernameOrEmail, password }) {
@@ -49,7 +56,9 @@ export const authentication = {
           password: password,
         })
         .then(response => {
-          commit(authenticationStorageMutations.commit.addToken, response.data.token)
+          commit(authenticationStorageMutations.commit.addToken, {
+            token: response.data.token,
+          })
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
@@ -69,29 +78,29 @@ export const authentication = {
     },
     signUp({ commit }, { email, username, password }) {
       axios
-          .post(process.env.VUE_APP_BACK_END_URL + '/users/registration/', {
-            email: email,
-            username: username,
-            password: password,
-          })
-          .then(response => {
-            commit(authenticationStorageMutations.commit.markAsSignedUp)
-          })
-          .catch(error => {
-            if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-              commit(authenticationStorageMutations.commit.addError, {
-                message: error.response.data.error,
-                statusCode: error.response.status
-              })
-            }
+        .post(process.env.VUE_APP_BACK_END_URL + '/users/registration/', {
+          email: email,
+          username: username,
+          password: password,
+        })
+        .then(response => {
+          commit(authenticationStorageMutations.commit.signUp)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(authenticationStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
 
-            if (error.response.status === HttpStatus.BAD_REQUEST) {
-              commit(authenticationStorageMutations.commit.addError, {
-                message: error.response.data.errors,
-                statusCode: error.response.status
-              })
-            }
-          })
+          if (error.response.status === HttpStatus.BAD_REQUEST) {
+            commit(authenticationStorageMutations.commit.addError, {
+              message: error.response.data.errors,
+              statusCode: error.response.status
+            })
+          }
+        })
     }
   }
 }

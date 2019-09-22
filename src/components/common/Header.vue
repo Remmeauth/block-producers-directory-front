@@ -1,89 +1,161 @@
 <template>
-  <div v-if="error.statusCode === 500">
+  <div v-if="profileError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
-    <v-card tile>
-      <v-toolbar style="background-color: rgb(242, 243, 244);">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        <v-toolbar-title>DIRECTORY</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <template v-if="localStorage.token">
-          <v-btn outlined color="#5d80da" @click="$router.push({name: 'block-producer-creation'})">Submit</v-btn>
-          <v-menu offset-y :nudge-width="150" style="margin-top: 20px">
-            <template v-slot:activator="{ on }">
-              <v-btn v-on="on" class="mx-2" :ripple="false" color="#424242" text>
-                <v-avatar tile size="36">
-                  <img v-if="profile.avatarUrl" :src="profile.avatarUrl" alt="avatar">
-                  <img v-else src="https://block-producers-directory.s3-us-west-2.amazonaws.com/users/avatars/default-user-logotype.png" alt="avatar">
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Signed in as</v-list-item-title>
-                  <v-list-item-subtitle>@{{ localStorage.username }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :to="{name: 'user', params: {username: localStorage.username}}">
-                <v-list-item-content>
-                  <v-list-item-title>Your profile</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item :to="{name: 'settings'}">
-                <v-list-item-content>
-                  <v-list-item-title>Your settings</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="signOut">
-                <v-list-item-content>
-                  <v-list-item-title>Sign Out</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </template>
-        <template v-else>
-          <v-btn outlined color="#5d80da" style="margin-right: 20px;" @click="$router.push({name: 'sign-in'})">Sign In</v-btn>
-          <v-btn outlined color="#5d80da" style="margin-right: 2px;" @click="$router.push({name: 'sign-up'})">Sign Up</v-btn>
-        </template>
-      </v-toolbar>
-    </v-card>
+    <v-toolbar
+      dark
+      color="#24292e"
+      flat
+      class="mb-4"
+    >
+      <v-spacer></v-spacer>
+      <v-toolbar-title style="font-weight: 600">Block Producer Directory</v-toolbar-title>
+
+      <div class="flex-grow-1"></div>
+
+      <v-tabs 
+        dark
+        v-if="localStorage.token"
+        slot="extension"
+        centered
+        class="tabs-btn white--text"
+        background-color="transparent"
+        slider-color="#24292e"
+      >
+        <div class="flex-grow-2"></div>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'md' || 
+            this.$vuetify.breakpoint.name == 'lg' ||
+            this.$vuetify.breakpoint.name == 'xl'" 
+          class="white--text" 
+          :ripple="false"
+          disabled
+        >
+          <v-form class="text-none" style="font-size: 1em;">
+            Signed in as 
+            <b
+              style="color: yellow; cursor: pointer;" 
+            >
+              @{{ localStorage.username }}
+            </b>
+          </v-form>
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'" 
+          class="tab-btn pa-0" 
+          :ripple="false" 
+          @click="$router.push({name: 'index'})"
+        >
+          Home
+        </v-tab>
+        <v-tab 
+          v-else 
+          :ripple="false" 
+          @click="$router.push({name: 'index'})"
+        >
+          Home
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'" 
+          class="tab-btn pl-2 pr-2" 
+          :ripple="false" 
+          @click="$router.push({name: 'block-producer-creation'})"
+        >
+          Submit
+        </v-tab>
+        <v-tab
+          v-else 
+          :ripple="false" 
+          @click="$router.push({name: 'block-producer-creation'})"
+        >
+          Submit
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'"  
+          class="tab-btn pl-2 pr-2" 
+          :ripple="false" 
+          @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+        >
+          Profile
+        </v-tab>
+        <v-tab 
+          v-else 
+          :ripple="false" 
+          @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+        >
+          Profile
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'"  
+          class="tab-btn pl-2 pr-2" 
+          :ripple="false" 
+          @click="$router.push({name: 'settings'})"
+        >
+          Settings
+        </v-tab>
+        <v-tab 
+          v-else 
+          :ripple="false" 
+          @click="$router.push({name: 'settings'})"
+        >
+          Settings
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'" 
+          class="tab-btn pl-2 pr-2" 
+          :ripple="false" 
+          @click="signOut"
+        >
+          Sign out
+        </v-tab>
+        <v-tab 
+          v-else 
+          :ripple="false" 
+          @click="signOut"
+        >
+          Sign out
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs
+        v-else
+        slot="extension"
+        centered
+        background-color="transparent"
+        slider-color="#24292e"
+      >
+        <div class="flex-grow-2"></div>
+        <v-tab 
+          :ripple="false" 
+          @click="$router.push({name: 'sign-in'})"
+        >
+          Sign In
+        </v-tab>
+        <v-tab 
+          :ripple="false" 
+          @click="$router.push({name: 'sign-up'})"
+        >
+          Sign Up
+        </v-tab>
+      </v-tabs>
+    </v-toolbar>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Error500 from '../../components/ui/Error500'
-import { profileStorageActions, profileStorageMutations} from '../../store/modules/profile'
+import { profileStorageActions } from '../../store/modules/profile'
 
 export default {
   name: 'Header',
   components: {
     Error500,
   },
-  data() {
-    return {
-      error: {
-        message: null,
-        statusCode: null,
-      },
-      profile: {
-        firstName: null,
-        lastName: null,
-        additionalInformation: null,
-        avatarUrl: null,
-        facebookUrl: null,
-        githubUrl: null,
-        linkedInUrl: null,
-        location: null,
-        mediumUrl: null,
-        steemitUrl: null,
-        telegramUrl: null,
-        tweeterUrl: null,
-        websiteUrl: null,
-      },
-    }
+  computed: {
+    ...mapGetters('profile', ['profile', 'profileError']),
   },
   methods: {
     signOut () {
@@ -94,38 +166,27 @@ export default {
     }
   },
   mounted() {
-    if (!this.localStorage.username) {
-      return
-    }
-
-    this.$store.dispatch(profileStorageActions.getProfile, {
-      username: this.localStorage.username,
-    })
-
-    const unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === profileStorageMutations.subscribe.addError) {
-        this.error = state.profile.error
-        unsubscribe()
-      }
-
-      if (mutation.type === profileStorageMutations.subscribe.addProfile) {
-        this.profile.firstName = state.profile.firstName
-        this.profile.lastName = state.profile.lastName
-        this.profile.additionalInformation = state.profile.additionalInformation
-        this.profile.avatarUrl = state.profile.avatarUrl
-        this.profile.facebookUrl = state.profile.facebookUrl
-        this.profile.githubUrl = state.profile.githubUrl
-        this.profile.linkedInUrl = state.profile.linkedInUrl
-        this.profile.location = state.profile.location
-        this.profile.mediumUrl = state.profile.mediumUrl
-        this.profile.steemitUrl = state.profile.steemitUrl
-        this.profile.telegramUrl = state.profile.telegramUrl
-        this.profile.tweeterUrl = state.profile.tweeterUrl
-        this.profile.websiteUrl = state.profile.websiteUrl
-      }
-    });
+    if (!this.localStorage.username) return
+    this.$store.dispatch(profileStorageActions.getProfile, { username: this.localStorage.username })
   },
 }
 </script>
 
-<style></style>
+<style>
+.theme--dark.v-tabs.v-tab--active:hover::before, .theme--dark.v-tabs.v-tab--active::before {
+  opacity: 0;
+}
+
+.theme--dark.v-tabs.v-tab:hover::before {
+  opacity: 0;
+}
+
+.v-tab--active.v-tab:not(:focus)::before {
+  opacity: 0;
+}
+
+.v-tab.tab-btn {
+  min-width: 60px;
+  font-size: 12px;
+}
+</style>
