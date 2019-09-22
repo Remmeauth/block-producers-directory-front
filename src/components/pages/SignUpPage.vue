@@ -58,6 +58,14 @@
                         style="transform:scale(0.78); transform-origin: 0 0;"
                       >
                       </vue-recaptcha>
+                      <v-card-actions
+                        v-if="authenticationError.message"
+                        class="justify-center"
+                      >
+                        <span style="font-size: 0.9em; color: red;">
+                          {{ authenticationError.message }}
+                        </span>
+                      </v-card-actions>
                       <v-card-actions class="justify-center">
                         <v-btn
                         outlined

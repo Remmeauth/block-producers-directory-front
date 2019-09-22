@@ -99,6 +99,14 @@
                         outlined 
                         prepend-inner-icon="email"
                       ></v-text-field>
+                      <v-card-actions
+                        v-if="passwordFieldsErrors.errors"
+                        class="justify-center pt-0"
+                      >
+                        <span style="font-size: 0.9em; color: red;">
+                          {{ passwordFieldsErrors.errors }}
+                        </span>
+                      </v-card-actions>
                       <v-card-actions 
                         class="justify-center"
                       >
@@ -175,7 +183,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('password', ['passwordError, passwordFieldsErrors', 'passwordEvents']),
+    ...mapGetters('password', ['passwordError', 'passwordFieldsErrors', 'passwordEvents']),
   },
   watch: {
     'passwordEvents.isReceived'() {
