@@ -99,6 +99,54 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Change password</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Provide your old password and enter a new password to change the password.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field 
+                  v-model="oldPassword"
+                  :error-messages="emailErrors"
+                  outlined 
+                  clearable 
+                  label="Old password" 
+                  prepend-inner-icon="lock"
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field 
+                  v-model="newPassword"
+                  :error-messages="emailErrors"
+                  outlined 
+                  clearable 
+                  label="New password" 
+                  prepend-inner-icon="lock"
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-if="passwordFieldsErrors.errors" class="pt-0">
+                <span style="color: red; font-size: 0.9em;">The password does not match. Type the correct password.</span>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-else-if="passwordIsUpdated && !passwordFieldsErrors.errors" class="pt-0">
+                <span style="color: green; font-size: 0.9em;">The password is updated.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn
+                  class="text-none white--text"
+                  @click="updatePassword"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update password
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Additional information</h2>
                 <v-divider class="mb-7"></v-divider>
                 <span>Tell some words about yourself.</span>
@@ -436,6 +484,7 @@ import Error500 from '../../components/ui/Error500'
 import { userSettingsForm } from "../../forms/pages/user/settings"
 import { avatarStorageActions } from '../../store/modules/avatar'
 import { userStorageActions } from '../../store/modules/user'
+import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
 import { profileStorageActions } from '../../store/modules/profile'
 import { truncate } from 'fs';
 
@@ -463,6 +512,9 @@ export default {
         updateAdditionalInformation: null,
         submitUploadingProfileAvatar: null,
       },
+      oldPassword: null,
+      newPassword: null,
+      passwordIsUpdated: false,
       avatarFile: null,
       successMessage: null,
       html: '',
@@ -496,6 +548,7 @@ export default {
   computed: {
     ...mapGetters('user', ['userError', 'user']),
     ...mapGetters('profile', ['profileError', 'profileFieldsErrors', 'profile', 'profileEvents']),
+    ...mapGetters('password', ['passwordError', 'passwordFieldsErrors', 'passwordEvents']),
   },
   watch: {
     'profileEvents.isGotten'() {
@@ -514,6 +567,15 @@ export default {
         lastName: this.profile.lastName,
         location: this.profile.location,
       })
+    },
+    updatePassword() {
+      this.$store.dispatch(passwordStorageActions.changePassword, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword,
+      })
+      this.passwordIsUpdated = true
     },
     updateReferenceLinks() {
       if (!this.isReferenceLinksFormValid()) { return }
