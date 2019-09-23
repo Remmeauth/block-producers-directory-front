@@ -128,6 +128,12 @@
         <div class="flex-grow-2"></div>
         <v-tab 
           :ripple="false" 
+          @click="$router.push({name: 'index'})"
+        >
+          Home
+        </v-tab>
+        <v-tab 
+          :ripple="false" 
           @click="$router.push({name: 'sign-in'})"
         >
           Sign In
