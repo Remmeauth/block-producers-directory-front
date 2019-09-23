@@ -297,9 +297,8 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user" class="justify-center">
+                <v-card-actions v-if="blockProducer.user.username === localStorage.username" class="justify-center">
                   <v-btn
-                    v-if="blockProducer.user.username === localStorage.username"
                     @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
                     class="edit-button"
                     block
