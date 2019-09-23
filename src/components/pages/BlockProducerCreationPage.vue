@@ -446,7 +446,11 @@ export default {
     'blockProducerEvents.isCreated'() {
       this.createdBlockProducerIdentifier = this.blockProducer.id
 
-      if (!this.logotypeFile) { return }
+      if (!this.logotypeFile) { 
+        this.$router.push({name: 'block-producer', params: {identifier: this.createdBlockProducerIdentifier }})
+        return
+      }
+
       this.$store.dispatch(avatarStorageActions.uploadBlockProducerAvatar, {
         jwtToken: this.localStorage.token,
         identifier: this.createdBlockProducerIdentifier,

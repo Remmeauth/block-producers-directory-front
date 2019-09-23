@@ -12,6 +12,7 @@ export const blockProducerStorageMutations = {
     updateDescription: 'blockProducer/updateDescription',
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
     createBlockProducer: 'blockProducer/createBlockProducer',
+    deleteBlockProducer: 'blockProducer/deleteBlockProducer',
   },
   commit: {
     addError: 'addError',
@@ -23,6 +24,7 @@ export const blockProducerStorageMutations = {
     updateDescription: 'updateDescription',
     updateReferenceLinks: 'updateReferenceLinks',
     createBlockProducer: 'createBlockProducer',
+    deleteBlockProducer: 'deleteBlockProducer',
   },
 }
 
@@ -34,6 +36,7 @@ export const blockProducerStorageActions = {
   updateDescription: 'blockProducer/updateDescription',
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
   createBlockProducer: 'blockProducer/create',
+  deleteBlockProducer: 'blockProducer/delete',
 }
 
 export const blockProducer = {
@@ -53,6 +56,7 @@ export const blockProducer = {
       referenceLinksAreUpdated: null,
       isCreated: null,
       isGotten: null,
+      isDeleted: null,
     },
     entity: {
       name: null,
@@ -103,6 +107,7 @@ export const blockProducer = {
       state.entity.id = blockProducerIdentifier
       state.events.isCreated = Math.random()
     },
+    deleteBlockProducer: (state) => state.events.isDeleted = Math.random(),
   },
   actions: {
     get({ commit }, { identifier }) {
@@ -370,6 +375,33 @@ export const blockProducer = {
           if (error.response.status === HttpStatus.BAD_REQUEST) {
             commit(blockProducerStorageMutations.commit.addFieldsErrors, {
               errors: error.response.data.errors,
+              statusCode: error.response.status
+            })
+          }
+        })
+    },
+    delete({ commit }, { jwtToken, identifier }) {
+      axios
+        .delete(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/`, {
+          headers: {
+            'Authorization': `JWT ${jwtToken}`,
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => {
+          commit(blockProducerStorageMutations.commit.deleteBlockProducer)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+
+          if (error.response.status === HttpStatus.BAD_REQUEST) {
+            commit(blockProducerStorageMutations.commit.addFieldsErrors, {
+              errors: error.response.data.error,
               statusCode: error.response.status
             })
           }
