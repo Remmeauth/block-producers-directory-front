@@ -488,6 +488,27 @@
             </v-row>
           </v-container>
         </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3" style="color: #cb2431;">Delete account</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Once you delete your account, there is no going back. Please be certain.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn 
+                  class="delete-button text-none"
+                  @click="deleteProfile"
+                  depressed
+                  :ripple="false"
+                >
+                  Delete your account
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-flex>
     </v-layout>
     <br>
@@ -594,6 +615,12 @@ export default {
     'profileEvents.isGotten'() {
       this.editor.setContent(this.profile.additionalInformation)
     },
+    // 'profileEvents.isDeleted'() {
+    //   this.localStorage.token = ''
+    //   this.localStorage.username = ''
+    //   this.localStorage.email = ''
+    //   this.$router.push({name: 'index'})
+    // },
   },
   methods: {
     updateDetails() {
@@ -663,6 +690,17 @@ export default {
         username: this.localStorage.username,
         file: this.avatarFile, 
       })
+    },
+    deleteProfile () {
+      this.$store.dispatch(profileStorageActions.deleteProfile, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+      })
+      
+      this.localStorage.token = ''
+      this.localStorage.username = ''
+      this.localStorage.email = ''
+      this.$router.push({name: 'index'})
     },
   },
   mounted() {
