@@ -9,6 +9,7 @@ export const profileStorageMutations = {
     updateDetails: 'profile/updateDetails',
     updateAdditionalInformation: 'profile/updateAdditionalInformation',
     updateReferenceLinks: 'profile/updateReferenceLinks',
+    deleteProfile: 'profile/deleteProfile',
   },
   commit: {
     addError: 'addError',
@@ -17,6 +18,7 @@ export const profileStorageMutations = {
     updateDetails: 'updateDetails',
     updateAdditionalInformation: 'updateAdditionalInformation',
     updateReferenceLinks: 'updateReferenceLinks',
+    deleteProfile: 'deleteProfile',
   },
 }
 
@@ -25,6 +27,7 @@ export const profileStorageActions = {
   updateDetails: 'profile/updateDetails',
   updateAdditionalInformation: 'profile/updateAdditionalInformation',
   updateReferenceLinks: 'profile/updateReferenceLinks',
+  deleteProfile: 'profile/delete',
 }
 
 export const profile = {
@@ -43,6 +46,7 @@ export const profile = {
       additionalInformationIsUpdated: null,
       referenceLinksAreUpdated: null,
       isGotten: null,
+      isDeleted: null,
     },
     entity: {
       userId: null,
@@ -77,6 +81,7 @@ export const profile = {
     updateDetails: (state) => state.events.detailsAreUpdated = Math.random(),
     updateAdditionalInformation: (state) => state.events.additionalInformationIsUpdated = Math.random(),
     updateReferenceLinks: (state) => state.events.referenceLinksAreUpdated = Math.random(),
+    deleteProfile: (state) => state.events.isDeleted = Math.random(),
   },
   actions: {
     get({ commit }, { username }) {
@@ -234,6 +239,33 @@ export const profile = {
           }
         })
     },
+    delete({ commit }, { jwtToken, username }) {
+      axios
+        .delete(process.env.VUE_APP_BACK_END_URL + `/users/${username}/`, {
+          headers: {
+            'Authorization': `JWT ${jwtToken}`,
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => {
+          commit(blockProducerStorageMutations.commit.deleteProfile)
+        })
+        .catch(error => {
+          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
+            commit(blockProducerStorageMutations.commit.addError, {
+              message: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+
+          if (error.response.status === HttpStatus.BAD_REQUEST) {
+            commit(blockProducerStorageMutations.commit.addFieldsErrors, {
+              errors: error.response.data.error,
+              statusCode: error.response.status
+            })
+          }
+        })
+    }
   }
 }
 
