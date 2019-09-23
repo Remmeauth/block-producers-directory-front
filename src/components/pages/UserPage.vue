@@ -19,7 +19,7 @@
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 35%; border-radius: 50%;"
+                  style="max-width: 35%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
                 ></v-img>
                 <v-divider></v-divider>
                 <h3 class="mt-3">
@@ -105,7 +105,7 @@
                 <v-img class="mt-2 mb-2"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 50%; border-radius: 50%;"
+                  style="max-width: 50%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
                 ></v-img>
                 <v-divider></v-divider>
                 <h3 class="mt-3">
@@ -224,7 +224,7 @@
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
                         style="max-width:12%; border-radius: 50%; border: 1px solid grey;"
-                        :src="blockProducer.logo_url"
+                        :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
@@ -249,7 +249,7 @@
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
                         style="max-width:12%; border-radius: 50%;"
-                        :src="blockProducer.logo_url"
+                        :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
