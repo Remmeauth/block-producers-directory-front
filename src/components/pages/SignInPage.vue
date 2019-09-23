@@ -42,6 +42,14 @@
                         prepend-inner-icon="lock" 
                         type="password"
                       ></v-text-field>
+                      <v-card-actions
+                        v-if="authenticationError.message"
+                        class="justify-center pt-0"
+                      >
+                        <span style="font-size: 0.9em; color: red;">
+                          {{ authenticationError.message }}
+                        </span>
+                      </v-card-actions>
                       <v-card-actions class="justify-center">
                         <v-btn 
                         outlined 

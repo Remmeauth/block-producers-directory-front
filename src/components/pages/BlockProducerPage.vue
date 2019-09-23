@@ -81,7 +81,7 @@
                   style="cursor: pointer;"
                 >
                   <v-form>
-                    by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                    by <b style="color: #5d80da; cursor: pointer;"> @{{ blockProducer.user.username }} </b>
                   </v-form>
                 </v-card-text>
                 <v-card-text 
@@ -106,7 +106,11 @@
                         blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
                         blockProducer.wikipediaUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl || blockProducer.githubUrl || 
+                        blockProducer.facebookUrl || blockProducer.mediumUrl || blockProducer.telegramUrl ||
+                        blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
+                        blockProducer.wikipediaUrl" 
                   class="pt-3 pb-3"
                 >
                   <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
@@ -229,7 +233,7 @@
                   style="cursor: pointer;"
                 >
                   <v-form>
-                    by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                    by <b style="color: #5d80da; cursor: pointer;"> @{{ blockProducer.user.username }} </b>
                   </v-form>
                 </v-card-text>
                 <v-card-text 
@@ -254,7 +258,11 @@
                         blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
                         blockProducer.wikipediaUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="blockProducer.linkedInUrl || blockProducer.twitterUrl || blockProducer.githubUrl || 
+                        blockProducer.facebookUrl || blockProducer.mediumUrl || blockProducer.telegramUrl ||
+                        blockProducer.redditUrl || blockProducer.slackUrl || blockProducer.steemitUrl || 
+                        blockProducer.wikipediaUrl" 
                   class="pt-3 pb-3"
                 >
                   <a v-if="blockProducer.linkedInUrl" :href="blockProducer.linkedInUrl" style="text-decoration: none;">
@@ -289,9 +297,8 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="blockProducer.user" class="justify-center">
+                <v-card-actions v-if="blockProducer.user.username === localStorage.username" class="justify-center">
                   <v-btn
-                    v-if="blockProducer.user.username === localStorage.username"
                     @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
                     class="edit-button"
                     block
@@ -343,8 +350,8 @@
                     <v-list-item v-if="blockProducer.user">
                       <img
                         class="mt-2 mb-2 mr-5 pa-1"
-                        style="max-width: 10%; border-radius: 50%; cursor: pointer; border: 1px solid grey"
-                        :src="comment.profile_avatar_url"
+                        style="max-width: 10%; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0, 0, 0, 0.12);"
+                        :src="comment.profile_avatar_url + `?${Math.random()}`"
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >
                       <v-list-item-content
@@ -507,5 +514,4 @@ export default {
   background-color: #E6EBF2; 
   border: 1px solid #9FA3A9;
 }
-
 </style>

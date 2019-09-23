@@ -15,29 +15,6 @@
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
-                  v-model="user.username"
-                  disabled 
-                  outlined 
-                  clearable 
-                  label="Username" 
-                  prepend-inner-icon="alternate_email"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" lg="5">
-                <v-text-field 
-                  v-model="user.email"
-                  :error-messages="emailErrors"
-                  @input="$v.user.email.$touch()"
-                  @blur="$v.user.email.$touch()"
-                  disabled 
-                  outlined 
-                  clearable 
-                  label="E-mail address" 
-                  prepend-inner-icon="email"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
                   v-model="profile.firstName"
                   :error-messages="firstNameErrors"
                   @input="$v.profile.firstName.$touch()"
@@ -60,7 +37,7 @@
                   prepend-inner-icon="account_circle"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" lg="10" offset-lg="1">
+              <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
                   v-model="profile.location"
                   :error-messages="locationErrors"
@@ -70,6 +47,16 @@
                   clearable 
                   label="Location" 
                   prepend-inner-icon="place"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="5">
+                <v-text-field 
+                  v-model="user.username"
+                  disabled 
+                  outlined 
+                  clearable 
+                  label="Username" 
+                  prepend-inner-icon="alternate_email"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
@@ -99,37 +86,86 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3">Change email address</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Enter a new email to change it.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-text-field 
+                  v-model="user.email"
+                  :error-messages="emailErrors"
+                  @input="$v.user.email.$touch()"
+                  @blur="$v.user.email.$touch()"
+                  outlined 
+                  clearable 
+                  label="E-mail address" 
+                  prepend-inner-icon="email"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-if="emailIsUpdated" class="pt-0">
+                <span style="color: green; font-size: 0.9em;">
+                  The email address is updated.
+                </span>
+              </v-col>
+              <v-col cols="12" lg="6" offset-lg="1">
+                <v-btn
+                  class="text-none white--text"
+                  @click="updateEmail"
+                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                >
+                  Update email
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Change password</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide your old password and enter a new password to change the password.</span>
+                <span>Provide your old password and enter a new password to change it.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
                   v-model="oldPassword"
-                  :error-messages="emailErrors"
+                  :error-messages="oldPasswordErrors"
+                  @input="$v.oldPassword.$touch()"
+                  @blur="$v.oldPassword.$touch()"
                   outlined 
                   clearable 
                   label="Old password" 
                   prepend-inner-icon="lock"
-                  type="password"
+                  :append-icon="value ? 'visibility_off' : 'visibility'"
+                  @click:append="() => (value = !value)"
+                  :type="value ? 'password' : 'text'"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="5">
                 <v-text-field 
                   v-model="newPassword"
-                  :error-messages="emailErrors"
+                  :error-messages="newPasswordErrors"
+                  @input="$v.newPassword.$touch()"
+                  @blur="$v.newPassword.$touch()"
                   outlined 
                   clearable 
                   label="New password" 
                   prepend-inner-icon="lock"
-                  type="password"
+                  :append-icon="value ? 'visibility_off' : 'visibility'"
+                  @click:append="() => (value = !value)"
+                  :type="value ? 'password' : 'text'"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" v-if="passwordFieldsErrors.errors" class="pt-0">
-                <span style="color: red; font-size: 0.9em;">The password does not match. Type the correct password.</span>
+                <span style="color: red; font-size: 0.9em;">
+                  The password does not match. Type the correct password.
+                </span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" v-else-if="passwordIsUpdated && !passwordFieldsErrors.errors" class="pt-0">
-                <span style="color: green; font-size: 0.9em;">The password is updated.</span>
+                <span style="color: green; font-size: 0.9em;">
+                  The password is updated.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn
@@ -452,6 +488,27 @@
             </v-row>
           </v-container>
         </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3" style="color: #cb2431;">Delete account</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Once you delete your account, there is no going back. Please be certain.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn 
+                  class="delete-button text-none"
+                  @click="deleteProfile"
+                  depressed
+                  :ripple="false"
+                >
+                  Delete your account
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-flex>
     </v-layout>
     <br>
@@ -483,8 +540,9 @@ import {
 import Error500 from '../../components/ui/Error500'
 import { userSettingsForm } from "../../forms/pages/user/settings"
 import { avatarStorageActions } from '../../store/modules/avatar'
+import { emailStorageActions } from '../../store/modules/email'
 import { userStorageActions } from '../../store/modules/user'
-import { passwordStorageActions, passwordStorageMutations } from '../../store/modules/password'
+import { passwordStorageActions } from '../../store/modules/password'
 import { profileStorageActions } from '../../store/modules/profile'
 import { truncate } from 'fs';
 
@@ -512,8 +570,10 @@ export default {
         updateAdditionalInformation: null,
         submitUploadingProfileAvatar: null,
       },
+      value: String,
       oldPassword: null,
       newPassword: null,
+      emailIsUpdated: false,
       passwordIsUpdated: false,
       avatarFile: null,
       successMessage: null,
@@ -546,6 +606,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('email', ['emailError', 'emailFieldsErrors']),
     ...mapGetters('user', ['userError', 'user']),
     ...mapGetters('profile', ['profileError', 'profileFieldsErrors', 'profile', 'profileEvents']),
     ...mapGetters('password', ['passwordError', 'passwordFieldsErrors', 'passwordEvents']),
@@ -568,7 +629,19 @@ export default {
         location: this.profile.location,
       })
     },
+    updateEmail() {
+      if (!this.isEmailFormValid()) { return }
+
+      this.$store.dispatch(emailStorageActions.changeEmail, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+        newEmail: this.user.email,
+      })
+      this.emailIsUpdated = true
+    },
     updatePassword() {
+      if (!this.isPasswordFormValid()) { return }
+
       this.$store.dispatch(passwordStorageActions.changePassword, {
         jwtToken: this.localStorage.token,
         username: this.localStorage.username,
@@ -611,6 +684,17 @@ export default {
         username: this.localStorage.username,
         file: this.avatarFile, 
       })
+    },
+    deleteProfile () {
+      this.$store.dispatch(profileStorageActions.deleteProfile, {
+        jwtToken: this.localStorage.token,
+        username: this.localStorage.username,
+      })
+      
+      this.localStorage.token = ''
+      this.localStorage.username = ''
+      this.localStorage.email = ''
+      this.$router.push({name: 'index'})
     },
   },
   mounted() {

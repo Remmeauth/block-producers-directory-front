@@ -31,7 +31,7 @@
                     >
                       <v-img class="mt-2 mb-2"
                         v-if="blockProducer.logo_url" 
-                        :src="blockProducer.logo_url"
+                        :src="blockProducer.logo_url + `?${Math.random()}`"
                         style="max-width: 35%; border-radius: 50%;"
                         @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
                       ></v-img>

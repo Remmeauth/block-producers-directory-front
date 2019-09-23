@@ -437,6 +437,28 @@
             </v-row>
           </v-container>
         </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" lg="10" offset-lg="1">
+                <h2 class="mb-3" style="color: #cb2431;"> Delete block producer</h2>
+                <v-divider class="mb-7"></v-divider>
+                <span>Once you delete your block producer, there is no going back. Please be certain.</span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
+                <v-btn 
+                  v-if="blockProducer.user.username === localStorage.username"
+                  class="delete-button text-none"
+                  @click="deleteBlockProducer"
+                  depressed
+                  :ripple="false"
+                >
+                  Delete block producer
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-flex>
     </v-layout>
     <br>
@@ -529,7 +551,7 @@ export default {
   },
   computed: {
     ...mapGetters('avatar', ['avatarEvents']),
-    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError', 'blockProducerEvents']),
+    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError', 'blockProducerEvents', 'blockProducerFieldsErrors']),
   },
   watch: {
     'blockProducerEvents.isGotten'() {
@@ -558,6 +580,9 @@ export default {
         "Block producer updated successfully — <a href=\"" +
         `/block-producers/${this.$route.params.identifier}` +
         "\">view your block producer</a>"
+    },
+    'blockProducerEvents.isDeleted'() {
+      this.$router.push({name: 'index'})
     },
   },
   methods: {
@@ -611,6 +636,12 @@ export default {
         file: this.logotypeFile,
       })
     },
+    deleteBlockProducer () {
+      this.$store.dispatch(blockProducerStorageActions.deleteBlockProducer, {
+        jwtToken: this.localStorage.token,
+        identifier: this.$route.params.identifier,
+      })
+    },
   },
   mounted() {
     this.$store.dispatch(blockProducerStorageActions.getBlockProducer, {
@@ -650,5 +681,19 @@ export default {
 
 .menubar__button.is-active {
 	 background-color: rgba(0, 0, 0, 0.1);
+}
+
+.delete-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+  border: 1px solid rgba(27,31,35,.2);
+  color: #cb2431;
+  font-size: 0.9em;
+  font-weight: 600;
+  background-color: #eff3f6; 
+  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+}
+
+.delete-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined):hover {
+  background-color: #E6EBF2; 
+  border: 1px solid #9FA3A9;
 }
 </style>
