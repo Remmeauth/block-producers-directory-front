@@ -615,12 +615,6 @@ export default {
     'profileEvents.isGotten'() {
       this.editor.setContent(this.profile.additionalInformation)
     },
-    // 'profileEvents.isDeleted'() {
-    //   this.localStorage.token = ''
-    //   this.localStorage.username = ''
-    //   this.localStorage.email = ''
-    //   this.$router.push({name: 'index'})
-    // },
   },
   methods: {
     updateDetails() {
