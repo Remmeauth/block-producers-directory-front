@@ -42,6 +42,11 @@
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
+                </v-card-text>
+                <v-card-text 
                   class="pt-0"
                   v-if="profile.websiteUrl"
                 >
@@ -54,7 +59,9 @@
                   v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
                         profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                   class="pt-3 pb-3"
                 >
                   <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
@@ -128,6 +135,11 @@
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
+                </v-card-text>
+                <v-card-text 
                   class="pt-0"
                   v-if="profile.websiteUrl"
                 >
@@ -140,7 +152,9 @@
                   v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
                         profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                   class="pt-3 pb-3"
                 >
                   <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
@@ -214,7 +228,11 @@
                       v-if="index === 0"
                     >User's block producers</v-subheader>
                     <v-divider 
-                      v-else-if="index > 0" 
+                      v-else-if="index > 0 && blockProducer.status === 'active' &&
+                      $route.params.username !== localStorage.username"
+                    ></v-divider>
+                    <v-divider 
+                      v-else-if="index > 0 && $route.params.username === localStorage.username"
                     ></v-divider>
                     <v-list-item :ripple="false" v-if="
                       blockProducer.status === 'active' &&
