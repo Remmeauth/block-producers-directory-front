@@ -94,10 +94,16 @@ export default {
       searchPhrase: null,
       getBlockProducersToRender: function() {
         if (this.searchPhrase) {
-          return this.searchedBlockProducers
+          return this.searchedBlockProducers.filter(
+            blockProducer => { if (blockProducer.status === 'moderation') return blockProducer}
+          );
         }
 
-        return this.blockProducers
+        const filteredBlockProducers = this.blockProducers.filter(
+          blockProducer => { if (blockProducer.status === 'moderation') return blockProducer}
+        );
+
+        return filteredBlockProducers
       },
       getBlockProducerCommentsNumber: function(blockProducerIdentifier) {
         var commentsNumber = 0
