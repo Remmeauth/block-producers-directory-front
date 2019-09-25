@@ -170,7 +170,8 @@
                 align="center"
                 outlined
                 >
-                <v-img class="mt-2 mb-2"
+                <v-img 
+                  class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 50%; border-radius: 50%;"
