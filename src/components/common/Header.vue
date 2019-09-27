@@ -160,8 +160,17 @@ export default {
   components: {
     Error500,
   },
+  data () {
+    return {
+      username: this.$route.params.username,
+    }
+  },
   computed: {
-    ...mapGetters('profile', ['profile', 'profileError']),
+    ...mapGetters('profile', ['profile', 'profileError', 'profileEvents']),
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.username = to.params.username
+    next()
   },
   methods: {
     signOut () {

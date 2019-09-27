@@ -22,41 +22,39 @@
                   v-for="(blockProducer, n) in getBlockProducersToRender()"
                   :key="n"
                 >
-                  <template v-if="blockProducer.status === 'moderation'">
-                    <v-card 
-                      outlined 
-                      align="center" 
-                      style="height: 300px; cursor: pointer;"
-                      :ripple="false"
+                  <v-card 
+                    outlined 
+                    align="center" 
+                    style="height: 300px; cursor: pointer;"
+                    :ripple="false"
+                  >
+                    <v-img class="mt-2 mb-2"
+                      v-if="blockProducer.logo_url" 
+                      :src="blockProducer.logo_url + `?${Math.random()}`"
+                      style="max-width: 35%; border-radius: 50%;"
+                      @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
+                    ></v-img>
+                    <v-divider></v-divider>
+                    <h3 class="mt-4" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})">
+                      <span style="font-size: 1.1em; font-weight: 500;">
+                        {{ blockProducer.name }}
+                      </span>
+                    </h3>
+                    <v-card-text
+                      v-if="blockProducer.user" 
+                      class="pt-1 pb-0"
+                      @click="$router.push({name: 'user', params: {username: blockProducer.user.username}})"
                     >
-                      <v-img class="mt-2 mb-2"
-                        v-if="blockProducer.logo_url" 
-                        :src="blockProducer.logo_url + `?${Math.random()}`"
-                        style="max-width: 35%; border-radius: 50%;"
-                        @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
-                      ></v-img>
-                      <v-divider></v-divider>
-                      <h3 class="mt-4" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})">
-                        <span style="font-size: 1.1em; font-weight: 500;">
-                          {{ blockProducer.name }}
-                        </span>
-                      </h3>
-                      <v-card-text
-                        v-if="blockProducer.user" 
-                        class="pt-1 pb-0"
-                        @click="$router.push({name: 'user', params: {username: blockProducer.user.username}})"
+                      <v-form>
+                        by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-text 
+                      class="pt-2 pb-0" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
                       >
-                        <v-form>
-                          by <b style="color: #5d80da;"> @{{ blockProducer.user.username }} </b>
-                        </v-form>
-                      </v-card-text>
-                      <v-card-text 
-                        class="pt-2 pb-0" @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
-                        >
-                        {{ blockProducer.short_description }}
-                      </v-card-text>
-                    </v-card>
-                  </template>
+                      {{ blockProducer.short_description }}
+                    </v-card-text>
+                  </v-card>
                 </v-col>
               </v-row>
               <v-row v-if="searchPhrase && Array.isArray(searchedBlockProducers) && !searchedBlockProducers.length">
@@ -94,10 +92,16 @@ export default {
       searchPhrase: null,
       getBlockProducersToRender: function() {
         if (this.searchPhrase) {
-          return this.searchedBlockProducers
+          return this.searchedBlockProducers.filter(
+            blockProducer => { if (blockProducer.status === 'active') return blockProducer}
+          );
         }
 
-        return this.blockProducers
+        const filteredBlockProducers = this.blockProducers.filter(
+          blockProducer => { if (blockProducer.status === 'active') return blockProducer}
+        );
+
+        return filteredBlockProducers
       },
       getBlockProducerCommentsNumber: function(blockProducerIdentifier) {
         var commentsNumber = 0

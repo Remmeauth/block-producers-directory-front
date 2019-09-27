@@ -185,7 +185,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Additional information</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Tell some words about yourself.</span>
+                <span>Tell some words about yourself. Notice that a full description should not exceed 1000 characters.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
@@ -297,6 +297,14 @@
                       >
                         <v-icon >mdi-redo</v-icon>
                       </v-btn>
+                      <v-btn
+                        class="menubar__button custom-btn text-none pa-0"
+                        @click="showImagePrompt(commands.image)"
+                        text
+                        :ripple="false"
+                      >
+                        <v-icon >mdi-image</v-icon>
+                      </v-btn>
                     </div>
                   </editor-menu-bar>
                   <editor-content class="pa-3" ref="contentEditor" :editor="editor" style="border-top: 1px solid #BEBEBE;" /> 
@@ -333,12 +341,19 @@
                 <v-divider class="mb-7"></v-divider>
                 <span>Upload your picture or avatar.</span>
               </v-col>
-              <v-col cols="12" lg="10" offset-lg="1">
+              <v-col cols="12" lg="10" offset-lg="1" class="pb-0">
                 <v-file-input
                   v-model="avatarFile"
                   outlined
                   label="Select your picture"
                 ></v-file-input>
+              </v-col>
+              <v-col cols="12" lg="10" offset-lg="1" v-if="imageSizeIsTooLarge" class="pt-0">
+                <span style="color: red; font-size: 0.9em;">
+                  The size of the uploaded image must be no more than 10 MB.
+                </span>
+              </v-col>
+              <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn 
                   class="text-none white--text"
                   @click="submitUploadingProfileAvatar"
@@ -367,7 +382,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Reference links</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide your profiles from other platforms.</span>
+                <span>Provide links to your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field
@@ -523,6 +538,7 @@ import {
   CodeBlock,
   HardBreak,
   Heading,
+  Image,
   OrderedList,
   BulletList,
   ListItem,
@@ -576,6 +592,7 @@ export default {
       emailIsUpdated: false,
       passwordIsUpdated: false,
       avatarFile: null,
+      imageSizeIsTooLarge: false,
       successMessage: null,
       html: '',
       editor: new Editor({
@@ -590,6 +607,7 @@ export default {
           new CodeBlock(),
           new HardBreak(),
           new Heading({ levels: [1, 2, 3] }),
+          new Image(),
           new ListItem(),
           new OrderedList(),
           new TodoItem(),
@@ -678,6 +696,11 @@ export default {
       })
     },
     submitUploadingProfileAvatar() {
+      if (this.avatarFile.size > 10000000) {
+        this.imageSizeIsTooLarge = true
+        return
+      }
+
       this.snackBars.submitUploadingProfileAvatar = true
       this.$store.dispatch(avatarStorageActions.uploadUserAvatarForUser, {
         jwtToken: this.localStorage.token,
@@ -695,6 +718,12 @@ export default {
       this.localStorage.username = ''
       this.localStorage.email = ''
       this.$router.push({name: 'index'})
+    },
+    showImagePrompt(command) {
+      const src = prompt('Enter the url of your image here')
+      if (src !== null) {
+        command({ src })
+      }
     },
   },
   mounted() {
@@ -772,5 +801,12 @@ export default {
 
 .menubar__button.is-active {
 	 background-color: rgba(0, 0, 0, 0.1);
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
 </style>
