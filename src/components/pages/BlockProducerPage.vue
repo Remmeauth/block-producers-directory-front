@@ -91,6 +91,11 @@
                   <v-icon>location_on</v-icon>
                   {{ blockProducer.location }}
                 </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
+                </v-card-text>
                 <v-card-text
                   class="pt-0"
                   v-if="blockProducer.websiteUrl"
@@ -170,7 +175,8 @@
                 align="center"
                 outlined
                 >
-                <v-img class="mt-2 mb-2"
+                <v-img 
+                  class="mt-2 mb-2"
                   v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl + `?${Math.random()}`"
                   style="max-width: 50%; border-radius: 50%;"
@@ -242,6 +248,11 @@
                 >
                   <v-icon>location_on</v-icon>
                   {{ blockProducer.location }}
+                </v-card-text>
+                <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
                 </v-card-text>
                 <v-card-text 
                   class="pt-0"

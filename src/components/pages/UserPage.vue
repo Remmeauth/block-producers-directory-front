@@ -42,6 +42,11 @@
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
+                </v-card-text>
+                <v-card-text 
                   class="pt-0"
                   v-if="profile.websiteUrl"
                 >
@@ -54,7 +59,9 @@
                   v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
                         profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                   class="pt-3 pb-3"
                 >
                   <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
@@ -128,6 +135,11 @@
                   {{ profile.location }}
                 </v-card-text>
                 <v-card-text 
+                  class="pt-1 pb-2"
+                  v-else
+                >
+                </v-card-text>
+                <v-card-text 
                   class="pt-0"
                   v-if="profile.websiteUrl"
                 >
@@ -140,7 +152,9 @@
                   v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
                         profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                 ></v-divider>
-                <v-card-text 
+                <v-card-text
+                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
+                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
                   class="pt-3 pb-3"
                 >
                   <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
@@ -214,16 +228,20 @@
                       v-if="index === 0"
                     >User's block producers</v-subheader>
                     <v-divider 
-                      v-else-if="index > 0" 
+                      v-else-if="index > 0 && blockProducer.status === 'active' &&
+                      $route.params.username !== localStorage.username"
                     ></v-divider>
-                    <v-list-item :ripple="false" v-if="
-                      blockProducer.status === 'active' &&
-                      $route.params.username !== localStorage.username"  
+                    <v-divider 
+                      v-else-if="index > 0 && $route.params.username === localStorage.username"
+                    ></v-divider>
+                    <v-list-item 
+                      v-if="blockProducer.status === 'active' && $route.params.username !== localStorage.username"
                       :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                      :ripple="false"
                     >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width:12%; border-radius: 50%; border: 1px solid grey;"
+                        style="max-width: 15%; border-radius: 50%;"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
@@ -242,13 +260,14 @@
                         </v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item :ripple="false" v-else-if="
-                      $route.params.username === localStorage.username"  
+                    <v-list-item 
+                      v-else-if="$route.params.username === localStorage.username"  
                       :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                      :ripple="false"
                     >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width:12%; border-radius: 50%;"
+                        style="max-width: 15%; border-radius: 50%;"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
