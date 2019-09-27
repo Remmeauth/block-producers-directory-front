@@ -85,7 +85,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Description</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide a short description and the full description. For a full description you can use HTML formatting.</span>
+                <span>Provide a short description and the full description.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <v-text-field 
@@ -99,6 +99,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
+                <div class="mb-7">
+                  <span>Notice that a full description should not exceed 1000 characters.</span>
+                </div>
                 <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
                   <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
                     <div class="menubar">
@@ -301,7 +304,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Reference links</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide your profiles from other platforms.</span>
+                <span>Provide links from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 

@@ -185,7 +185,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Additional information</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Tell some words about yourself.</span>
+                <span>Tell some words about yourself. Notice that a full description should not exceed 1000 characters.</span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
                 <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
@@ -382,7 +382,7 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h2 class="mb-3">Reference links</h2>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide your profiles from other platforms.</span>
+                <span>Provide links to your profiles from other platforms.</span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field
