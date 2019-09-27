@@ -234,10 +234,10 @@
                     <v-divider 
                       v-else-if="index > 0 && $route.params.username === localStorage.username"
                     ></v-divider>
-                    <v-list-item :ripple="false" v-if="
-                      blockProducer.status === 'active' &&
-                      $route.params.username !== localStorage.username"  
+                    <v-list-item 
+                      v-if="blockProducer.status === 'active' && $route.params.username !== localStorage.username"
                       :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                      :ripple="false"
                     >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
@@ -260,9 +260,10 @@
                         </v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item :ripple="false" v-else-if="
-                      $route.params.username === localStorage.username"  
+                    <v-list-item 
+                      v-else-if="$route.params.username === localStorage.username"  
                       :to="{name: 'block-producer', params: {identifier: blockProducer.id}}"
+                      :ripple="false"
                     >
                       <img 
                         class="mt-2 mb-2 mr-5 pa-1" 
