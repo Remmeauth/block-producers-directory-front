@@ -453,12 +453,18 @@ export default {
   data() {
     return {
       comment: null,
+      temporary_status_description: null,
     }
   },
   computed: {
     ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError']),
     ...mapGetters('blockProducerComment', ['comments', 'blockProducerCommentError']),
     ...mapGetters('profile', ['profile', 'profileError']),
+  },
+  watch: {
+    'blockProducerEvents.isSent'() {
+      this.temporary_status_description = this.blockProducer.status_description
+    }
   },
   methods: {
     createComment() {
@@ -494,6 +500,14 @@ export default {
     this.$store.dispatch(blockProducerCommentStorageActions.getComments, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
+
+    if (this.blockProducer.status_description && !this.temporary_status_description) {
+
+      this.$store.dispatch(blockProducerStorageActions.sendStatusDescriptionToEmail, {
+        identifier: this.$route.params.identifier,
+        email: this.localStorage.email,
+      })
+    }
   }
 }
 </script>
