@@ -154,7 +154,7 @@ export default {
       this.localStorage.username = this.username
       this.localStorage.confirmEmail = this.email
 
-      this.$router.push({name: 'email-confirm'})
+      this.$router.push({name: 'confirm-email'})
     }
   },
   methods: {

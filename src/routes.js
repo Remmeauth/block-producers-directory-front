@@ -2,7 +2,7 @@ import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
 import ConfirmRegistrationPage from './components/pages/ConfirmRegistrationPage.vue'
-import EmailConfirmPage from './components/pages/EmailConfirmPage.vue'
+import ConfirmEmailPage from './components/pages/ConfirmEmailPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import PasswordRecoverPage from './components/pages/PasswordRecoverPage.vue'
 import PasswordRecoveringIdentifierPage from './components/pages/PasswordRecoveringIdentifierPage.vue'
@@ -40,8 +40,8 @@ const routes = [
   },
   {
     path: '/email/confirm/',
-    component: EmailConfirmPage,
-    name: 'email-confirm'
+    component: ConfirmEmailPage,
+    name: 'confirm-email'
   },
   {
     path: '/users/email/confirm/:identifier/',
