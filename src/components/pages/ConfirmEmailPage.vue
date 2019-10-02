@@ -94,7 +94,7 @@ export default {
   },
   watch: {
     'emailEvents.isSent'() {
-      this.successMessage = 'Registration confirmation link sent to the email address — check it.'
+      this.successMessage = 'Registration confirmation link sent to the email address.'
       this.email = this.localStorage.confirmEmail
     }
   },
