@@ -60,7 +60,7 @@ export const blockProducer = {
       isCreated: null,
       isGotten: null,
       isDeleted: null,
-      isSent: false,
+      isSent: null,
     },
     entity: {
       name: null,
@@ -113,7 +113,7 @@ export const blockProducer = {
       state.events.isCreated = Math.random()
     },
     deleteBlockProducer: (state) => state.events.isDeleted = Math.random(),
-    sendStatusDescriptionToEmail: (state) => state.events.isSent = true,
+    sendStatusDescriptionToEmail: (state) => state.events.isSent = Math.random(),
   },
   actions: {
     get({ commit }, { identifier }) {
@@ -422,7 +422,7 @@ export const blockProducer = {
         .then(response => { console.log(response.data.result)
           commit(blockProducerStorageMutations.commit.sendStatusDescriptionToEmail)
         })
-        .catch(error => { console.log(error.response.data)
+        .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
             commit(blockProducerStorageMutations.commit.addError, {
               message: error.response.data.error,

@@ -453,18 +453,18 @@ export default {
   data() {
     return {
       comment: null,
-      temporary_status_description: '',
+      temporary_status_description: null,
     }
   },
   computed: {
-    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError']),
+    ...mapGetters('blockProducer', ['blockProducer', 'blockProducerError', 'blockProducerEvents']),
     ...mapGetters('blockProducerComment', ['comments', 'blockProducerCommentError']),
     ...mapGetters('profile', ['profile', 'profileError']),
   },
   watch: {
     'blockProducerEvents.isSent'() {
-      console.log('temporary_status_description: ', this.temporary_status_description)
-      console.log('blockProducer.status_description: ', this.blockProducer.status_description)
+      console.log('watch temporary_status_description: ', this.temporary_status_description)
+      console.log('watch blockProducer.status_description: ', this.blockProducer.status_description)
 
       this.temporary_status_description = this.blockProducer.status_description
     }
@@ -504,11 +504,16 @@ export default {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    console.log('temporary_status_description: ', this.temporary_status_description)
-    console.log('blockProducer.status_description: ', this.blockProducer.status_description)
-
     if (this.blockProducer.status_description &&
             this.blockProducer.status_description !== this.temporary_status_description) {
+
+      console.log('1 temporary_status_description: ', this.temporary_status_description)
+      console.log('1 blockProducer.status_description: ', this.blockProducer.status_description)
+
+      this.temporary_status_description = this.blockProducer.status_description
+
+      console.log('2 temporary_status_description: ', this.temporary_status_description)
+      console.log('2 blockProducer.status_description: ', this.blockProducer.status_description)
 
       this.$store.dispatch(blockProducerStorageActions.sendStatusDescriptionToEmail, {
         identifier: this.$route.params.identifier,
