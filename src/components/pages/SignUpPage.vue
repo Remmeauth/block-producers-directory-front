@@ -121,7 +121,7 @@ import signUpForm from '../../forms/pages/authentication/signUp'
 import { authenticationStorageActions } from '../../store/modules/authentication'
 
 export default {
-  name: 'SinUpPage',
+  name: 'sign-up',
   mixins: [signUpForm],
   components: {
     Error500, VueRecaptcha,
@@ -147,22 +147,14 @@ export default {
     ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
   },
   watch: {
-    'authenticationEvents.signedIn'() {
-      if (!this.credentials.token) return
-
-      this.localStorage.token = this.credentials.token
-      this.$router.push({name: 'index'})
-    },
     'authenticationEvents.signedUp'() {
       if (!this.authenticationEvents.signedUp) return
 
       this.localStorage.email = this.email
       this.localStorage.username = this.username
+      this.localStorage.confirmEmail = this.email
 
-      this.$store.dispatch(authenticationStorageActions.signIn, {
-        usernameOrEmail: this.email,
-        password: this.password,
-      })
+      this.$router.push({name: 'confirm-email'})
     }
   },
   methods: {

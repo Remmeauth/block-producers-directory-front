@@ -1,6 +1,5 @@
 import axios from 'axios'
 import HttpStatus from 'http-status-codes'
-import Vue from 'vue'
 
 export const authenticationStorageMutations = {
   subscribe: {

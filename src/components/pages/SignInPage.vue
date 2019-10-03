@@ -28,7 +28,7 @@
                         @input="$v.usernameOrEmail.$touch()"
                         @blur="$v.usernameOrEmail.$touch()"
                         label="Username or e-mail"
-                        outlined 
+                        outlined
                         prepend-inner-icon="person"
                       ></v-text-field>
                       <v-text-field
@@ -37,9 +37,9 @@
                         :error-messages="passwordErrors"
                         @input="$v.password.$touch()"
                         @blur="$v.password.$touch()"
-                        label="Password" 
-                        outlined 
-                        prepend-inner-icon="lock" 
+                        label="Password"
+                        outlined
+                        prepend-inner-icon="lock"
                         type="password"
                       ></v-text-field>
                       <v-card-actions
@@ -51,41 +51,41 @@
                         </span>
                       </v-card-actions>
                       <v-card-actions class="justify-center">
-                        <v-btn 
-                        outlined 
-                        color="white" 
-                        block 
+                        <v-btn
+                        outlined
+                        color="white"
+                        block
                         @click="signIn"
                         style="background-color: #4d70d5;"
                       >
                         Sign in
                       </v-btn>
                       </v-card-actions>
-                      <v-card-actions 
-                        class="justify-center pt-0 pb-0" 
+                      <v-card-actions
+                        class="justify-center pt-0 pb-0"
                         style="flex-direction: column;"
                       >
-                        <v-btn 
-                          class="custom-btn text-none" 
+                        <v-btn
+                          class="custom-btn text-none"
                           :ripple="false"
                           text
-                          color="#5d80da" 
+                          color="#5d80da"
                           @click="$router.push({name: 'password-recover'})"
                         >
                           Forgot password?
                         </v-btn>
-                        <v-btn  
-                          class="custom-btn-second text-none" 
+                        <v-btn
+                          class="custom-btn-second text-none"
                           :ripple="false"
                           text
                           style="cursor: auto;"
                         >
-                          Don't have an account? 
-                          <v-btn 
-                            class="custom-btn text-none" 
-                            :ripple="false" 
+                          Don't have an account?
+                          <v-btn
+                            class="custom-btn text-none"
+                            :ripple="false"
                             text
-                            color="#5d80da" 
+                            color="#5d80da"
                             @click="$router.push({name: 'sign-up'})"
                           >
                             Sign up!

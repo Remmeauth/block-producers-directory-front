@@ -717,6 +717,9 @@ export default {
       this.localStorage.token = ''
       this.localStorage.username = ''
       this.localStorage.email = ''
+      this.localStorage.recoveryEmail = ''
+      this.localStorage.confirmEmail = ''
+      this.localStorage.statusDescription = ''
       this.$router.push({name: 'index'})
     },
     showImagePrompt(command) {

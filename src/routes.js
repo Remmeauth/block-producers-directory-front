@@ -1,6 +1,8 @@
 import BlockProducerPage from './components/pages/BlockProducerPage.vue'
 import BlockProducerCreationPage from './components/pages/BlockProducerCreationPage.vue'
 import BlockProducerEditionPage from './components/pages/BlockProducerEditionPage.vue'
+import ConfirmRegistrationPage from './components/pages/ConfirmRegistrationPage.vue'
+import ConfirmEmailPage from './components/pages/ConfirmEmailPage.vue'
 import IndexPage from './components/pages/IndexPage.vue'
 import PasswordRecoverPage from './components/pages/PasswordRecoverPage.vue'
 import PasswordRecoveringIdentifierPage from './components/pages/PasswordRecoveringIdentifierPage.vue'
@@ -32,9 +34,19 @@ const routes = [
     name: 'password-recover'
   },
   {
-    path: '/user/password/recovering/:identifier/',
+    path: '/users/password/recovering/:identifier/',
     component: PasswordRecoveringIdentifierPage,
     name: 'password-recovering-identifier'
+  },
+  {
+    path: '/email/confirm/',
+    component: ConfirmEmailPage,
+    name: 'confirm-email'
+  },
+  {
+    path: '/users/email/confirm/:identifier/',
+    component: ConfirmRegistrationPage,
+    name: 'confirm-registration'
   },
   {
     path: '/settings/',
