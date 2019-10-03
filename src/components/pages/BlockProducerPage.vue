@@ -501,7 +501,11 @@ export default {
       blockProducerIdentifier: this.$route.params.identifier,
     })
 
-    if (this.blockProducer.status_description && !this.temporary_status_description) {
+    console.log('temporary_status_description: ', this.temporary_status_description)
+    console.log('blockProducer.status_description: ', this.blockProducer.status_description)
+
+    if (this.blockProducer.status_description &&
+            this.blockProducer.status_description !== this.temporary_status_description) {
 
       this.$store.dispatch(blockProducerStorageActions.sendStatusDescriptionToEmail, {
         identifier: this.$route.params.identifier,
