@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authenticationError.statusCode === 500">
+  <div v-if="authenticationSignUpError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -59,11 +59,11 @@
                       >
                       </vue-recaptcha>
                       <v-card-actions
-                        v-if="authenticationError.message"
+                        v-if="authenticationSignUpError.message"
                         class="justify-center"
                       >
                         <span style="font-size: 0.9em; color: red;">
-                          {{ authenticationError.message }}
+                          {{ authenticationSignUpError.message }}
                         </span>
                       </v-card-actions>
                       <v-card-actions class="justify-center">
@@ -144,7 +144,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
+    ...mapGetters('authentication', ['authenticationSignUpError', 'authenticationEvents', 'credentials']),
   },
   watch: {
     'authenticationEvents.signedUp'() {
