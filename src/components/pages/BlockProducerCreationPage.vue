@@ -488,9 +488,11 @@ export default {
     create () {
       if (!this.isFormValid()) { return }
 
-      if (this.logotypeFile.size > 10000000) {
-        this.imageSizeIsTooLarge = true
-        return
+      if (this.logotypeFile) {
+        if (this.logotypeFile.size > 10000000) {
+          this.imageSizeIsTooLarge = true
+          return
+        }
       }
 
       this.$store.dispatch(blockProducerStorageActions.createBlockProducer, {

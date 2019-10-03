@@ -179,6 +179,7 @@ export default {
       this.localStorage.email = ''
       this.localStorage.recoveryEmail = ''
       this.localStorage.confirmEmail = ''
+      this.localStorage.statusDescription = ''
 
       this.$router.push({name: 'index'})
     }
