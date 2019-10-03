@@ -419,7 +419,7 @@ export const blockProducer = {
         .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/description/`, {
           email: email,
         })
-        .then(response => { console.log(response.data.result)
+        .then(response => {
           commit(blockProducerStorageMutations.commit.sendStatusDescriptionToEmail)
         })
         .catch(error => {

@@ -462,9 +462,6 @@ export default {
   },
   watch: {
     'blockProducerEvents.isSent'() {
-      console.log('watch localStorage.statusDescription: ', this.localStorage.statusDescription)
-      console.log('watch blockProducer.status_description: ', this.blockProducer.status_description)
-
       this.localStorage.statusDescription = this.blockProducer.status_description
     }
   },
