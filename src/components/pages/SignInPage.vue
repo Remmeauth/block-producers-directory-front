@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authenticationError.statusCode === 500 || userError.statusCode === 500">
+  <div v-if="authenticationSignInError.statusCode === 500 || userError.statusCode === 500">
     <Error500/>
   </div>
   <div v-else>
@@ -43,11 +43,11 @@
                         type="password"
                       ></v-text-field>
                       <v-card-actions
-                        v-if="authenticationError.message"
+                        v-if="authenticationSignInError.message"
                         class="justify-center pt-0"
                       >
                         <span style="font-size: 0.9em; color: red;">
-                          {{ authenticationError.message }}
+                          {{ authenticationSignInError.message }}
                         </span>
                       </v-card-actions>
                       <v-card-actions class="justify-center">
@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['userError', 'userEvents', 'user']),
-    ...mapGetters('authentication', ['authenticationError', 'authenticationEvents', 'credentials']),
+    ...mapGetters('authentication', ['authenticationSignInError', 'authenticationEvents', 'credentials']),
   },
   watch: {
     'userEvents.isGotten'() {
