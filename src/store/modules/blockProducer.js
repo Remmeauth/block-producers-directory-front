@@ -60,7 +60,7 @@ export const blockProducer = {
       isCreated: null,
       isGotten: null,
       isDeleted: null,
-      isSent: null,
+      isSent: false,
     },
     entity: {
       name: null,
@@ -113,7 +113,7 @@ export const blockProducer = {
       state.events.isCreated = Math.random()
     },
     deleteBlockProducer: (state) => state.events.isDeleted = Math.random(),
-    sendStatusDescriptionToEmail: (state) => state.events.isSent = Math.random(),
+    sendStatusDescriptionToEmail: (state) => state.events.isSent = true,
   },
   actions: {
     get({ commit }, { identifier }) {

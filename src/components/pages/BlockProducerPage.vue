@@ -453,7 +453,7 @@ export default {
   data() {
     return {
       comment: null,
-      temporary_status_description: null,
+      temporary_status_description: '',
     }
   },
   computed: {
@@ -463,6 +463,9 @@ export default {
   },
   watch: {
     'blockProducerEvents.isSent'() {
+      console.log('temporary_status_description: ', this.temporary_status_description)
+      console.log('blockProducer.status_description: ', this.blockProducer.status_description)
+
       this.temporary_status_description = this.blockProducer.status_description
     }
   },
