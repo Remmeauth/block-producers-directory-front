@@ -453,7 +453,6 @@ export default {
   data() {
     return {
       comment: null,
-      temporary_status_description: null,
     }
   },
   computed: {
@@ -463,10 +462,10 @@ export default {
   },
   watch: {
     'blockProducerEvents.isSent'() {
-      console.log('watch temporary_status_description: ', this.temporary_status_description)
+      console.log('watch localStorage.statusDescription: ', this.localStorage.statusDescription)
       console.log('watch blockProducer.status_description: ', this.blockProducer.status_description)
 
-      this.temporary_status_description = this.blockProducer.status_description
+      this.localStorage.statusDescription = this.blockProducer.status_description
     }
   },
   methods: {
@@ -505,15 +504,7 @@ export default {
     })
 
     if (this.blockProducer.status_description &&
-            this.blockProducer.status_description !== this.temporary_status_description) {
-
-      console.log('1 temporary_status_description: ', this.temporary_status_description)
-      console.log('1 blockProducer.status_description: ', this.blockProducer.status_description)
-
-      this.temporary_status_description = this.blockProducer.status_description
-
-      console.log('2 temporary_status_description: ', this.temporary_status_description)
-      console.log('2 blockProducer.status_description: ', this.blockProducer.status_description)
+            this.blockProducer.status_description !== this.localStorage.statusDescription) {
 
       this.$store.dispatch(blockProducerStorageActions.sendStatusDescriptionToEmail, {
         identifier: this.$route.params.identifier,
