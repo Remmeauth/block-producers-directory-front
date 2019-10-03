@@ -2,7 +2,9 @@
   <v-app>
     <v-content>
       <Header/>
-      <router-view :key="$route.fullPath"></router-view>
+      <transition name="view" mode="out-in" appear>
+        <router-view :key="$route.fullPath"></router-view>
+      </transition>
     </v-content>
     <Footer/>
   </v-app>
