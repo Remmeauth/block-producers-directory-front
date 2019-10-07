@@ -93,7 +93,7 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="user" class="justify-center">
+                <v-card-actions v-if="user.username === localStorage.username && user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
@@ -186,7 +186,7 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="user" class="justify-center">
+                <v-card-actions v-if="user.username === localStorage.username && user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
