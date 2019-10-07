@@ -18,10 +18,10 @@
                 align="center"
                 outlined
               >
-                <v-img class="mt-2 mb-2"
+                <div></div>
+                <v-img class="mt-4 mb-2 user"
                   v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl + `?${Math.random()}`"
-                  style="max-width: 35%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
                 <v-form 
@@ -175,11 +175,11 @@
                 align="center"
                 outlined
                 >
+                <div></div>
                 <v-img 
-                  class="mt-2 mb-2"
+                  class="mt-4 mb-2 user"
                   v-if="blockProducer.logoUrl"
                   :src="blockProducer.logoUrl + `?${Math.random()}`"
-                  style="max-width: 50%; border-radius: 50%;"
                 ></v-img>
                 <v-divider></v-divider>
                 <v-form 
@@ -360,8 +360,7 @@
                     <v-divider v-else-if="index > 0" :inset="true"></v-divider>
                     <v-list-item v-if="blockProducer.user">
                       <img
-                        class="mt-2 mb-2 mr-5 pa-1"
-                        style="max-width: 10%; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0, 0, 0, 0.12);"
+                        class="mt-2 mb-2 mr-5 pa-1 users-bp"
                         :src="comment.profile_avatar_url + `?${Math.random()}`"
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >

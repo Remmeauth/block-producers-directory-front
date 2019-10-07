@@ -246,8 +246,7 @@
                       :ripple="false"
                     >
                       <img 
-                        class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width: 15%; border-radius: 50%;"
+                        class="mt-2 mb-2 mr-5 pa-1 users-bp"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
@@ -272,8 +271,7 @@
                       :ripple="false"
                     >
                       <img 
-                        class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width: 15%; border-radius: 50%;"
+                        class="mt-2 mb-2 mr-5 pa-1 users-bp"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
@@ -419,6 +417,17 @@ a:link {
   max-width: 200px;
   height: 200px;
   border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.users-bp {
+  display: inline-block;
+  max-width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

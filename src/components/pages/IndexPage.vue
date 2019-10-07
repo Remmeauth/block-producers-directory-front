@@ -28,10 +28,10 @@
                     style="height: 300px; cursor: pointer;"
                     :ripple="false"
                   >
-                    <v-img class="mt-2 mb-2"
+                    <div></div>
+                    <v-img class="mt-4 mb-2 all-bp"
                       v-if="blockProducer.logo_url" 
                       :src="blockProducer.logo_url + `?${Math.random()}`"
-                      style="max-width: 35%; border-radius: 50%;"
                       @click="$router.push({name: 'block-producer', params: {identifier: blockProducer.id }})"
                     ></v-img>
                     <v-divider></v-divider>
@@ -97,11 +97,12 @@ export default {
           );
         }
 
-        const filteredBlockProducers = this.blockProducers.filter(
-          blockProducer => { if (blockProducer.status === 'active') return blockProducer}
-        );
+        // const filteredBlockProducers = this.blockProducers.filter(
+        //   blockProducer => { if (blockProducer.status === 'active') return blockProducer}
+        // );
 
-        return filteredBlockProducers
+        // return filteredBlockProducers
+        return this.blockProducers
       },
       getBlockProducerCommentsNumber: function(blockProducerIdentifier) {
         var commentsNumber = 0
@@ -149,5 +150,15 @@ export default {
 }
 .custom-btn::before {
   color: transparent;
+}
+
+.all-bp {
+  display: inline-block;
+  max-width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 </style>
