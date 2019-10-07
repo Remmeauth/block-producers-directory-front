@@ -6,11 +6,6 @@
     <Error500/>
   </div>
   <div v-else>
-
-    <!--<div class="user" style="background-image: url('https://qph.fs.quoracdn.net/main-qimg-3eb22fdc92d3b21cf4ba3d18f585fa74');"></div>-->
-    <!--<div class="user" style="background-image: url('https://aldroenergia.com/blog/wp-content/uploads/2017/08/aldro-portugal.jpg');"></div>-->
-    <!--<div class="user" style="background-image: url('https://pbs.twimg.com/profile_images/1135566911184527360/wPmso1yc.png');"></div>-->
-
     <v-layout class="mb-12 mt-4" row wrap>
       <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
         <v-layout row wrap>
