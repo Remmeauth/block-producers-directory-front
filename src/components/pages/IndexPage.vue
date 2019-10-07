@@ -3,12 +3,13 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-container fluid class="pt-0">
+    <v-container fluid style="background-color: white;">
       <v-layout row wrap>
         <v-flex xs12 sm12 md8 lg8 offset-xs offset-sm offset-md2 offset-lg2>
           <v-card 
-            class="mb-4"
+            class="ma-0"
             outlined
+            color="white"
           >
             <v-container>
               <v-text-field 
@@ -25,7 +26,7 @@
                   <v-card 
                     outlined 
                     align="center" 
-                    style="height: 300px; cursor: pointer;"
+                    style="height: 345px; cursor: pointer;"
                     :ripple="false"
                   >
                     <div></div>
