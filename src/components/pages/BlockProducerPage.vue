@@ -331,7 +331,7 @@
                 <div class="pa-4 pt-0 caption">
                   <p
                     v-if="blockProducer.fullDescription"
-                    style="text-align: justify;"
+                    style="text-align: justify; word-wrap: break-word;"
                     v-html="blockProducer.fullDescription"
                   ></p>
                   <p

@@ -6,6 +6,11 @@
     <Error500/>
   </div>
   <div v-else>
+
+    <!--<div class="user" style="background-image: url('https://qph.fs.quoracdn.net/main-qimg-3eb22fdc92d3b21cf4ba3d18f585fa74');"></div>-->
+    <!--<div class="user" style="background-image: url('https://aldroenergia.com/blog/wp-content/uploads/2017/08/aldro-portugal.jpg');"></div>-->
+    <!--<div class="user" style="background-image: url('https://pbs.twimg.com/profile_images/1135566911184527360/wPmso1yc.png');"></div>-->
+
     <v-layout class="mb-12 mt-4" row wrap>
       <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
         <v-layout row wrap>
@@ -15,11 +20,12 @@
                 class="mx-auto mb-6"
                 align="center"
                 outlined
+                style="position: -webkit-sticky; position: sticky;"
               >
-                <v-img class="mt-2 mb-2"
+                <div></div>
+                <v-img class="mt-4 mb-2 user"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 35%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
                 ></v-img>
                 <v-divider></v-divider>
                 <h3 class="mt-3">
@@ -109,10 +115,10 @@
                 align="center"
                 outlined
                 >
-                <v-img class="mt-2 mb-2"
+                <div></div>
+                <v-img class="mt-4 mb-2 user"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 50%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
                 ></v-img>
                 <v-divider></v-divider>
                 <h3 class="mt-3">
@@ -204,7 +210,7 @@
                 <div class="pa-4 pt-0 caption">
                   <p 
                     v-if="profile.additionalInformation" 
-                    style="text-align: justify;" 
+                    style="text-align: justify; word-wrap: break-word;"
                     v-html="profile.additionalInformation"
                   ></p>
                   <p 
@@ -406,5 +412,15 @@ a:link {
 }
 .v-icon.links {
   font-size: 35px;
+}
+
+.user {
+  display: inline-block;
+  max-width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 </style>
