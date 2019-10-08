@@ -62,7 +62,7 @@
         <v-tab
           v-else
           class="noHover font-weight-bold"
-          :ripple="false" 
+          :ripple="false"
           @click="$router.push({name: 'index'})"
         >
           <v-icon left>mdi-home</v-icon>
@@ -141,9 +141,11 @@
       <v-tabs
         v-else
         slot="extension"
+        light
         centered
+        color="#364fcc"
         background-color="transparent"
-        slider-color="#24292e"
+        slider-color="#364fcc"
       >
         <div class="flex-grow-2"></div>
         <v-tab
