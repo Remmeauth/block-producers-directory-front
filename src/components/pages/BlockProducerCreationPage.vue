@@ -9,7 +9,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Block producer</h2>
+                <h3 class="mb-3 heading">Block producer creation</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
@@ -21,7 +21,7 @@
                   @blur="$v.name.$touch()"
                   outlined
                   clearable
-                  label="Name"
+                  label="Name*"
                   prepend-inner-icon="account_circle"
                 ></v-text-field>
               </v-col>
@@ -33,7 +33,7 @@
                   @blur="$v.websiteUrl.$touch()"
                   outlined
                   clearable
-                  label="Website"
+                  label="Website*"
                   prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
@@ -55,7 +55,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Description</h2>
+                <h3 class="mb-3 heading">Description</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide a short description and the full description.</span>
               </v-col>
@@ -67,7 +67,7 @@
                   @blur="$v.shortDescription.$touch()"
                   outlined
                   clearable
-                  label="Short description"
+                  label="Short description*"
                 ></v-text-field>
               </v-col>  
               <v-col cols="12" lg="10" offset-lg="1">
@@ -201,7 +201,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Logotype</h2>
+                <h3 class="mb-3 heading">Logotype</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Upload block producer logotype.</span>
               </v-col>
@@ -222,7 +222,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Reference links</h2>
+                <h3 class="mb-3 heading">Reference links</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide links from other platforms.</span>
               </v-col>
@@ -546,22 +546,22 @@ export default {
 }
 
 .menubar {
-	 transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+   transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
 }
- .menubar.is-hidden {
-	 visibility: hidden;
-	 opacity: 0;
+.menubar.is-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
- .menubar.is-focused {
-	 visibility: visible;
-	 opacity: 1;
-	 transition: visibility 0.2s, opacity 0.2s;
+.menubar.is-focused {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.2s, opacity 0.2s;
 }
- .menubar__button:hover {
-	 background-color: rgba(0, 0, 0, 0.05);
+.menubar__button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
- .menubar__button.is-active {
-	 background-color: rgba(0, 0, 0, 0.1);
+.menubar__button.is-active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 img {
@@ -569,5 +569,10 @@ img {
   margin-left: auto;
   margin-right: auto;
   width: 40%;
+}
+
+.heading {
+  color: #343747;
+  font-family: Open Sans,sans-serif;
 }
 </style>

@@ -9,7 +9,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Personal details</h2>
+                <h3 class="mb-3 heading">Personal details</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
               </v-col>
@@ -86,7 +86,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Change email address</h2>
+                <h3 class="mb-3 heading">Change email address</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Enter a new email to change it.</span>
               </v-col>
@@ -98,7 +98,7 @@
                   @blur="$v.user.email.$touch()"
                   outlined 
                   clearable 
-                  label="E-mail address" 
+                  label="E-mail address*"
                   prepend-inner-icon="email"
                 ></v-text-field>
               </v-col>
@@ -123,7 +123,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Change password</h2>
+                <h3 class="mb-3 heading">Change password</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide your old password and enter a new password to change it.</span>
               </v-col>
@@ -135,7 +135,7 @@
                   @blur="$v.oldPassword.$touch()"
                   outlined 
                   clearable 
-                  label="Old password" 
+                  label="Old password*"
                   prepend-inner-icon="lock"
                   :append-icon="value ? 'visibility_off' : 'visibility'"
                   @click:append="() => (value = !value)"
@@ -150,7 +150,7 @@
                   @blur="$v.newPassword.$touch()"
                   outlined 
                   clearable 
-                  label="New password" 
+                  label="New password*"
                   prepend-inner-icon="lock"
                   :append-icon="value ? 'visibility_off' : 'visibility'"
                   @click:append="() => (value = !value)"
@@ -183,7 +183,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Additional information</h2>
+                <h3 class="mb-3 heading">Additional information</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Tell some words about yourself. Notice that a full description should not exceed 1000 characters.</span>
               </v-col>
@@ -337,7 +337,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Profile picture</h2>
+                <h3 class="mb-3 heading">Profile picture</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Upload your picture or avatar.</span>
               </v-col>
@@ -380,7 +380,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Reference links</h2>
+                <h3 class="mb-3 heading">Reference links</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide links to your profiles from other platforms.</span>
               </v-col>
@@ -507,7 +507,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3" style="color: #cb2431;">Delete account</h2>
+                <h3 class="mb-3" style="color: #cb2431;">Delete account</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Once you delete your account, there is no going back. Please be certain.</span>
               </v-col>

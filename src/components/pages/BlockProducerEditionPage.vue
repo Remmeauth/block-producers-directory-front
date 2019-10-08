@@ -12,7 +12,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Block producer settings</h2>
+                <h3 class="mb-3 heading">Block producer settings</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Please provide correct information. Only Remme Protocol related projects are permitted.</span>
               </v-col>
@@ -24,7 +24,7 @@
                   @blur="$v.blockProducer.name.$touch()"
                   outlined 
                   clearable 
-                  label="Name" 
+                  label="Name*"
                   prepend-inner-icon="account_circle"
                 ></v-text-field>
               </v-col>
@@ -36,7 +36,7 @@
                   @blur="$v.blockProducer.websiteUrl.$touch()"
                   outlined 
                   clearable 
-                  label="Website" 
+                  label="Website*"
                   prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
@@ -83,7 +83,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Description</h2>
+                <h3 class="mb-3 heading">Description</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide a short description and the full description.</span>
               </v-col>
@@ -95,7 +95,7 @@
                   @blur="$v.blockProducer.shortDescription.$touch()" 
                   outlined 
                   clearable 
-                  label="Short description"
+                  label="Short description*"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
@@ -255,7 +255,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Logotype</h2>
+                <h3 class="mb-3 heading">Logotype</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Upload block producer logotype.</span>
               </v-col>
@@ -302,7 +302,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3">Reference links</h2>
+                <h3 class="mb-3 heading">Reference links</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Provide links from other platforms.</span>
               </v-col>
@@ -457,7 +457,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h2 class="mb-3" style="color: #cb2431;"> Delete block producer</h2>
+                <h3 class="mb-3" style="color: #cb2431;"> Delete block producer</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span>Once you delete your block producer, there is no going back. Please be certain.</span>
               </v-col>
