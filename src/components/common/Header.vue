@@ -9,7 +9,12 @@
       flat
     >
       <v-spacer></v-spacer>
-      <v-toolbar-title style="font-weight: 600; color: #343747;">Block Producer Directory</v-toolbar-title>
+      <h2
+        class="heading2"
+        style="color: #343747; font-family: Open Sans,sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.02em;"
+      >
+        Block Producer Directory
+      </h2>
 
       <div class="flex-grow-1"></div>
 
@@ -27,11 +32,12 @@
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'md' || 
             this.$vuetify.breakpoint.name == 'lg' ||
-            this.$vuetify.breakpoint.name == 'xl'" 
+            this.$vuetify.breakpoint.name == 'xl'"
+          class="font-weight-bold"
           :ripple="false"
-          disabled
+          style="pointer-events: none;"
         >
-          <v-form class="text-none" style="font-size: 1em; color: #364fcc;">
+          <v-form class="text-none" style="font-size: 1em;">
             Signed in as 
             <b
               style="color: #364fcc; cursor: pointer;"
@@ -42,18 +48,19 @@
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pa-0" 
+          class="tab-btn pa-0"
           :ripple="false"
           @click="$router.push({name: 'index'})"
         >
           <v-icon>mdi-home</v-icon>
         </v-tab>
-        <v-tab 
-          v-else 
+        <v-tab
+          v-else
+          class="noHover font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'index'})"
         >
-          <v-icon left>mdi-home</v-icon>
+          <v-icon class="noHover" left>mdi-home</v-icon>
           Home
         </v-tab>
         <v-tab 
@@ -65,7 +72,8 @@
           <v-icon>mdi-bank-plus</v-icon>
         </v-tab>
         <v-tab
-          v-else 
+          v-else
+          class="noHover font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
         >
@@ -81,7 +89,8 @@
           <v-icon>mdi-account</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
         >
@@ -97,7 +106,8 @@
           <v-icon>mdi-settings</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
         >
@@ -113,7 +123,8 @@
           <v-icon>mdi-logout</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover font-weight-bold"
           :ripple="false" 
           @click="signOut"
         >
@@ -130,22 +141,25 @@
         slider-color="#24292e"
       >
         <div class="flex-grow-2"></div>
-        <v-tab 
-          :ripple="false" 
+        <v-tab
+          :ripple="false"
+          class="noHover font-weight-bold"
           @click="$router.push({name: 'index'})"
         >
           <v-icon left>mdi-home</v-icon>
           Home
         </v-tab>
         <v-tab
-          :ripple="false" 
+          :ripple="false"
+          class="noHover font-weight-bold"
           @click="$router.push({name: 'sign-in'})"
         >
           <v-icon left>mdi-login</v-icon>
           Sign In
         </v-tab>
         <v-tab 
-          :ripple="false" 
+          :ripple="false"
+          class="noHover font-weight-bold"
           @click="$router.push({name: 'sign-up'})"
         >
           <v-icon left>mdi-account-plus</v-icon>
@@ -214,5 +228,29 @@ export default {
 .v-tab.tab-btn {
   min-width: 70px;
   font-size: 14px;
+}
+
+.v-tab.noHover::before {
+  color: transparent;
+}
+
+.v-tab.noHover:hover {
+  color: unset !important;
+}
+
+/*.v-tab.noHover:active {*/
+  /*font-weight: 600;*/
+/*}*/
+
+.v-tab.noHover:visited {
+  font-weight: 600;
+}
+
+v-icon.noHover::before {
+  color: transparent;
+}
+
+v-icon.noHover:hover {
+  color: unset !important;
 }
 </style>
