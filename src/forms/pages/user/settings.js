@@ -13,7 +13,7 @@ export const userSettingsForm = {
       firstName: { minLength: minLength(3), maxLength: maxLength(50) },
       lastName: { minLength: minLength(3), maxLength: maxLength(50) },
       location: { maxLength: maxLength(50) },
-      additionalInformation: { maxLength: maxLength(1000) },
+      additionalInformation: { maxLength: maxLength(10000) },
       websiteUrl: { url },
       linkedInUrl: { url },
       twitterUrl: { url },
@@ -123,7 +123,7 @@ export const userSettingsForm = {
     additionalInformationErrors () {
       const errors = []
       if (!this.$v.profile.additionalInformation.$dirty) return errors
-      !this.$v.profile.additionalInformation.maxLength && errors.push('Short description must be at most 1000 characters long.')
+      !this.$v.profile.additionalInformation.maxLength && errors.push('Short description must be at most 10000 characters long.')
       return errors
     },
     websiteUrlErrors () {
