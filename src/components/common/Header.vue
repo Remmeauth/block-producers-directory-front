@@ -9,9 +9,14 @@
       flat
     >
       <v-spacer></v-spacer>
-      <h2
-        class="heading2"
+      <h2 v-if="this.$vuetify.breakpoint.name !== 'xs'"
         style="color: #343747; font-family: Open Sans,sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.02em;"
+      >
+        Block Producer Directory
+      </h2>
+      <h2
+        v-else
+        style="color: #343747; font-family: Open Sans,sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.02em;"
       >
         Block Producer Directory
       </h2>
@@ -48,7 +53,7 @@
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pa-0"
+          class="tab-btn pa-0 noHover"
           :ripple="false"
           @click="$router.push({name: 'index'})"
         >
@@ -60,12 +65,12 @@
           :ripple="false" 
           @click="$router.push({name: 'index'})"
         >
-          <v-icon class="noHover" left>mdi-home</v-icon>
+          <v-icon left>mdi-home</v-icon>
           Home
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
         >
@@ -82,7 +87,7 @@
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'"  
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
         >
@@ -99,7 +104,7 @@
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'"  
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
         >
@@ -116,7 +121,7 @@
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="signOut"
         >
@@ -167,6 +172,7 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
+    <v-divider></v-divider>
   </div>
 </template>
 

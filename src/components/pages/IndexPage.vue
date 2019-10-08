@@ -11,7 +11,7 @@
             outlined
             color="white"
           >
-            <v-container>
+            <v-container class="pt-0">
               <v-text-field 
                 prepend-icon="search" 
                 v-model="searchPhrase" 
