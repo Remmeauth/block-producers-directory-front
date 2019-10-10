@@ -8,7 +8,7 @@ export const editBlockProducerForm = {
       name: { required, minLength: minLength(3), maxLength: maxLength(50) },
       websiteUrl: { required, url },
       location: { maxLength: maxLength(50) },
-      shortDescription: { required, maxLength: maxLength(200) },
+      shortDescription: { required, maxLength: maxLength(100) },
       fullDescription: { maxLength: maxLength(10000) },
       facebookUrl: { url },
       githubUrl: { url },
@@ -94,7 +94,7 @@ export const editBlockProducerForm = {
     shortDescriptionErrors () {
       const errors = []
       if (!this.$v.blockProducer.shortDescription.$dirty) return errors
-      !this.$v.blockProducer.shortDescription.maxLength && errors.push('Short description must be at most 200 characters long.')
+      !this.$v.blockProducer.shortDescription.maxLength && errors.push('Short description must be at most 100 characters long.')
       !this.$v.blockProducer.shortDescription.required && errors.push('Short description is required.')
       return errors
     },
