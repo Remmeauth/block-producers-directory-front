@@ -164,9 +164,6 @@ export default {
 </script>
 
 <style>
-.v-card {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
 .custom-btn::before {
   color: transparent;
 }
