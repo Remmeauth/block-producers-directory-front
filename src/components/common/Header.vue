@@ -147,6 +147,7 @@
         color="#364fcc"
         background-color="transparent"
         slider-color="#364fcc"
+        style="border-bottom: 1px solid #e7e7f3;"
       >
         <div class="flex-grow-2"></div>
         <v-tab
