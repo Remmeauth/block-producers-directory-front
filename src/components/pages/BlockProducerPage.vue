@@ -246,26 +246,27 @@
                   this.$vuetify.breakpoint.name === 'md' ||
                   this.$vuetify.breakpoint.name === 'lg' ||
                   this.$vuetify.breakpoint.name === 'xl'"
-              class="mx-auto mb-6"
+              class="mx-auto mt-6 mb-6"
               align="center"
               outlined
-              style="border-top: none;"
+              style="border: 1px solid #e7e7f3;"
             >
               <div></div>
               <v-img class="mt-4 mb-2 user"
                 v-if="blockProducer.logoUrl"
                 :src="blockProducer.logoUrl + `?${Math.random()}`"
               ></v-img>
-              <v-divider v-if="blockProducer.user.username === localStorage.username"></v-divider>
+              <v-divider
+                v-if="blockProducer.user.username === localStorage.username"
+              ></v-divider>
               <v-card-actions
                 v-if="blockProducer.user && blockProducer.user.username === localStorage.username"
-                class="justify-center"
+                class="justify-center pa-3"
               >
                 <v-btn
                   v-if="blockProducer.user.username === localStorage.username"
                   @click="$router.push({name: 'block-producer-edition', params: {identifier: blockProducer.id }})"
                   class="edit-button"
-
                   :ripple="false"
                   depressed
                 >
@@ -315,30 +316,35 @@
                   <span>rejected</span>
                 </v-tooltip>
               </v-form>
-              <h3 class="mt-2">
-                <span class="headline">
-                  {{ blockProducer.name }}
-                </span>
-              </h3>
-              <v-card-text class="pt-2 pb-0">
-                {{ blockProducer.shortDescription }}
+              <v-card-text class="layout justify-center mb-6">
+                <h3 class="h3name">
+                  <span>
+                    {{ blockProducer.name }}
+                  </span>
+                </h3>
               </v-card-text>
               <v-card-text
                 v-if="blockProducer.user"
-                class="pt-1 pb-0"
+                class="pt-0 pb-0"
                 @click="$router.push({name: 'user', params: {username: blockProducer.user.username }})"
                 style="cursor: pointer;"
               >
-                <v-form>
-                  by <b style="color: #5d80da; cursor: pointer;"> @{{ blockProducer.user.username }} </b>
+                <v-form class="description">
+                  by <b style="color: #364fcc; cursor: pointer;"> @{{ blockProducer.user.username }} </b>
                 </v-form>
               </v-card-text>
+              <v-card-text class="pt-2 pb-0 mb-0">
+                <p class="mb-2 description">
+                  {{ blockProducer.shortDescription }}
+                </p>
+              </v-card-text>
               <v-card-text
-                class="pt-1 pb-2"
+                class="pt-0 pb-0"
                 v-if="blockProducer.location"
               >
-                <v-icon>location_on</v-icon>
-                {{ blockProducer.location }}
+                <p class="mb-1 location">
+                  {{ blockProducer.location }}
+                </p>
               </v-card-text>
               <v-card-text
                 class="pt-1 pb-2"
@@ -346,11 +352,11 @@
               >
               </v-card-text>
               <v-card-text
-                class="pt-0"
+                class="pt-2"
                 v-if="blockProducer.websiteUrl"
               >
-                <a :href="blockProducer.websiteUrl" style="text-decoration: none; color: black;">
-                  <v-icon color="#5d80da">mdi-web</v-icon>
+                <a :href="blockProducer.websiteUrl" class="website" style="color: #343747;">
+                  <v-icon color="#364fcc">mdi-web</v-icon>
                   {{ blockProducer.websiteUrl }}
                 </a>
               </v-card-text>
@@ -398,25 +404,47 @@
                   <v-icon class="links" color="black">mdi-wikipedia</v-icon>
                 </a>
               </v-card-text>
-              <v-divider></v-divider>
-              <v-subheader class="justify-center">Block producer's information</v-subheader>
-              <div class="pa-4 pt-0">
-                <p
-                  v-if="blockProducer.fullDescription"
-                  style="text-align: justify; word-wrap: break-word; font-size: 0.9em;"
-                  v-html="blockProducer.fullDescription"
-                ></p>
-                <p
-                  v-else
-                  style="text-align: justify;"
-                >
-                  No information has been provided.
-                </p>
-              </div>
+            </v-card>
+
+              <v-card
+                class="mx-auto mb-6"
+                align="center"
+                outlined
+                style="border: 1px solid #e7e7f3;"
+              >
+                <v-card-text class="layout justify-center">
+                  <h5 class="bp-info">
+                    <span>
+                      Block producer's information
+                    </span>
+                  </h5>
+                </v-card-text>
+                <div class="pa-4 pt-0">
+                  <p
+                    v-if="blockProducer.fullDescription"
+                    class="description"
+                    style="text-align: center; word-wrap: break-word;"
+                    v-html="blockProducer.fullDescription"
+                  ></p>
+                  <p
+                    v-else
+                    class="description"
+                    style="text-align: center; word-wrap: break-word;"
+                  >
+                    No information has been provided.
+                  </p>
+                </div>
+              </v-card>
+
+              <v-card
+                class="mx-auto mb-6"
+                align="center"
+                outlined
+                style="border: 1px solid #e7e7f3; border-radius: 4px;"
+              >
               <div
                 v-if="comments && comments.length > 0"
               >
-                <v-divider></v-divider>
                 <v-card-text class="pb-0 black--text" v-if="!localStorage.username">
                   Already have an account?
                   <a class="custom-btn" @click="$router.push({name: 'sign-in'})">
@@ -426,8 +454,17 @@
                 </v-card-text>
                 <v-list two-line>
                   <template v-for="(comment, index) in comments">
-                    <v-subheader v-if="index === 0" class="justify-center">Comments</v-subheader>
-                    <v-divider v-else-if="index > 0" :inset="true"></v-divider>
+                    <v-card-text
+                      v-if="index === 0"
+                      class="layout justify-center"
+                    >
+                      <h5 class="bp-info">
+                        <span>
+                          Comments
+                        </span>
+                      </h5>
+                    </v-card-text>
+                    <v-divider v-else-if="index > 0" :inset="true" class="divider"></v-divider>
                     <v-list-item v-if="blockProducer.user">
                       <img
                         class="mt-2 mb-2 mr-5 pa-1 users-bp"
@@ -439,14 +476,15 @@
                         @click="$router.push({name: 'user', params: { username: comment.user.username }})"
                       >
                         <v-list-item-title
-                          class="mb-1"
+                          class="mb-1 description"
                           style="font-weight: 600; font-size:0.9em; color:#343747;"
                         >
                           {{ comment.user.username }}
                           {{ new Date(comment.created_at * 1000).toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}
                         </v-list-item-title>
-                        <div class="mt-4">
+                        <div class="mt-2">
                           <p
+                            class="description"
                             style="text-align: justify; word-wrap: break-word; font-size: 0.9em;"
                             v-html="comment.text"
                           ></p>
@@ -459,29 +497,44 @@
               <div
                 v-else
               >
-                <v-divider></v-divider>
-                <v-card-text class="pb-0 black--text" v-if="!localStorage.username">
+                <v-card-text class="description pb-0 black--text" v-if="!localStorage.username">
                   Already have an account?
                   <a class="custom-btn" @click="$router.push({name: 'sign-in'})">
                     Sign in
                   </a>
                   to comment.
                 </v-card-text>
-                <v-subheader class="justify-center">Comments.</v-subheader>
-                <div class="pa-4 pt-0 caption">
-                  <p style="text-align: justify;">No comments.</p>
+                <v-card-text
+                  class="layout justify-center"
+                >
+                  <h5 class="bp-info">
+                    <span>
+                      Comments
+                    </span>
+                  </h5>
+                </v-card-text>
+                <div class="pa-4 pt-0">
+                  <p class="description" style="text-align: center; word-wrap: break-word;">
+                    No comments.
+                  </p>
                 </div>
               </div>
             </v-card>
             <v-flex class="mt-4" v-if="localStorage.username">
-              <h3 class="mb-2">Leave a comment</h3>
+              <v-card-text class="layout">
+                <h5 class="bp-info">
+                  <span>
+                    Leave a comment
+                  </span>
+                </h5>
+              </v-card-text>
               <form>
                 <v-textarea
-                  outlined
                   v-model="comment"
                   no-resize
-                  class="mt-0 mb-2"
-                  style="background-color: white;"
+                  color="black"
+                  class="custom-textarea description mt-0 mb-2 pa-4"
+                  style="background-color: white; border: 1px solid #e7e7f3; border-radius: 4px;"
                 ></v-textarea>
                 <v-flex xs3 sm3 md3 lg3 xl3>
                   <v-btn
@@ -504,7 +557,7 @@
             </v-flex>
           </v-flex>
 
-          
+
 
 
             <!--<v-flex xs12 sm8 md4 lg4 xl4 offset-sm2 offset-md1 offset-lg1 offset-xl1 class="mt-10">-->
@@ -1038,5 +1091,76 @@ export default {
 .edit-button:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined):hover {
   background-color: #E6EBF2; 
   border: 1px solid #9FA3A9;
+}
+
+.h3name {
+  position: absolute;
+  /*width: 279px;*/
+  /*height: 39px;*/
+  /*left: 140px;*/
+  /*top: 413px;*/
+
+  /* heading H3 */
+
+  font-family: Avenir Next;
+  font-size: 28px;
+  line-height: 39px;
+  /* identical to box height, or 139% */
+
+  letter-spacing: -0.02em;
+
+  /* black */
+
+  color: #343747;
+}
+
+.theme--light.v-divider {
+  border-color: #e7e7f3;
+}
+
+.custom-textarea.v-text-field>.v-input__control>.v-input__slot:before {
+  border-style: none;
+}
+.custom-textarea.v-text-field>.v-input__control>.v-input__slot:after {
+  border-style: none;
+}
+
+.description {
+  font-family: open sans, OpenSans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+
+  color: #343747;
+}
+
+.location {
+  font-family: open sans, OpenSans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+
+  color: #343747;
+}
+.website {
+  font-family: open sans, OpenSans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  text-decoration: none;
+
+  color: #343747;
+}
+
+.bp-info {
+  font-family: Avenir Next;
+  font-size: 21px;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+
+  color: #343747;
 }
 </style>
