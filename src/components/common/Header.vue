@@ -9,17 +9,19 @@
       flat
     >
       <v-spacer></v-spacer>
-      <h2 v-if="this.$vuetify.breakpoint.name !== 'xs'"
-        style="color: #343747; font-family: Open Sans,sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.02em;"
-      >
-        Block Producer Directory
-      </h2>
-      <h2
-        v-else
-        style="color: #343747; font-family: Open Sans,sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.02em;"
-      >
-        Block Producer Directory
-      </h2>
+      <div class="layout justify-center mb-8">
+        <h2 v-if="this.$vuetify.breakpoint.name !== 'xs'"
+            class="h2title"
+        >
+          Block Producer Directory
+        </h2>
+        <h2
+          v-else
+          style="color: #343747; font-family: Open Sans,sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.02em;"
+        >
+          Block Producer Directory
+        </h2>
+      </div>
 
       <div class="flex-grow-1"></div>
 
@@ -28,21 +30,20 @@
         v-if="localStorage.token"
         slot="extension"
         centered
-        class="tabs-btn"
-        color="#364fcc"
         background-color="transparent"
+        color="#364fcc"
         slider-color="#364fcc"
+        style="border-bottom: 1px solid #e7e7f3;"
       >
         <div class="flex-grow-2"></div>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'md' || 
             this.$vuetify.breakpoint.name == 'lg' ||
             this.$vuetify.breakpoint.name == 'xl'"
-          class="font-weight-bold"
           :ripple="false"
           style="pointer-events: none;"
         >
-          <v-form class="text-none" style="font-size: 1em;">
+          <v-form class="text-none" style="color: #8e8ea8; cursor: pointer;">
             Signed in as 
             <b
               style="color: #364fcc; cursor: pointer;"
@@ -61,7 +62,7 @@
         </v-tab>
         <v-tab
           v-else
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           :ripple="false"
           @click="$router.push({name: 'index'})"
         >
@@ -78,7 +79,7 @@
         </v-tab>
         <v-tab
           v-else
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
         >
@@ -95,7 +96,7 @@
         </v-tab>
         <v-tab 
           v-else
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
         >
@@ -112,7 +113,7 @@
         </v-tab>
         <v-tab 
           v-else
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
         >
@@ -129,7 +130,7 @@
         </v-tab>
         <v-tab 
           v-else
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           :ripple="false" 
           @click="signOut"
         >
@@ -150,7 +151,7 @@
         <div class="flex-grow-2"></div>
         <v-tab
           :ripple="false"
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           @click="$router.push({name: 'index'})"
         >
           <v-icon left>mdi-home</v-icon>
@@ -158,7 +159,7 @@
         </v-tab>
         <v-tab
           :ripple="false"
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           @click="$router.push({name: 'sign-in'})"
         >
           <v-icon left>mdi-login</v-icon>
@@ -166,7 +167,7 @@
         </v-tab>
         <v-tab 
           :ripple="false"
-          class="noHover font-weight-bold"
+          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
           @click="$router.push({name: 'sign-up'})"
         >
           <v-icon left>mdi-account-plus</v-icon>
@@ -174,7 +175,6 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
-    <v-divider></v-divider>
   </div>
 </template>
 
@@ -221,6 +221,10 @@ export default {
 </script>
 
 <style>
+
+.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active) > .v-icon, .theme--light.v-tabs > .v-tabs-bar .v-tab--disabled {
+  color: #8e8ea8 !important;
+}
 .theme--dark.v-tabs.v-tab--active:hover::before, .theme--dark.v-tabs.v-tab--active::before {
   opacity: 0;
 }
@@ -233,11 +237,6 @@ export default {
   opacity: 0;
 }
 
-.v-tab.tab-btn {
-  min-width: 70px;
-  font-size: 14px;
-}
-
 .v-tab.noHover::before {
   color: transparent;
 }
@@ -246,13 +245,9 @@ export default {
   color: unset !important;
 }
 
-/*.v-tab.noHover:active {*/
+/*.v-tab.noHover:visited {*/
   /*font-weight: 600;*/
 /*}*/
-
-.v-tab.noHover:visited {
-  font-weight: 600;
-}
 
 v-icon.noHover::before {
   color: transparent;
@@ -261,4 +256,33 @@ v-icon.noHover::before {
 v-icon.noHover:hover {
   color: unset !important;
 }
+
+.h2title {
+  position: absolute;
+
+  /* heading H2 */
+
+  font-family: Avenir Next;
+  font-size: 32px;
+  line-height: 45px;
+  /* identical to box height, or 141% */
+
+  letter-spacing: -0.02em;
+
+  /* black */
+
+  color: #343747;
+}
+
+.v-tab.custom-tab {
+  /* body text M */
+
+  font-family: open sans,OpenSans,sans-serif;
+  font-style: normal;
+  /*font-weight: 600;*/
+  font-size: 15px;
+  line-height: 17px;
+  /* or 160% */
+}
+
 </style>
