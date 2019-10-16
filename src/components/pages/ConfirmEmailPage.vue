@@ -10,23 +10,25 @@
             <v-row>
               <v-col cols="12">
                 <v-card
-                  elevation="18" 
+                  elevation="2"
                   outlined
-                  style="border-color: #5d80da;"
+                  style="border: 1px solid #e7e7f3;"
                 >
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0"
+                    class="ma-2 pa-10 pt-3 pb-5"
                     align="center"
                   >
                     <v-card-actions
-                      class="pt-8 justify-center"
-                      style="font-size: 1.2em; font-weight: 500; flex-direction: column;"
+                      class="justify-center"
+                      style="flex-direction: column;"
                     >
-                      Please confirm your registration!
+                      <h3 class="heading"
+                      >
+                        Please confirm your registration!
+                      </h3>
                     </v-card-actions>
                     <v-img
-                      class=""
                       height="150px"
                       max-width="200"
                       src="../../assets/email.png"
@@ -34,20 +36,20 @@
                     </v-img>
                     <v-form>
                       <v-card-actions
-                        class="justify-center"
-                        style="font-size: 1em; flex-direction: column;"
+                        class="description pb-0 justify-center"
+                        style="flex-direction: column;"
                       >
                         Confirm registration by clicking on the link sent in your e-mail:
                       </v-card-actions>
                       <v-card-actions
-                        class="pt-0 justify-center"
-                        style="font-size: 1em; font-weight: 600; flex-direction: column; color: #5d80da;"
+                        class="description pt-0 justify-center"
+                        style="flex-direction: column; color: #364fcc;"
                       >
-                        {{ email }}
+                        <b style="color: #364fcc;"> {{ email }} </b>
                       </v-card-actions>
                     </v-form>
                     <v-card-actions 
-                      class="pb-0 justify-center"
+                      class="description pb-0 justify-center"
                       style="flex-direction: column; font-size: 0.7em;"
                     >
                       If you don’t receive a confirmation e-mail within the next minutes,

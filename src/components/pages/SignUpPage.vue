@@ -10,16 +10,16 @@
             <v-row>
               <v-col cols="12">
                 <v-card
-                  elevation="18"
                   outlined
-                  style="border-color: #5d80da;"
+                  elevation="2"
+                  style="border: 1px solid #e7e7f3;"
                 >
-                  <div class="mt-6" 
-                    style="text-align: center; font-size: 1.3em;"
+                  <h3 class="mt-6 heading"
+                    style="text-align: center;"
                   >
                     Sign up to Directory
-                  </div>
-                  <v-card flat class="ma-2 pa-10 pt-5">
+                  </h3>
+                  <v-card flat class="ma-2 pa-10 pt-5 pb-5">
                     <v-form>
                       <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="email"
@@ -27,6 +27,7 @@
                         @input="$v.email.$touch()"
                         @blur="$v.email.$touch()"
                         label="E-mail"
+                        color="#364fcc"
                         outlined
                         prepend-inner-icon="email"
                       ></v-text-field>
@@ -36,6 +37,7 @@
                         @input="$v.username.$touch()"
                         @blur="$v.username.$touch()"
                         label="Username"
+                        color="#364fcc"
                         outlined
                         prepend-inner-icon="person"
                       ></v-text-field>
@@ -45,6 +47,7 @@
                         @input="$v.password.$touch()"
                         @blur="$v.password.$touch()"
                         label="Password"
+                        color="#364fcc"
                         outlined
                         prepend-inner-icon="lock"
                         type="password"
@@ -68,11 +71,19 @@
                       </v-card-actions>
                       <v-card-actions class="justify-center">
                         <v-btn
+                        class="text-none white--text"
                         outlined
-                        color="white"
+                        depressed
                         block
                         @click="signUp"
-                        style="background-color: #4d70d5;"
+                        style="background-color: #364FCC;
+                          height: 38px;
+                          font-family: open sans, OpenSans, sans-serif !important;
+                          font-style: normal !important;
+                          font-weight: bold !important;
+                          font-size: 15px !important;
+                          line-height: 21px !important;
+                          letter-spacing: -0.01em;"
                       >
                         Sign up
                         </v-btn>
@@ -85,16 +96,27 @@
                           class="custom-btn-second text-none" 
                           :ripple="false"
                           text
-                          style="cursor: auto;"
+                          style="cursor: auto; font-family: open sans, OpenSans, sans-serif !important;
+                            font-style: normal !important;
+                            font-weight: bold !important;
+                            font-size: 15px !important;
+                            line-height: 21px !important;
+                            letter-spacing: -0.01em; color: #343747;"
                         >
                           Already have an account?
                           <v-btn
-                            class="custom-btn text-none"
+                            class="custom-btn text-none pl-1"
                             :ripple="false"
                             text
                             color="#5d80da"
-                            style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
+                            style="cursor: pointer;
+                              font-family: open sans, OpenSans, sans-serif !important;
+                              font-style: normal !important;
+                              font-weight: bold !important;
+                              font-size: 15px !important;
+                              line-height: 21px !important;
+                              letter-spacing: -0.01em; color: #364fcc;"
                           >
                             Sign in!
                           </v-btn>
@@ -180,5 +202,19 @@ export default {
 <style>
 .custom-btn::before {
   color: transparent;
+}
+
+.v-input .v-label {
+  font-family: open sans, OpenSans, sans-serif !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 15px !important;
+  line-height: 21px !important;
+  letter-spacing: -0.01em;
+  color: #364fcc;
+}
+
+.v-input__prepend-inner .v-input__icon--prepend-inner .v-icon {
+  color: #364fcc;
 }
 </style>

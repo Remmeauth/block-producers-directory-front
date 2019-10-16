@@ -11,33 +11,38 @@
               <v-col cols="12">
                 <v-card
                   v-if="successMessage"
-                  elevation="18" 
+                  elevation="2"
                   outlined
-                  style="border-color: #5d80da;"
+                  style="border: 1px solid #e7e7f3;"
                 >
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0"
+                    class="ma-2 pa-10 pt-0 pb-5"
                     align="center"
                   >
                     <v-img
-                      class="mt-10"
-                      height="200px"
-                      max-width="300"
+                      class="mt-5"
+                      height="150px"
+                      max-width="200"
                       src="../../assets/email.png"
                     >
                     </v-img>
                     <v-form>
                       <v-card-actions
-                        class="justify-center" 
-                        style="font-size: 1.1em; font-weight: 400; flex-direction: column;"
+                        class="justify-center pb-0"
+                        style="flex-direction: column;"
                       >
+                        <h3 class="heading">
                         Recovery link sent to
+                        </h3>
                       </v-card-actions>
                       <v-card-actions
-                        class="justify-center" 
-                        style="font-size: 1.1em; font-weight: 400; padding-top: 0; flex-direction: column; color: #5d80da;"
+                        class="justify-center pt-0"
+                        style="flex-direction: column;"
                       >
+                        <h4 class="heading" style="color: #364fcc;">
+                          dev@gmail.com
+                        </h4>
                         {{ email }}
                       </v-card-actions>
                       <v-card-actions 
@@ -45,19 +50,29 @@
                         style="padding-top: 0; flex-direction: column;"
                       >
                         <v-btn  
-                          class="custom-btn-second text-none" 
+                          class="custom-btn-second text-none"
                           :ripple="false"
                           text
-                          style="cursor: auto;"
+                          style="cursor: auto; font-family: open sans, OpenSans, sans-serif !important;
+                            font-style: normal !important;
+                            font-weight: bold !important;
+                            font-size: 15px !important;
+                            line-height: 21px !important;
+                            letter-spacing: -0.01em; color: #343747;"
                         >
-                          Remembered your password?
+                          Remember your password?
                           <v-btn 
-                            class="custom-btn text-none" 
+                            class="custom-btn text-none pl-1"
                             :ripple="false" 
                             text
-                            color="#5d80da" 
-                            style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
+                            style="cursor: pointer;
+                              font-family: open sans, OpenSans, sans-serif !important;
+                              font-style: normal !important;
+                              font-weight: bold !important;
+                              font-size: 15px !important;
+                              line-height: 21px !important;
+                              letter-spacing: -0.01em; color: #364fcc;"
                           >
                             Sign in!
                           </v-btn>
@@ -68,25 +83,25 @@
                 </v-card>
                 <v-card
                   v-else
-                  elevation="18" 
+                  elevation="2"
                   outlined
-                  style="border-color: #5d80da;"
+                  style="border: 1px solid #e7e7f3;"
                 >
-                  <div 
-                    style="text-align: center; font-size: 1.3em;"
+                  <h3
+                    class="mb-4 heading"
+                    style="text-align: center;"
                   ><br>
                     Send a password recover request
-                  </div>
-                  <br>
-                  <v-card-actions 
-                    class="ml-12 mr-12 justify-center" 
-                    style="font-size: 0.8em; color: #4d70d5;"
+                  </h3>
+                  <v-card-actions
+                    class="pl-12 pr-12 justify-center"
+                    style="font-size: 0.8em; color: #364fcc; font-family: open sans, OpenSans, sans-serif !important;"
                   >
-                    Enter the e-mail address of your account to get a recovery link
+                    Enter the e-mail of your account to get a recovery link
                   </v-card-actions>
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0"
+                    class="ma-2 pa-10 pt-0 pb-5"
                   >
                     <v-form>
                       <v-text-field
@@ -96,6 +111,7 @@
                         @input="$v.email.$touch()"
                         @blur="$v.email.$touch()"
                         label="E-mail"
+                        color="#364fcc"
                         outlined 
                         prepend-inner-icon="email"
                       ></v-text-field>
@@ -110,12 +126,20 @@
                       <v-card-actions 
                         class="justify-center"
                       >
-                        <v-btn 
-                          outlined 
-                          color="white" 
-                          block 
+                        <v-btn
+                          class="text-none white--text"
+                          outlined
+                          depressed
+                          block
                           @click="getPasswordRecoveryRequest"
-                          style="background-color: #4d70d5;"
+                          style="background-color: #364FCC;
+                            height: 38px;
+                            font-family: open sans, OpenSans, sans-serif !important;
+                            font-style: normal !important;
+                            font-weight: bold !important;
+                            font-size: 15px !important;
+                            line-height: 21px !important;
+                            letter-spacing: -0.01em;"
                         >
                           Get recovery link
                         </v-btn>
@@ -128,16 +152,26 @@
                           class="custom-btn-second text-none" 
                           :ripple="false"
                           text
-                          style="cursor: auto;"
+                          style="cursor: auto; font-family: open sans, OpenSans, sans-serif !important;
+                            font-style: normal !important;
+                            font-weight: bold !important;
+                            font-size: 15px !important;
+                            line-height: 21px !important;
+                            letter-spacing: -0.01em; color: #343747;"
                         >
                           Remember your password?
                           <v-btn 
-                            class="custom-btn text-none" 
+                            class="custom-btn text-none pl-1"
                             :ripple="false" 
                             text
-                            color="#5d80da" 
-                            style="text-decoration: underline;"
                             @click="$router.push({name: 'sign-in'})"
+                            style="cursor: pointer;
+                              font-family: open sans, OpenSans, sans-serif !important;
+                              font-style: normal !important;
+                              font-weight: bold !important;
+                              font-size: 15px !important;
+                              line-height: 21px !important;
+                              letter-spacing: -0.01em; color: #364fcc;"
                           >
                             Sign in!
                           </v-btn>
