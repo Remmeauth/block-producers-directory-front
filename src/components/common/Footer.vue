@@ -2,7 +2,7 @@
     <v-footer
       dark
       padless
-      color="#160d1d"
+      color="#2c193d"
     >
     <v-layout>
       <v-flex xs12 sm10 md8 lg8 xl8 offset-sm1 offset-md2 offset-lg2 offset-xl2>
@@ -10,7 +10,7 @@
           flat
           tile
           class="white--text text-center"
-          color="#160d1d"
+          color="#2c193d"
         >
           <v-card-actions 
             class="justify-center mt-8 mb-8" 

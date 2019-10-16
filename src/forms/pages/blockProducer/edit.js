@@ -9,7 +9,7 @@ export const editBlockProducerForm = {
       websiteUrl: { required, url },
       location: { maxLength: maxLength(50) },
       shortDescription: { required, maxLength: maxLength(100) },
-      fullDescription: { maxLength: maxLength(1000) },
+      fullDescription: { maxLength: maxLength(10000) },
       facebookUrl: { url },
       githubUrl: { url },
       linkedInUrl: { url },
@@ -101,7 +101,7 @@ export const editBlockProducerForm = {
     fullDescriptionErrors () {
       const errors = []
       if (!this.$v.blockProducer.fullDescription.$dirty) return errors
-      !this.$v.blockProducer.fullDescription.maxLength && errors.push('Full description must be at most 1000 characters long.')
+      !this.$v.blockProducer.fullDescription.maxLength && errors.push('Full description must be at most 10000 characters long.')
       return errors
     },
     facebookUrlErrors () {

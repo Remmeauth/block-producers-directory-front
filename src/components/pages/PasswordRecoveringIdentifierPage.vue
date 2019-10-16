@@ -10,13 +10,13 @@
             <v-row>
               <v-col cols="12">
                 <v-card
-                  elevation="18" 
                   outlined
-                  style="border-color: #5d80da;"
+                  elevation="2"
+                  style="border: 1px solid #e7e7f3;"
                 >
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0"
+                    class="ma-2 pa-10 pt-0 pb-5"
                     align="center"
                   >
                     <v-card-actions 
@@ -24,7 +24,6 @@
                         style="flex-direction: row;"
                       >
                       <v-img
-                        class="mt-10"
                         max-width="100"
                         style="width: 20%"
                         src="../../assets/key.png"
@@ -38,11 +37,16 @@
                       >
                       </v-img>
                     </v-card-actions>
-                    <v-form class="align-justify">
-                      Please check <b style="color:#5d80da;">
-                        {{ this.localStorage.recoveryEmail }}
-                      </b> email address for a message with your new password.
-                    </v-form>
+                    <v-card-text
+                      class="pt-0 pb-0 align-justify"
+                      style="cursor: pointer;"
+                    >
+                      <v-form class="description">
+                        Please check
+                          <b style="color: #364fcc; cursor: pointer;"> {{ this.localStorage.recoveryEmail }} </b>
+                        email address for a message with your new password.
+                      </v-form>
+                    </v-card-text>
                   </v-card>
                 </v-card>
               </v-col>
@@ -85,7 +89,4 @@ export default {
 </script>
 
 <style>
-.v-card {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
 </style>

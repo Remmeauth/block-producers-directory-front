@@ -6,52 +6,61 @@
     <Error500/>
   </div>
   <div v-else>
-    <v-layout class="mb-12 mt-4" row wrap>
-      <v-flex xs10 sm10 md10 lg10 xl6 offset-xs1 offset-sm1 offset-md1 offset-lg1 offset-xl3>
-        <v-layout row wrap>
-            <v-flex xs12 sm8 md4 lg4 xl4 offset-sm2 offset-md1 offset-lg1 offset-xl1>
-              <v-card 
-                v-if="this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'"
-                class="mx-auto mb-6"
+    <v-layout row wrap>
+      <v-flex xs12 sm10 md10 lg10 xl10 offset-xs offset-sm1 offset-md1 offset-lg1 offset-xl1>
+        <v-container fluid grid-list-xl>
+          <v-layout row wrap>
+            <v-flex xs12 sm8 md4 lg4 xl3 offset-sm2 offset-md1 offset-lg1 offset-xl2 class="pb-0">
+              <v-card
+                class="mx-auto mt-1 mb-4"
                 align="center"
                 outlined
-              >
-                <v-img class="mt-2 mb-2"
+                elevation="2"
+                style="border: 1px solid #e7e7f3;"
+                >
+                <div></div>
+                <v-img class="mt-4 mb-2 user"
                   v-if="profile.avatarUrl" 
                   :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 35%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
                 ></v-img>
                 <v-divider></v-divider>
-                <h3 class="mt-3">
-                  <span class="headline">
-                    {{ profile.firstName }} {{ profile.lastName }}
-                  </span>
-                </h3>
-                <v-card-text 
-                  class="pt-1 pb-0"
+                <v-card-text class="layout justify-center pt-2 pb-0">
+                  <h5 class="bp-info pl-2">
+                    <span>
+                       {{ profile.firstName }} {{ profile.lastName }}
+                    </span>
+                  </h5>
+                </v-card-text>
+                <v-card-text
+                  v-if="profile.firstName || profile.location || profile.websiteUrl"
+                  class="pt-0 pb-0"
                 >
-                  <v-form>
-                    <b style="color: #5d80da;"> @{{ user.username }} </b>
+                  <v-form class="description">
+                    <b style="color: #364fcc; cursor: pointer;"> @{{ user.username }} </b>
                   </v-form>
                 </v-card-text>
-                <v-card-text 
-                  class="pt-1 pb-2" 
+                <v-card-text
+                  v-if="!profile.firstName && !profile.location && !profile.websiteUrl"
+                  class="pt-1 pb-2"
+                >
+                  <v-form class="description">
+                    <b style="color: #364fcc; cursor: pointer;"> @{{ user.username }} </b>
+                  </v-form>
+                </v-card-text>
+                <v-card-text
+                  class="pt-0 pb-0"
                   v-if="profile.location"
                 >
-                  <v-icon>location_on</v-icon>
-                  {{ profile.location }}
+                  <p class="mb-0 location">
+                    {{ profile.location }}
+                  </p>
                 </v-card-text>
                 <v-card-text 
-                  class="pt-1 pb-2"
-                  v-else
-                >
-                </v-card-text>
-                <v-card-text 
-                  class="pt-0"
+                  class="pt-1"
                   v-if="profile.websiteUrl"
                 >
-                  <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
-                    <v-icon color="#5d80da">mdi-web</v-icon>
+                  <a :href="profile.websiteUrl" class="website" style="text-decoration: none; color: #343747;">
+                    <v-icon color="#364fcc">mdi-web</v-icon>
                     {{ profile.websiteUrl }} 
                   </a>
                 </v-card-text>
@@ -87,104 +96,11 @@
                   </a>
                 </v-card-text>
                 <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="user" class="justify-center">
+                <v-card-actions v-if="user.username === localStorage.username && user" class="justify-center">
                   <v-btn 
                     v-if="user.username === localStorage.username" 
                     @click="$router.push({name: 'settings'})"
-                    class="edit-button"
-                    block
-                    :ripple="false"
-                    depressed
-                  >
-                    Edit profile
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-              <v-card 
-                v-if="
-                  this.$vuetify.breakpoint.name === 'md' ||
-                  this.$vuetify.breakpoint.name === 'lg' ||
-                  this.$vuetify.breakpoint.name === 'xl'" 
-                class="mx-auto mr-6 mb-6"
-                align="center"
-                outlined
-                >
-                <v-img class="mt-2 mb-2"
-                  v-if="profile.avatarUrl" 
-                  :src="profile.avatarUrl + `?${Math.random()}`"
-                  style="max-width: 50%; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12);"
-                ></v-img>
-                <v-divider></v-divider>
-                <h3 class="mt-3">
-                  <span class="headline">
-                    {{ profile.firstName }} {{ profile.lastName }}
-                  </span>
-                </h3>
-                <v-card-text 
-                  class="pt-1 pb-0"
-                >
-                  <v-form>
-                    <b style="color: #5d80da;"> @{{ user.username }} </b>
-                  </v-form>
-                </v-card-text>
-                <v-card-text 
-                  class="pt-1 pb-2"
-                  v-if="profile.location"
-                >
-                  <v-icon>location_on</v-icon>
-                  {{ profile.location }}
-                </v-card-text>
-                <v-card-text 
-                  class="pt-1 pb-2"
-                  v-else
-                >
-                </v-card-text>
-                <v-card-text 
-                  class="pt-0"
-                  v-if="profile.websiteUrl"
-                >
-                  <a :href="profile.websiteUrl" style="text-decoration: none; color: black;">
-                    <v-icon color="#5d80da">mdi-web</v-icon>
-                    {{ profile.websiteUrl }} 
-                  </a>
-                </v-card-text>
-                <v-divider 
-                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
-                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
-                ></v-divider>
-                <v-card-text
-                  v-if="profile.linkedInUrl || profile.twitterUrl || profile.githubUrl || 
-                        profile.facebookUrl || profile.mediumUrl || profile.telegramUrl || profile.steemitUrl"
-                  class="pt-3 pb-3"
-                >
-                  <a v-if="profile.linkedInUrl" :href="profile.linkedInUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="#0077b5">mdi-linkedin-box</v-icon>
-                  </a>
-                  <a v-if="profile.twitterUrl" :href="profile.twitterUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="#1da1f2">mdi-twitter</v-icon>
-                  </a>
-                  <a v-if="profile.githubUrl" :href="profile.githubUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="black">mdi-github-circle</v-icon>
-                  </a>
-                  <a v-if="profile.facebookUrl" :href="profile.facebookUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="#3578E5">mdi-facebook-box</v-icon>
-                  </a>
-                  <a v-if="profile.mediumUrl" :href="profile.mediumUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="#03a87c">mdi-medium</v-icon>
-                  </a>
-                  <a v-if="profile.telegramUrl" :href="profile.telegramUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="black">mdi-telegram</v-icon>
-                  </a>
-                  <a v-if="profile.steemitUrl" :href="profile.steemitUrl" style="text-decoration: none;">
-                    <v-icon class="links" color="#06D6A9">mdi-alpha-s-circle</v-icon>
-                  </a>
-                </v-card-text>
-                <v-divider v-if="user.username === localStorage.username"></v-divider>
-                <v-card-actions v-if="user" class="justify-center">
-                  <v-btn 
-                    v-if="user.username === localStorage.username" 
-                    @click="$router.push({name: 'settings'})"
-                    class="edit-button"
+                    class="edit-button text-none"
                     block
                     :ripple="false"
                     depressed
@@ -194,21 +110,31 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs12 sm8 md6 lg6 offset-sm2 offset-md0 offset-lg0 offset-xl0>
+            <v-flex xs12 sm8 md6 lg6 xl5 offset-sm2 offset-md0 offset-lg0 offset-xl0>
               <v-card 
-                class="mx-auto"
+                class="mx-auto mt-1 mb-6"
                 align="center"
                 outlined
+                elevation="2"
+                style="border: 1px solid #e7e7f3;"
               >
-                <v-subheader>User's information</v-subheader>
-                <div class="pa-4 pt-0 caption">
+                <v-card-text class="layout">
+                  <h3 class="bp-info pt-3">
+                    <span>
+                      User's information
+                    </span>
+                  </h3>
+                </v-card-text>
+                <div class="pa-4 pt-0">
                   <p 
-                    v-if="profile.additionalInformation" 
-                    style="text-align: justify;" 
+                    v-if="profile.additionalInformation"
+                    class="description"
+                    style="text-align: justify; word-wrap: break-word;"
                     v-html="profile.additionalInformation"
                   ></p>
                   <p 
-                    v-else 
+                    v-else
+                    class="description"
                     style="text-align: justify;"
                   >
                     No information has been provided.
@@ -217,16 +143,22 @@
               </v-card>
               <v-card 
                 v-if="blockProducers && blockProducersByUser(user.username).length > 0"
-                class="mt-6"
+                class="mt-6 mb-2"
                 outlined
+                elevation="2"
+                style="border: 1px solid #e7e7f3;"
               >
-                <v-list two-line>
+                <v-list two-line class="pt-0 pb-0">
                   <template 
                     v-for="(blockProducer, index) in blockProducersByUser(user.username) "
                   >
-                    <v-subheader 
-                      v-if="index === 0"
-                    >User's block producers</v-subheader>
+                    <v-card-text v-if="index === 0" class="layout mt-0 ml-0">
+                      <h5 class="bp-info">
+                        <span>
+                          User's block producers
+                        </span>
+                      </h5>
+                    </v-card-text>
                     <v-divider 
                       v-else-if="index > 0 && blockProducer.status === 'active' &&
                       $route.params.username !== localStorage.username"
@@ -240,22 +172,20 @@
                       :ripple="false"
                     >
                       <img 
-                        class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width: 15%; border-radius: 50%;"
+                        class="mt-2 mb-2 mr-5 pa-1 users-bp"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
-                          class="mb-1" 
-                          style="font-weight: 500; display:inline-block;"
+                          class="mb-1 description"
+                          style="font-weight: 600; display: inline-block;"
                         >
                           {{ blockProducer.name }}
                         </v-list-item-title>
                         <v-list-item-subtitle 
-                          style="font-size: 0.8em;"
+                          class="location"
                           v-if="blockProducer.location"
                         >
-                          <v-icon>location_on</v-icon> 
                           {{ blockProducer.location }}
                         </v-list-item-subtitle>
                       </v-list-item-content>
@@ -266,14 +196,13 @@
                       :ripple="false"
                     >
                       <img 
-                        class="mt-2 mb-2 mr-5 pa-1" 
-                        style="max-width: 15%; border-radius: 50%;"
+                        class="mt-2 mb-2 mr-5 pa-1 users-bp"
                         :src="blockProducer.logo_url + `?${Math.random()}`"
                       >
                       <v-list-item-content>
                         <v-list-item-title 
-                          class="mb-1" 
-                          style="font-weight: 500; display:inline-block;"
+                          class="mb-1 description"
+                          style="font-weight: 600; display:inline-block;"
                         >
                           {{ blockProducer.name }}
                           <v-tooltip 
@@ -326,19 +255,20 @@
                           </v-tooltip>
                         </v-list-item-title>
                         <v-list-item-subtitle 
-                          style="font-size: 0.8em;"
+                          class="location"
                           v-if="blockProducer.location"
                         >
-                          <v-icon>location_on</v-icon> 
                           {{ blockProducer.location }}
                         </v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
+                    <div></div>
                   </template>
                 </v-list>
               </v-card>
             </v-flex>
-        </v-layout>
+          </v-layout>
+        </v-container>
       </v-flex>
     </v-layout>
   </div>
@@ -406,5 +336,30 @@ a:link {
 }
 .v-icon.links {
   font-size: 35px;
+}
+
+.user {
+  display: inline-block;
+  max-width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.users-bp {
+  display: inline-block;
+  max-width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.v-content__wrap {
+  background-color: #f2f2fa;
 }
 </style>
