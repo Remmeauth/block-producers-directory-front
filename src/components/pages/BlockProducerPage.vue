@@ -396,11 +396,6 @@ export default {
     ...mapGetters('blockProducerComment', ['comments', 'blockProducerCommentError']),
     ...mapGetters('profile', ['profile', 'profileError']),
   },
-  watch: {
-    'blockProducerEvents.isSent'() {
-      this.localStorage.statusDescription = this.blockProducer.status_description
-    }
-  },
   methods: {
     createComment() {
       this.$store.dispatch(blockProducerCommentStorageActions.createComment, {
@@ -435,15 +430,6 @@ export default {
     this.$store.dispatch(blockProducerCommentStorageActions.getComments, {
       blockProducerIdentifier: this.$route.params.identifier,
     })
-
-    if (this.blockProducer.status_description &&
-            this.blockProducer.status_description !== this.localStorage.statusDescription) {
-
-      this.$store.dispatch(blockProducerStorageActions.sendStatusDescriptionToEmail, {
-        identifier: this.$route.params.identifier,
-        email: this.localStorage.email,
-      })
-    }
   }
 }
 </script>

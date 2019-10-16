@@ -13,7 +13,6 @@ export const blockProducerStorageMutations = {
     updateReferenceLinks: 'blockProducer/updateReferenceLinks',
     createBlockProducer: 'blockProducer/createBlockProducer',
     deleteBlockProducer: 'blockProducer/deleteBlockProducer',
-    sendStatusDescriptionToEmail: 'blockProducer/sendStatusDescriptionToEmail',
   },
   commit: {
     addError: 'addError',
@@ -26,7 +25,6 @@ export const blockProducerStorageMutations = {
     updateReferenceLinks: 'updateReferenceLinks',
     createBlockProducer: 'createBlockProducer',
     deleteBlockProducer: 'deleteBlockProducer',
-    sendStatusDescriptionToEmail: 'sendStatusDescriptionToEmail',
   },
 }
 
@@ -39,7 +37,6 @@ export const blockProducerStorageActions = {
   updateReferenceLinks: 'blockProducer/updateReferenceLinks',
   createBlockProducer: 'blockProducer/create',
   deleteBlockProducer: 'blockProducer/delete',
-  sendStatusDescriptionToEmail: 'blockProducer/sendStatusDescriptionToEmail',
 }
 
 export const blockProducer = {
@@ -60,7 +57,6 @@ export const blockProducer = {
       isCreated: null,
       isGotten: null,
       isDeleted: null,
-      isSent: null,
     },
     entity: {
       name: null,
@@ -113,7 +109,6 @@ export const blockProducer = {
       state.events.isCreated = Math.random()
     },
     deleteBlockProducer: (state) => state.events.isDeleted = Math.random(),
-    sendStatusDescriptionToEmail: (state) => state.events.isSent = Math.random(),
   },
   actions: {
     get({ commit }, { identifier }) {
@@ -407,30 +402,6 @@ export const blockProducer = {
           }
 
           if (error.response.status === HttpStatus.BAD_REQUEST) {
-            commit(blockProducerStorageMutations.commit.addFieldsErrors, {
-              errors: error.response.data.error,
-              statusCode: error.response.status
-            })
-          }
-        })
-    },
-    sendStatusDescriptionToEmail({ commit }, { email, identifier }) {
-      axios
-        .post(process.env.VUE_APP_BACK_END_URL + `/block-producers/${identifier}/description/`, {
-          email: email,
-        })
-        .then(response => {
-          commit(blockProducerStorageMutations.commit.sendStatusDescriptionToEmail)
-        })
-        .catch(error => {
-          if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-            commit(blockProducerStorageMutations.commit.addError, {
-              message: error.response.data.error,
-              statusCode: error.response.status
-            })
-          }
-
-          if (error.response.status === HttpStatus.BAD_REQUEST || error.response.status === HttpStatus.NOT_FOUND) {
             commit(blockProducerStorageMutations.commit.addFieldsErrors, {
               errors: error.response.data.error,
               statusCode: error.response.status
