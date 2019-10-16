@@ -24,12 +24,12 @@
                   :src="blockProducer.logoUrl + `?${Math.random()}`"
                 ></v-img>
                 <v-divider></v-divider>
-                <v-form
+                <v-form class="pt-3"
                   v-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'active'" align="center">
                   <v-tooltip right color="green lighten-1">
                     <template v-slot:activator="{ on }">
                       <v-icon
-                        class="pt-2"
+                        class="pa-1"
                         color="green lighten-1"
                         v-on="on"
                         style="font-size: 30px; border: 1px solid #66BB6A; border-radius: 50%; border-width: medium;"
@@ -43,7 +43,7 @@
                   <v-tooltip right color="grey lighten-1">
                     <template v-slot:activator="{ on }">
                       <v-icon
-                        class="pa-1 "
+                        class="pa-1"
                         color="grey lighten-1"
                         v-on="on"
                         style="font-size: 30px; border: 1px solid #BDBDBD; border-radius: 50%; border-width: medium;"
@@ -52,12 +52,12 @@
                     <span>on moderation</span>
                   </v-tooltip>
                 </v-form>
-                <v-form
+                <v-form class="pt-3"
                   v-else-if="blockProducer.user.username === localStorage.username && blockProducer.status === 'declined'" align="center">
                   <v-tooltip right color="red lighten-1">
                     <template v-slot:activator="{ on }">
                       <v-icon
-                        class="pt-2"
+                        class="pa-1"
                         color="red lighten-1"
                         v-on="on"
                         style="font-size: 30px; border: 1px solid #EF5350; border-radius: 50%; border-width: medium;"
