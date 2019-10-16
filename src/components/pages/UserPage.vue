@@ -31,8 +31,17 @@
                     </span>
                   </h5>
                 </v-card-text>
-                <v-card-text 
-                  class="pt-0 pb-1"
+                <v-card-text
+                  v-if="profile.firstName || profile.location || profile.websiteUrl"
+                  class="pt-0 pb-0"
+                >
+                  <v-form class="description">
+                    <b style="color: #364fcc; cursor: pointer;"> @{{ user.username }} </b>
+                  </v-form>
+                </v-card-text>
+                <v-card-text
+                  v-if="!profile.firstName && !profile.location && !profile.websiteUrl"
+                  class="pt-1 pb-2"
                 >
                   <v-form class="description">
                     <b style="color: #364fcc; cursor: pointer;"> @{{ user.username }} </b>
@@ -109,8 +118,8 @@
                 elevation="2"
                 style="border: 1px solid #e7e7f3;"
               >
-                <v-card-text class="layout mt-1">
-                  <h3 class="bp-info">
+                <v-card-text class="layout">
+                  <h3 class="bp-info pt-3">
                     <span>
                       User's information
                     </span>
@@ -139,7 +148,7 @@
                 elevation="2"
                 style="border: 1px solid #e7e7f3;"
               >
-                <v-list two-line class="pb-0">
+                <v-list two-line class="pt-0 pb-0">
                   <template 
                     v-for="(blockProducer, index) in blockProducersByUser(user.username) "
                   >

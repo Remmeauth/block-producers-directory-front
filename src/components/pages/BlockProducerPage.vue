@@ -221,7 +221,7 @@
                     </b>
                     to comment.
                   </v-card-text>
-                  <v-list two-line>
+                  <v-list two-line class="pt-0 pb-0">
                     <template v-for="(comment, index) in comments">
                       <v-card-text
                         v-if="index === 0"
@@ -273,12 +273,12 @@
                     style="color: #343747;"
                   >
                     Already have an account?
-                    <a class="custom-btn"
+                    <b class="custom-btn"
                        @click="$router.push({name: 'sign-in'})"
                        style="color: #364fcc; cursor: pointer;"
                     >
                       Sign in
-                    </a>
+                    </b>
                     to comment.
                   </v-card-text>
                   <v-card-text
@@ -305,8 +305,8 @@
                 elevation="2"
                 style="border: 1px solid #e7e7f3;"
               >
-                <v-card-text class="layout mt-1 pb-0" >
-                  <h5 class="bp-info">
+                <v-card-text class="layout pb-0" >
+                  <h5 class="bp-info pt-3">
                     <span>
                       Leave a comment
                     </span>
@@ -317,10 +317,14 @@
                     v-model="comment"
                     no-resize
                     placeholder="Enter comment here..."
-                    class="custom-textarea description mt-0 mb-2 pa-4"
-                    style="background-color: white;"
+                    class="custom-textarea mt-0 mb-4 pa-4"
+                    style="background-color: white;
+                      font-family: open sans, OpenSans, sans-serif;
+                      font-style: normal;
+                      font-weight: normal;
+                      font-size: 15px;
+                      line-height: 24px; color: #343747;"
                   ></v-textarea>
-
                 </form>
               </v-card>
               <v-flex xs3 sm3 md3 lg3 xl3
