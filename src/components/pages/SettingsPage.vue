@@ -2,16 +2,22 @@
   <div v-if="profileError.statusCode === 500">
     <Error500/>
   </div>
-  <div v-else>
+  <div v-else style="background-color: #f2f2fa;">
     <v-layout>
-      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3>
+      <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3
+        class="mt-4"
+        style="background-color: white; border: 1px solid #e7e7f3; border-radius: 5px;
+        box-shadow: 0px 3px 1px -3px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.14)"
+      >
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Personal details</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>All provided information is optional and shown on your profile page. E-mail is never shown publicly.</span>
+                <span class="description">
+                  All provided information is optional and shown on your profile page. E-mail is never shown publicly.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
@@ -21,7 +27,8 @@
                   @blur="$v.profile.firstName.$touch()"
                   outlined 
                   clearable 
-                  label="First name" 
+                  label="First name"
+                  color="#364fcc"
                   prepend-inner-icon="account_circle"
                 ></v-text-field>
               </v-col>
@@ -33,7 +40,8 @@
                   @blur="$v.profile.lastName.$touch()"
                   outlined 
                   clearable 
-                  label="Last name" 
+                  label="Last name"
+                  color="#364fcc"
                   prepend-inner-icon="account_circle"
                 ></v-text-field>
               </v-col>
@@ -45,7 +53,8 @@
                   @blur="$v.profile.location.$touch()"
                   outlined 
                   clearable 
-                  label="Location" 
+                  label="Location"
+                  color="#364fcc"
                   prepend-inner-icon="place"
                 ></v-text-field>
               </v-col>
@@ -55,7 +64,7 @@
                   disabled 
                   outlined 
                   clearable 
-                  label="Username" 
+                  label="Username"
                   prepend-inner-icon="alternate_email"
                 ></v-text-field>
               </v-col>
@@ -63,7 +72,14 @@
                 <v-btn
                   class="text-none white--text"
                   @click="updateDetails"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Update details
                 </v-btn>
@@ -88,7 +104,9 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Change email address</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Enter a new email to change it.</span>
+                <span class="description">
+                  Enter a new email to change it.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field 
@@ -97,7 +115,8 @@
                   @input="$v.user.email.$touch()"
                   @blur="$v.user.email.$touch()"
                   outlined 
-                  clearable 
+                  clearable
+                  color="#364fcc"
                   label="E-mail address*"
                   prepend-inner-icon="email"
                 ></v-text-field>
@@ -111,7 +130,14 @@
                 <v-btn
                   class="text-none white--text"
                   @click="updateEmail"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Update email
                 </v-btn>
@@ -125,10 +151,12 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Change password</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide your old password and enter a new password to change it.</span>
+                <span class="description">
+                  Provide your old password and enter a new password to change it.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
-                <v-text-field 
+                <v-text-field
                   v-model="oldPassword"
                   :error-messages="oldPasswordErrors"
                   @input="$v.oldPassword.$touch()"
@@ -136,6 +164,7 @@
                   outlined 
                   clearable 
                   label="Old password*"
+                  color="#364fcc"
                   prepend-inner-icon="lock"
                   :append-icon="value ? 'visibility_off' : 'visibility'"
                   @click:append="() => (value = !value)"
@@ -151,6 +180,7 @@
                   outlined 
                   clearable 
                   label="New password*"
+                  color="#364fcc"
                   prepend-inner-icon="lock"
                   :append-icon="value ? 'visibility_off' : 'visibility'"
                   @click:append="() => (value = !value)"
@@ -158,12 +188,15 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" v-if="passwordFieldsErrors.errors" class="pt-0">
-                <span style="color: red; font-size: 0.9em;">
+                <span class="description" style="color: #FB4444;">
                   The password does not match. Type the correct password.
                 </span>
               </v-col>
-              <v-col cols="12" lg="10" offset-lg="1" v-else-if="passwordIsUpdated && !passwordFieldsErrors.errors" class="pt-0">
-                <span style="color: green; font-size: 0.9em;">
+              <v-col cols="12" lg="10" offset-lg="1"
+                v-else-if="passwordIsUpdated && !passwordFieldsErrors.errors"
+                class="pt-0"
+              >
+                <span class="description" style="color: #27D086;">
                   The password is updated.
                 </span>
               </v-col>
@@ -171,7 +204,14 @@
                 <v-btn
                   class="text-none white--text"
                   @click="updatePassword"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Update password
                 </v-btn>
@@ -185,10 +225,12 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Additional information</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Tell some words about yourself. Notice that a full description should not exceed 1000 characters.</span>
+                <span class="description">
+                  Tell some words about yourself. Notice that a full description should not exceed 10000 characters.
+                </span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1">
-                <div class="editor" style="border:1px solid #BEBEBE; border-radius: 4px;">
+                <div class="editor description" style="border:1px solid #BEBEBE; border-radius: 4px;">
                   <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
                     <div class="menubar">
                       <v-btn
@@ -314,7 +356,14 @@
                 <v-btn
                   class="text-none white--text"
                   @click="updateAdditionalInformation"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Update information
                 </v-btn>
@@ -339,17 +388,21 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Profile picture</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Upload your picture or avatar.</span>
+                <span class="description">
+                  Upload your picture or avatar.
+                </span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" class="pb-0">
                 <v-file-input
                   v-model="avatarFile"
                   outlined
+                  color="#364fcc"
                   label="Select your picture"
+                  prepend-inner-icon="mdi-image"
                 ></v-file-input>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" v-if="imageSizeIsTooLarge" class="pt-0">
-                <span style="color: red; font-size: 0.9em;">
+                <span class="description" style="color: #FB4444;">
                   The size of the uploaded image must be no more than 10 MB.
                 </span>
               </v-col>
@@ -357,7 +410,14 @@
                 <v-btn 
                   class="text-none white--text"
                   @click="submitUploadingProfileAvatar"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Upload picture
                 </v-btn>
@@ -382,7 +442,9 @@
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Reference links</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Provide links to your profiles from other platforms.</span>
+                <span class="description">
+                  Provide links to your profiles from other platforms.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-text-field
@@ -392,7 +454,8 @@
                   @blur="$v.profile.websiteUrl.$touch()"
                   outlined
                   clearable 
-                  label="Web-site" 
+                  label="Web-site"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-web"
                 ></v-text-field>
               </v-col>
@@ -404,7 +467,8 @@
                   @blur="$v.profile.linkedInUrl.$touch()"
                   outlined 
                   clearable 
-                  label="LinkedIn" 
+                  label="LinkedIn"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-linkedin-box"
                 ></v-text-field>
               </v-col>
@@ -416,7 +480,8 @@
                   @blur="$v.profile.twitterUrl.$touch()" 
                   outlined 
                   clearable 
-                  label="Twitter" 
+                  label="Twitter"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-twitter"
                 ></v-text-field>
               </v-col>
@@ -429,6 +494,7 @@
                   outlined
                   clearable
                   label="Medium"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-medium"
                 ></v-text-field>
               </v-col>
@@ -441,6 +507,7 @@
                   outlined
                   clearable
                   label="Github"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-github-circle"
                 ></v-text-field>
               </v-col>
@@ -453,6 +520,7 @@
                   outlined
                   clearable
                   label="Facebook"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-facebook-box"
                 ></v-text-field>
               </v-col>
@@ -465,6 +533,7 @@
                   outlined
                   clearable
                   label="Telegram"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-telegram"
                   ></v-text-field>
               </v-col>
@@ -477,6 +546,7 @@
                   outlined
                   clearable
                   label="Steemit"
+                  color="#364fcc"
                   prepend-inner-icon="mdi mdi-alpha-s-circle"
                 ></v-text-field>
               </v-col>
@@ -484,7 +554,14 @@
                 <v-btn 
                   class="text-none white--text"
                   @click="updateReferenceLinks"
-                  style="background-color: #28a745; border: 1px solid rgba(27,31,35,.2); font-weight: 600; background-image: linear-gradient(-180deg, #34d058, #28a745 90%);" 
+                  depressed
+                  color="#27D086"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Update links
                 </v-btn>
@@ -507,16 +584,25 @@
           <v-container>
             <v-row>
               <v-col cols="12" lg="10" offset-lg="1">
-                <h3 class="mb-3" style="color: #cb2431;">Delete account</h3>
+                <h3 class="mb-3" style="color: #FB4444;">Delete account</h3>
                 <v-divider class="mb-7"></v-divider>
-                <span>Once you delete your account, there is no going back. Please be certain.</span>
+                <span class="description">
+                  Once you delete your account, there is no going back. Please be certain.
+                </span>
               </v-col>
               <v-col cols="12" lg="5" offset-lg="1">
                 <v-btn 
-                  class="delete-button text-none"
+                  class="text-none white--text"
                   @click="deleteProfile"
                   depressed
+                  color="#FB4444"
                   :ripple="false"
+                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                  font-style: normal !important;
+                  font-weight: bold !important;
+                  font-size: 15px !important;
+                  line-height: 21px !important;
+                  letter-spacing: -0.01em;"
                 >
                   Delete your account
                 </v-btn>
