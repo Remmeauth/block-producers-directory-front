@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height style="height: calc(100vh - 58px);">
     <v-layout align-center>
-      <v-flex sm12 md12 id="error" text-center>
+      <v-flex xs12 sm12 md12 lg10 xl10 offset-lg1 id="error" text-center>
         <img id="error404Logo" alt="Error 404 logo" src="../../assets/icon-sad-face.png">
         <br><br>
         <h1 class="display-3 grey-darken-4--text" >404</h1>

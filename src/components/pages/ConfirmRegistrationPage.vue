@@ -4,44 +4,51 @@
   </div>
   <div v-else>
     <v-layout>
-      <v-flex class="mt-8 mb-12" xs12 sm8 md4 lg4 xl4 offset-xs offset-sm2 offset-md4 offset-lg4 offset-xl4>
+      <v-flex class="mt-8 mb-12" xs12 sm6 md4 lg4 xl2 offset-xs offset-sm3 offset-md4 offset-lg4 offset-xl5>
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12">
                 <v-card
-                  elevation="18"
+                  elevation="2"
                   outlined
-                  style="border-color: #5d80da;"
+                  style="border: 1px solid #e7e7f3;"
                 >
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0"
+                    class="ma-2 pa-10 pt-0 pb-5"
                     align="center"
                   >
                     <v-img
-                      class="mt-10 mb-4"
-                      height="150px"
-                      max-width="150"
+                      class="mt-7 mb-4"
+                      height="135px"
+                      max-width="135"
                       src="../../assets/success_registration.png"
                     >
                     </v-img>
                     <v-form>
                       <v-card-actions
-                        class="justify-center"
-                        style="font-size: 1.1em; font-weight: 400; flex-direction: column;"
+                        class="heading justify-center"
+                        style="flex-direction: column;"
                       >
-                        <b>Congratulations!</b>
+                        <b class="heading">Congratulations!</b>
                         Your registration is confirmed!
                       </v-card-actions>
                     </v-form>
                     <v-card-actions class="pb-0 justify-center">
                       <v-btn
+                        class="text-none white--text"
                         outlined
-                        color="white"
                         block
                         @click="$router.push({name: 'sign-in'})"
-                        style="background-color: #4d70d5;"
+                        style="background-color: #364FCC;
+                          height: 38px;
+                          font-family: open sans, OpenSans, sans-serif !important;
+                          font-style: normal !important;
+                          font-weight: bold !important;
+                          font-size: 15px !important;
+                          line-height: 21px !important;
+                          letter-spacing: -0.01em;"
                       >
                         Sign in
                       </v-btn>
@@ -98,9 +105,6 @@ export default {
 </script>
 
 <style>
-.v-card {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
 
 .custom-btn::before {
   color: transparent;

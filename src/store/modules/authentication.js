@@ -3,12 +3,14 @@ import HttpStatus from 'http-status-codes'
 
 export const authenticationStorageMutations = {
   subscribe: {
-    addError: 'authentication/addError',
+    addSignInError: 'authentication/addSignInError',
+    addSignUpError: 'authentication/addSignUpError',
     addToken: 'authentication/addToken',
     signUp: 'authentication/signUp',
   },
   commit: {
-    addError: 'addError',
+    addSignInError: 'addSignInError',
+    addSignUpError: 'addSignUpError',
     addToken: 'addToken',
     signUp: 'signUp',
   },
@@ -22,7 +24,11 @@ export const authenticationStorageActions = {
 export const authentication = {
   namespaced: true,
   state: {
-    error: {
+    errorSignIn: {
+      message: null,
+      statusCode: null,
+    },
+    errorSignUp: {
       message: null,
       statusCode: null,
     },
@@ -35,12 +41,14 @@ export const authentication = {
     }
   },
   getters: {
-    authenticationError: state => state.error,
+    authenticationSignInError: state => state.errorSignIn,
+    authenticationSignUpError: state => state.errorSignUp,
     authenticationEvents: state => state.events,
     credentials: state => state.entity,
   },
   mutations: {
-    addError: (state, error) => state.error = error,
+    addSignInError: (state, error) => state.errorSignIn = error,
+    addSignUpError: (state, error) => state.errorSignUp = error,
     addToken: (state, credentials) => {
       state.entity = credentials
       state.events.signedIn = Math.random()
@@ -61,14 +69,14 @@ export const authentication = {
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-            commit(authenticationStorageMutations.commit.addError, {
+            commit(authenticationStorageMutations.commit.addSignInError, {
               message: error.response.data.error,
               statusCode: error.response.status
             })
           }
 
           if (error.response.status === HttpStatus.BAD_REQUEST) {
-            commit(authenticationStorageMutations.commit.addError, {
+            commit(authenticationStorageMutations.commit.addSignInError, {
               message: error.response.data.non_field_errors[0],
               statusCode: error.response.status
             })
@@ -87,14 +95,14 @@ export const authentication = {
         })
         .catch(error => {
           if (error.response.status === HttpStatus.INTERNAL_SERVER_ERROR) {
-            commit(authenticationStorageMutations.commit.addError, {
+            commit(authenticationStorageMutations.commit.addSignUpError, {
               message: error.response.data.error,
               statusCode: error.response.status
             })
           }
 
           if (error.response.status === HttpStatus.BAD_REQUEST) {
-            commit(authenticationStorageMutations.commit.addError, {
+            commit(authenticationStorageMutations.commit.addSignUpError, {
               message: error.response.data.error,
               statusCode: error.response.status
             })

@@ -5,115 +5,142 @@
   <div v-else>
     <v-toolbar
       dark
-      color="#24292e"
+      color="#f2f2fa"
       flat
-      class="mb-4"
     >
       <v-spacer></v-spacer>
-      <v-toolbar-title style="font-weight: 600">Block Producer Directory</v-toolbar-title>
+      <div class="layout justify-center mb-8">
+        <h2 v-if="this.$vuetify.breakpoint.name !== 'xs'"
+            class="h2title"
+        >
+          Block Producer Directory
+        </h2>
+        <h2
+          v-else
+          class="pt-6"
+          style="color: #343747; font-family: Avenir Next; font-size: 24px; font-weight: 700; letter-spacing: -.02em;"
+        >
+          Block Producer Directory
+        </h2>
+      </div>
 
       <div class="flex-grow-1"></div>
 
       <v-tabs 
-        dark
+        light
         v-if="localStorage.token"
         slot="extension"
         centered
-        class="tabs-btn white--text"
         background-color="transparent"
-        slider-color="#24292e"
+        color="#364fcc"
+        slider-color="#364fcc"
+        style="border-bottom: 1px solid #e7e7f3;"
       >
         <div class="flex-grow-2"></div>
-        <v-tab 
+        <div
           v-if="this.$vuetify.breakpoint.name == 'md' || 
             this.$vuetify.breakpoint.name == 'lg' ||
-            this.$vuetify.breakpoint.name == 'xl'" 
-          class="white--text" 
+            this.$vuetify.breakpoint.name == 'xl'"
           :ripple="false"
-          disabled
+          class="noHover custom-tab subtitle-1 font-weight-bold pt-3 pr-3"
         >
-          <v-form class="text-none" style="font-size: 1em;">
-            Signed in as 
+          <v-form class="text-none" style="color: #8e8ea8; cursor: auto;">
+            Signed in as
             <b
-              style="color: yellow; cursor: pointer;" 
+              style="color: #364fcc;"
             >
               @{{ localStorage.username }}
             </b>
           </v-form>
-        </v-tab>
+        </div>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pa-0" 
-          :ripple="false" 
+          class="tab-btn pa-0 noHover"
+          :ripple="false"
           @click="$router.push({name: 'index'})"
+          style="min-width: 75px;"
         >
-          Home
-        </v-tab>
-        <v-tab 
-          v-else 
-          :ripple="false" 
-          @click="$router.push({name: 'index'})"
-        >
-          Home
-        </v-tab>
-        <v-tab 
-          v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pl-2 pr-2" 
-          :ripple="false" 
-          @click="$router.push({name: 'block-producer-creation'})"
-        >
-          Submit
+          <v-icon>mdi-home</v-icon>
         </v-tab>
         <v-tab
-          v-else 
+          v-else
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
+          :ripple="false"
+          @click="$router.push({name: 'index'})"
+        >
+          <v-icon left>mdi-home</v-icon>
+          Home
+        </v-tab>
+        <v-tab 
+          v-if="this.$vuetify.breakpoint.name == 'xs'" 
+          class="tab-btn pl-2 pr-2 noHover"
+          :ripple="false" 
+          @click="$router.push({name: 'block-producer-creation'})"
+          style="min-width: 75px;"
+        >
+          <v-icon>mdi-bank-plus</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
         >
+          <v-icon left>mdi-bank-plus</v-icon>
           Submit
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'"  
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+          style="min-width: 75px;"
         >
-          Profile
+          <v-icon>mdi-account</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
         >
+          <v-icon left>mdi-account</v-icon>
           Profile
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'"  
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
+          style="min-width: 75px;"
         >
-          Settings
+          <v-icon>mdi-settings</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
         >
+          <v-icon left>mdi-settings</v-icon>
           Settings
         </v-tab>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
-          class="tab-btn pl-2 pr-2" 
+          class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="signOut"
+          style="min-width: 75px;"
         >
-          Sign out
+          <v-icon>mdi-logout</v-icon>
         </v-tab>
         <v-tab 
-          v-else 
+          v-else
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="signOut"
         >
+          <v-icon left>mdi-logout</v-icon>
           Sign out
         </v-tab>
       </v-tabs>
@@ -121,27 +148,63 @@
       <v-tabs
         v-else
         slot="extension"
+        light
         centered
+        color="#364fcc"
         background-color="transparent"
-        slider-color="#24292e"
+        slider-color="#364fcc"
+        style="border-bottom: 1px solid #e7e7f3;"
       >
         <div class="flex-grow-2"></div>
-        <v-tab 
-          :ripple="false" 
+        <v-tab
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
+          :ripple="false"
+          class="noHover"
           @click="$router.push({name: 'index'})"
         >
+          <v-icon>mdi-home</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
+          @click="$router.push({name: 'index'})"
+        >
+          <v-icon left>mdi-home</v-icon>
           Home
         </v-tab>
         <v-tab
-          :ripple="false" 
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
+          :ripple="false"
+          class="noHover"
           @click="$router.push({name: 'sign-in'})"
         >
+          <v-icon>mdi-login</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
+          @click="$router.push({name: 'sign-in'})"
+        >
+          <v-icon left>mdi-login</v-icon>
           Sign In
         </v-tab>
-        <v-tab 
-          :ripple="false" 
+        <v-tab
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
+          :ripple="false"
+          class="noHover"
           @click="$router.push({name: 'sign-up'})"
         >
+          <v-icon>mdi-account-plus</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
+          @click="$router.push({name: 'sign-up'})"
+        >
+          <v-icon left>mdi-account-plus</v-icon>
           Sign Up
         </v-tab>
       </v-tabs>
@@ -192,6 +255,10 @@ export default {
 </script>
 
 <style>
+
+.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active) > .v-icon, .theme--light.v-tabs > .v-tabs-bar .v-tab--disabled {
+  color: #8e8ea8 !important;
+}
 .theme--dark.v-tabs.v-tab--active:hover::before, .theme--dark.v-tabs.v-tab--active::before {
   opacity: 0;
 }
@@ -204,8 +271,40 @@ export default {
   opacity: 0;
 }
 
-.v-tab.tab-btn {
-  min-width: 60px;
-  font-size: 12px;
+.v-tab.noHover::before {
+  color: transparent;
+}
+
+.v-tab.noHover:hover {
+  color: unset !important;
+}
+
+/*.v-tab.noHover:visited {*/
+  /*font-weight: 600;*/
+/*}*/
+
+v-icon.noHover::before {
+  color: transparent;
+}
+
+v-icon.noHover:hover {
+  color: unset !important;
+}
+
+.h2title {
+  position: absolute;
+
+  font-family: Avenir Next;
+  font-size: 32px;
+  line-height: 45px;
+  letter-spacing: -0.02em;
+  color: #343747;
+}
+
+.v-tab.custom-tab {
+  font-family: open sans,OpenSans,sans-serif;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 17px;
 }
 </style>
