@@ -273,7 +273,10 @@
                     style="color: #343747;"
                   >
                     Already have an account?
-                    <a class="custom-btn" @click="$router.push({name: 'sign-in'})">
+                    <a class="custom-btn"
+                       @click="$router.push({name: 'sign-in'})"
+                       style="color: #364fcc; cursor: pointer;"
+                    >
                       Sign in
                     </a>
                     to comment.
