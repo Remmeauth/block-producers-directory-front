@@ -17,7 +17,8 @@
         </h2>
         <h2
           v-else
-          style="color: #343747; font-family: Open Sans,sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.02em;"
+          class="pt-6"
+          style="color: #343747; font-family: Avenir Next; font-size: 24px; font-weight: 700; letter-spacing: -.02em;"
         >
           Block Producer Directory
         </h2>
@@ -36,33 +37,34 @@
         style="border-bottom: 1px solid #e7e7f3;"
       >
         <div class="flex-grow-2"></div>
-        <v-tab 
+        <div
           v-if="this.$vuetify.breakpoint.name == 'md' || 
             this.$vuetify.breakpoint.name == 'lg' ||
             this.$vuetify.breakpoint.name == 'xl'"
           :ripple="false"
-          style="pointer-events: none;"
+          class="noHover custom-tab subtitle-1 font-weight-bold pt-3 pr-3"
         >
-          <v-form class="text-none" style="color: #8e8ea8; cursor: pointer;">
-            Signed in as 
+          <v-form class="text-none" style="color: #8e8ea8; cursor: auto;">
+            Signed in as
             <b
-              style="color: #364fcc; cursor: pointer;"
+              style="color: #364fcc;"
             >
               @{{ localStorage.username }}
             </b>
           </v-form>
-        </v-tab>
+        </div>
         <v-tab 
           v-if="this.$vuetify.breakpoint.name == 'xs'" 
           class="tab-btn pa-0 noHover"
           :ripple="false"
           @click="$router.push({name: 'index'})"
+          style="min-width: 75px;"
         >
           <v-icon>mdi-home</v-icon>
         </v-tab>
         <v-tab
           v-else
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false"
           @click="$router.push({name: 'index'})"
         >
@@ -74,12 +76,13 @@
           class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
+          style="min-width: 75px;"
         >
           <v-icon>mdi-bank-plus</v-icon>
         </v-tab>
         <v-tab
           v-else
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'block-producer-creation'})"
         >
@@ -91,12 +94,13 @@
           class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
+          style="min-width: 75px;"
         >
           <v-icon>mdi-account</v-icon>
         </v-tab>
         <v-tab 
           v-else
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'user', params: {username: localStorage.username}})"
         >
@@ -108,12 +112,13 @@
           class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
+          style="min-width: 75px;"
         >
           <v-icon>mdi-settings</v-icon>
         </v-tab>
         <v-tab 
           v-else
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="$router.push({name: 'settings'})"
         >
@@ -125,12 +130,13 @@
           class="tab-btn pl-2 pr-2 noHover"
           :ripple="false" 
           @click="signOut"
+          style="min-width: 75px;"
         >
           <v-icon>mdi-logout</v-icon>
         </v-tab>
         <v-tab 
           v-else
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           :ripple="false" 
           @click="signOut"
         >
@@ -151,24 +157,51 @@
       >
         <div class="flex-grow-2"></div>
         <v-tab
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
           :ripple="false"
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover"
+          @click="$router.push({name: 'index'})"
+        >
+          <v-icon>mdi-home</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           @click="$router.push({name: 'index'})"
         >
           <v-icon left>mdi-home</v-icon>
           Home
         </v-tab>
         <v-tab
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
           :ripple="false"
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover"
+          @click="$router.push({name: 'sign-in'})"
+        >
+          <v-icon>mdi-login</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           @click="$router.push({name: 'sign-in'})"
         >
           <v-icon left>mdi-login</v-icon>
           Sign In
         </v-tab>
-        <v-tab 
+        <v-tab
+          v-if="this.$vuetify.breakpoint.name == 'xs'"
           :ripple="false"
-          class="noHover text-none custom-tab subtitle-1 font-weight-medium"
+          class="noHover"
+          @click="$router.push({name: 'sign-up'})"
+        >
+          <v-icon>mdi-account-plus</v-icon>
+        </v-tab>
+        <v-tab
+          v-else
+          :ripple="false"
+          class="noHover text-none custom-tab subtitle-1 font-weight-bold"
           @click="$router.push({name: 'sign-up'})"
         >
           <v-icon left>mdi-account-plus</v-icon>
@@ -261,29 +294,17 @@ v-icon.noHover:hover {
 .h2title {
   position: absolute;
 
-  /* heading H2 */
-
   font-family: Avenir Next;
   font-size: 32px;
   line-height: 45px;
-  /* identical to box height, or 141% */
-
   letter-spacing: -0.02em;
-
-  /* black */
-
   color: #343747;
 }
 
 .v-tab.custom-tab {
-  /* body text M */
-
   font-family: open sans,OpenSans,sans-serif;
   font-style: normal;
-  /*font-weight: 600;*/
   font-size: 15px;
   line-height: 17px;
-  /* or 160% */
 }
-
 </style>
