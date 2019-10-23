@@ -15,7 +15,7 @@
                 class="mx-auto mt-1 mb-4"
                 align="center"
                 outlined
-                elevation="2"
+                elevation="1"
                 style="border: 1px solid #e7e7f3;"
                 >
                 <div></div>
@@ -56,7 +56,7 @@
                   </p>
                 </v-card-text>
                 <v-card-text 
-                  class="pt-1"
+                  class="pt-1 pb-2"
                   v-if="profile.websiteUrl"
                 >
                   <a :href="profile.websiteUrl" class="website" style="text-decoration: none; color: #343747;">
@@ -115,7 +115,7 @@
                 class="mx-auto mt-1 mb-6"
                 align="center"
                 outlined
-                elevation="2"
+                elevation="1"
                 style="border: 1px solid #e7e7f3;"
               >
                 <v-card-text class="layout">
@@ -145,7 +145,7 @@
                 v-if="blockProducers && blockProducersByUser(user.username).length > 0"
                 class="mt-6 mb-2"
                 outlined
-                elevation="2"
+                elevation="1"
                 style="border: 1px solid #e7e7f3;"
               >
                 <v-list two-line class="pt-0 pb-0">
