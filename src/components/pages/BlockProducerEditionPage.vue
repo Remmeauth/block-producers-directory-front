@@ -14,7 +14,7 @@
       >
         <v-form>
           <v-container>
-            <v-row>
+            <v-row class="pt-3">
               <v-col cols="12" lg="10" offset-lg="1" >
                 <h3 class="mb-3 heading">Block producer settings</h3>
                 <v-divider class="mb-7"></v-divider>
@@ -514,31 +514,72 @@
         </v-form>
         <v-form>
           <v-container>
-            <v-row>
-              <v-col cols="12" lg="10" offset-lg="1">
+            <v-row class="pb-4">
+              <v-col cols="12" lg="10" offset-lg="1"
+                v-if="blockProducer.user.username === localStorage.username"
+              >
                 <h3 class="mb-3" style="color: #FB4444;"> Delete block producer</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span class="description">
                   Once you delete your block producer, there is no going back. Please be certain.
                 </span>
               </v-col>
-              <v-col cols="12" lg="5" offset-lg="1">
-                <v-btn 
-                  v-if="blockProducer.user.username === localStorage.username"
-                  class="text-none white--text"
-                  @click="deleteBlockProducer"
-                  depressed
-                  color="#FB4444"
-                  :ripple="false"
-                  style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
-                  font-style: normal !important;
-                  font-weight: bold !important;
-                  font-size: 15px !important;
-                  line-height: 21px !important;
-                  letter-spacing: -0.01em;"
-                >
-                  Delete block producer
-                </v-btn>
+              <v-col cols="12" lg="5" offset-lg="1"
+                v-if="blockProducer.user.username === localStorage.username"
+              >
+                <v-dialog v-model="dialog" persistent max-width="290">
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                     v-if="blockProducer.user.username === localStorage.username"
+                     v-on="on"
+                     class="text-none white--text"
+                     depressed
+                     color="#FB4444"
+                     :ripple="false"
+                     style="height: 38px; font-family: open sans, OpenSans, sans-serif !important;
+                     font-style: normal !important;
+                     font-weight: bold !important;
+                     font-size: 15px !important;
+                     line-height: 21px !important;
+                     letter-spacing: -0.01em;"
+                    >Delete block producer</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-text class="description">
+                      Are you sure you want to delete this block producer?
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn
+                        class="text-none"
+                        depressed
+                        color="ml-1 grey lighten-1"
+                        :ripple="false"
+                        style="font-family: open sans, OpenSans, sans-serif !important;
+                        font-style: normal !important;
+                        font-weight: bold !important;
+                        font-size: 15px !important;
+                        line-height: 21px !important;
+                        letter-spacing: -0.01em;"
+                        @click="dialog = false"
+                      >Cancel</v-btn>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        v-if="blockProducer.user.username === localStorage.username"
+                        @click="deleteBlockProducer"
+                        class="mr-1 text-none white--text"
+                        depressed
+                        color="#FB4444"
+                        :ripple="false"
+                        style="font-family: open sans, OpenSans, sans-serif !important;
+                        font-style: normal !important;
+                        font-weight: bold !important;
+                        font-size: 15px !important;
+                        line-height: 21px !important;
+                        letter-spacing: -0.01em;"
+                      >Delete</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </v-col>
             </v-row>
           </v-container>
@@ -604,6 +645,7 @@ export default {
         updateReferenceLinks: null,
         submitUploadingBlockProducerLogotype: null,
       },
+      dialog: false,
       logotypeFile: null,
       imageSizeIsTooLarge: false,
       successMessage: null,

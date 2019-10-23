@@ -94,14 +94,14 @@
                     Send a password recover request
                   </h3>
                   <v-card-actions
-                    class="pl-12 pr-12 justify-center"
+                    class="pl-8 pr-8 justify-center"
                     style="font-size: 0.8em; color: #364fcc; font-family: open sans, OpenSans, sans-serif !important;"
                   >
                     Enter the e-mail of your account to get a recovery link
                   </v-card-actions>
                   <v-card 
                     flat 
-                    class="ma-2 pa-10 pt-0 pb-5"
+                    class="ma-2 pr-3 pl-3 pt-0 pb-5"
                   >
                     <v-form>
                       <v-text-field

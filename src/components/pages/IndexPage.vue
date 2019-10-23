@@ -44,7 +44,7 @@
                   <v-card
                     v-if="blockProducer"
                     outlined
-                    elevation="3"
+                    elevation="2"
                     align="center"
                     style="height: 345px; cursor: pointer; border: 1px solid #e7e7f3;"
                     :ripple="false"

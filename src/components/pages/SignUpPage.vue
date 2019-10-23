@@ -19,7 +19,7 @@
                   >
                     Sign up to Directory
                   </h3>
-                  <v-card flat class="ma-2 pa-10 pt-5 pb-5">
+                  <v-card flat class="ma-2 pr-3 pl-3 pt-5 pb-5">
                     <v-form>
                       <v-text-field class="mb-6 pl-2 pr-2"
                         v-model="email"

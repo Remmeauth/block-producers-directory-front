@@ -11,7 +11,7 @@
       >
         <v-form>
           <v-container>
-            <v-row>
+            <v-row class="pt-3">
               <v-col cols="12" lg="10" offset-lg="1">
                 <h3 class="mb-3 heading">Block producer creation</h3>
                 <v-divider class="mb-7"></v-divider>
@@ -380,7 +380,7 @@
             </v-row>
           </v-container>
           <v-container>
-            <v-col cols="12" xs="4" sm="4" md="2" lg="2" offset-sm="4" offset-md="5" offset-lg="5">
+            <v-col cols="12" xs="4" sm="4" md="2" lg="2" offset-sm="4" offset-md="5" offset-lg="5" class="mb-4">
               <v-btn 
                 class="text-none white--text"
                 @click="create"
