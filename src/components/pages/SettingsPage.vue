@@ -1,8 +1,11 @@
 <template>
-  <div v-if="profileError.statusCode === 500">
+  <div v-if="profileError.statusCode === 404 || user.username !== localStorage.username">
+    <Error404/>
+  </div>
+  <div v-else-if="profileError.statusCode === 500">
     <Error500/>
   </div>
-  <div v-else style="background-color: #f2f2fa;">
+  <div v-else-if="user.username === localStorage.username" style="background-color: #f2f2fa;">
     <v-layout>
       <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3
         class="mt-4"
@@ -867,7 +870,7 @@ export default {
     if (!this.localStorage.username) {
       this.$router.push({name: 'index'})
     }
-    
+
     this.$store.dispatch(userStorageActions.getUser, {
         username: this.localStorage.username,
     })

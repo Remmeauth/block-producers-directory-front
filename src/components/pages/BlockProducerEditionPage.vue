@@ -1,11 +1,11 @@
 <template>
-  <div v-if="blockProducerError.statusCode === 404">
+  <div v-if="blockProducerError.statusCode === 404 || blockProducer.user.username !== localStorage.username">
     <Error404/>
   </div>
   <div v-else-if="blockProducerError.statusCode === 500">
     <Error500/>
   </div>
-  <div v-else style="background-color: #f2f2fa;">
+  <div v-else-if="blockProducer.user.username === localStorage.username" style="background-color: #f2f2fa;">
     <v-layout>
       <v-flex xs12 sm10 md8 lg8 xl6 offset-sm1 offset-md2 offset-lg2 offset-xl3
         class="mt-4"
