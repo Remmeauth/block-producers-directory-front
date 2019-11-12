@@ -219,7 +219,7 @@
                 <h3 class="mb-3 heading">Logotype</h3>
                 <v-divider class="mb-7"></v-divider>
                 <span class="description">
-                  Upload block producer logotype.
+                  Upload block producer logotype. If you do not provide a logotype image, the default image will be set.
                 </span>
               </v-col>
               <v-col cols="12" lg="10" offset-lg="1" class="pb-0">
