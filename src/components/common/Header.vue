@@ -13,14 +13,14 @@
         <h2 v-if="this.$vuetify.breakpoint.name !== 'xs'"
             class="h2title"
         >
-          Block Producer Directory
+          Block Producers Directory
         </h2>
         <h2
           v-else
           class="pt-6"
           style="color: #343747; font-family: Avenir Next; font-size: 24px; font-weight: 700; letter-spacing: -.02em;"
         >
-          Block Producer Directory
+          Block Producers Directory
         </h2>
       </div>
 
